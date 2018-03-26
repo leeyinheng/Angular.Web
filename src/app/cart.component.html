@@ -1,0 +1,71 @@
+<a routerLink="/products" routerLinkActive="active"><img src="app/Services/Model/Photos/product.jpg" alt="product Icon" style="width:50px;height:50px;">返回產品線</a>
+<p>
+ 
+<h3>數量: {{count}}  總價: {{totalamount}} 運費: {{shipmentfee}}</h3>
+ 
+ 
+  <div class='table-responsive'>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>產品</th>
+                        <th>數量</th>
+                        <th>價格</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let product of sumuplist'>
+                        <td>{{ product.Name}}<img [src]='product.Photo'></td>
+                        <td>{{ product.Volume}}</td>
+                        <td>{{ product.SellPrice }}</td>  
+                        <td><button class="btn btn-info" (click)="add(product)">增加</button>   
+                         <button class="btn btn-warning" (click)="remove(product)">減少</button></td>     
+                    </tr>
+                    <tr *ngIf="shipmentfee > 0 && sumuplist.length">
+                        <td>運費</td>
+                        <td></td>
+                        <td>{{ shipmentfee }}</td>
+                    </tr>
+                </tbody>
+            </table>
+   </div>
+
+
+     <div class='panel'  *ngIf='sumuplist && sumuplist.length'>
+        <div class="form-group">
+             <div class="form-group">
+                <label>姓名:</label>
+                <input type='text' [(ngModel)]='Name' />
+            </div>
+            <div class="form-group">
+                <label>地址:</label>
+                <input type='text' [(ngModel)]='Address' size="100" />
+            </div>
+            <div class="form-group">
+                <label>電話:</label>
+                <input type='text' [(ngModel)]='Phone' />
+            </div>
+             <div class="form-group">
+                <label>Email:</label>
+                <input type='text' [(ngModel)]='Email' size="80"/>
+            </div>
+             <div class="form-group">
+                <label>備註:</label>
+                <input type='text' [(ngModel)]='Note' size="80"/>
+            </div>
+             <h3>數量: {{count}}  總價: {{totalamount}} 運費: {{shipmentfee}}</h3>
+             
+                 <h5>付款方式(滿兩千免運費)</h5>
+                 <input type="radio" [(ngModel)]="paymenttype"  name="paymenttype" value="貨到付款"/>貨到付款 <br>
+                 <input type="radio" [(ngModel)]="paymenttype"  name="paymenttype" value="信用卡"/>信用卡(專員會與您聯絡信用卡付費方式) 
+            
+             <p>
+             <hr>
+             <button class="btn btn-primary" (click)="submitorder()">確認訂購</button>
+         </div>
+
+         
+     </div>
+
+    

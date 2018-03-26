@@ -1,0 +1,18 @@
+div{
+    align-content: left;
+}
+
+table {
+    width: 200;
+}
+
+thead{
+    color: #337AB7; 
+    align-content: center;
+    
+}
+
+row td{
+    align-content: left;
+    text-align: left;
+}

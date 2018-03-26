@@ -1,0 +1,82 @@
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            編號
+        </th>
+        <th>
+            空氣重量
+        </th>
+        <th>
+            水中重量
+        </th>
+        <th>
+            物體比重
+        </th>
+    </tr>
+    
+        <tr>
+            <td>
+    
+            </td>
+            <td>
+                <input type="number"
+                [(ngModel)]='airweight'
+                style="width: 6em;"
+                /> 
+            </td>
+            <td>
+                <input type="number"
+                [(ngModel)]='waterweight'  
+                style="width: 6em;"
+                /> 
+            </td>
+            <td>
+                {{caculateweightrate()}}
+            </td>
+            <td>
+                <button class="btn btn-primary" (click) = 'addintolist()'>
+                    新增
+                 </button>
+            </td>
+        </tr>
+
+    <tbody> 
+        <tr *ngFor = 'let item of weightList'>
+            
+            <td>{{ item.id}}</td>
+            <td>{{ item.airweight }}</td>
+            <td>{{ item.waterweight}}</td>
+            <td>{{ item.ratioweight}}</td>
+            
+        </tr>
+    </tbody>
+   
+
+
+</table>
+
+<table *ngIf="weightList?.length > 0">
+    <tr>
+        <td>
+            Email: 
+        </td>
+        <td>
+            <input type="string"
+            [(ngModel)]='emailaddress'  
+            style="width: 15em;"
+            /> 
+        </td>
+        <td>
+            <span></span>
+        </td>
+        <td>
+            <button class="btn btn-info" (click) = 'emailout()'>
+                寄出
+             </button>
+        </td>
+    </tr>
+</table>
+
+
+
+
