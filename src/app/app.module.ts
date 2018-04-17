@@ -4,6 +4,7 @@ import { FormsModule }    from '@angular/forms';
 import { RouterModule }   from '@angular/router';
 import { HttpModule }    from '@angular/http';
 import { HttpClientModule} from '@angular/common/http'; 
+import {ModalModule, BsModalService} from 'ngx-bootstrap'; 
 //import './rxjs-extensions';
 
  
@@ -14,6 +15,7 @@ import { ProductService }    from './Services/product.service';
 import { ShopCartService }    from './Services/shop-cart.service';
 import { EmailService }    from './Services/emailservice';
 import {ListEmailService} from './Services/list-email.service'; 
+import {CustomerlogService} from './Services/customerlog.service'; 
 
 //Components
 import { AppComponent }         from './app.component';
@@ -21,8 +23,10 @@ import { ProductsComponent }    from './products.component';
 import { MenuComponent }        from './menu.component';
 import { CartComponent }        from './cart.component';
 import {StoneweightComponent} from './stoneweight.component'; 
+import {CustomerlogComponent} from './customerlog.component'; 
 
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+
 
 
 
@@ -32,6 +36,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     FormsModule,
     HttpClientModule, 
     HttpModule,
+    ModalModule.forRoot(), 
     //InMemoryWebApiModule.forRoot(InMemoryDataService),
     RouterModule.forRoot([
       {
@@ -50,6 +55,10 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
       {
         path:'stoneweight',
         component: StoneweightComponent
+      }, 
+      {
+        path:'customerlog',
+        component: CustomerlogComponent
       }
     ])
   ],
@@ -58,7 +67,8 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     ProductsComponent,
     MenuComponent,
     CartComponent,
-    StoneweightComponent
+    StoneweightComponent, 
+    CustomerlogComponent
   ],
 
   providers: [
@@ -66,6 +76,8 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     ShopCartService, 
     EmailService, 
     ListEmailService, 
+    CustomerlogService, 
+    BsModalService, 
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
