@@ -17,7 +17,9 @@ export class CustomerlogService{
 
     
     
-    url:string = "https://localhost:44347/api/CustomerLogApi/"; 
+    //url:string = "https://localhost:44347/api/CustomerLogApi/"; 
+
+    url:string = "https://leecloud.azurewebsites.net/api/CustomerLogApi/"; 
 
    
 
@@ -41,5 +43,10 @@ export class CustomerlogService{
     DeleteCustomerLog(rowkey:string)
     {
         return this.http.delete(this.url + rowkey); 
+    }
+
+    UpdateCustomerLog(c: customerlog): Observable<object> {
+
+        return this.http.put(this.url + '5', c, httpOptions); 
     }
 }

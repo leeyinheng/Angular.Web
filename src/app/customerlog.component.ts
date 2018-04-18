@@ -25,9 +25,9 @@ export class CustomerlogComponent implements OnInit{
         this.GetLogList(); 
     }
 
-    modalRef: BsModalRef;
+    bsModalRef: BsModalRef;
     
-    constructor(private logservice: CustomerlogService,private modalService: BsModalService ){
+    constructor(public logservice: CustomerlogService,private modalService: BsModalService ){
 
     }
 
@@ -99,11 +99,19 @@ export class CustomerlogComponent implements OnInit{
 
     }
 
-    openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template);
-      }
+    openModal(item: customerlog) {
 
-    GetLogList() :void{
+        const initialState = {
+              log: item, 
+              parent : this.GetLogList
+          };
+
+        this.bsModalRef = this.modalService.show(ModalContentComponent, {initialState});
+
+      
+    }
+
+    public GetLogList() :void{
 
         this.logservice.GetAllCustomerLog().subscribe(
             list => {
@@ -152,6 +160,7 @@ export class CustomerlogComponent implements OnInit{
                 res  => {
                     alert(newitem.Name + ' 資料輸入成功!'); 
                     this.resetInput(); 
+                    this.GetLogList(); 
                 },
                 error =>  alert((<any>error))); 
             
@@ -169,3 +178,137 @@ export class CustomerlogComponent implements OnInit{
     }
 
 }
+
+
+ /* This is a component which we pass in modal*/
+ 
+ @Component({
+    selector: 'modal-content',
+    template: `
+      <div class="modal-header table-hover">
+        <h4 class="modal-title pull-left">{{log.Name}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <table class="table table-bordered">
+      <tr>
+          <td>
+              顧客姓名
+          </td>
+          <td>
+          <input type="string"
+          [(ngModel)]='Name'
+           />  
+          </td>
+      </tr>
+
+      <tr>
+          <td>
+              電話
+          </td>
+          <td>
+          <input type="string"
+          [(ngModel)]='PhoneNumber'
+           />  
+          </td>
+      </tr>
+
+      <tr>
+      <td>
+         Email
+      </td>
+      <td>
+      <input type="string"
+      [(ngModel)]='Email'
+       />  
+      </td>
+      </tr>
+
+      <tr>
+      <td>
+          通訊紀錄
+      </td>
+      <td>
+         <textarea [(ngModel)]='Note' class="form-control" >
+
+         </textarea>
+      </td>
+      </tr>
+      <tr>
+         
+              <td>
+                  <button class="btn btn-primary" (click) = 'savelog()'>
+                     儲存
+                   </button>
+                  
+              </td>
+
+        </tr>
+    </table> 
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">取消</button>
+      </div>
+    `
+  })
+   
+  export class ModalContentComponent implements OnInit {
+     
+    log: customerlog; 
+
+    Name: string; 
+
+    PhoneNumber : string; 
+
+    Email : string;
+
+    Note : string ; 
+
+    parent : Function; 
+  
+    
+    constructor(public bsModalRef: BsModalRef , public logservice: CustomerlogService ) {}
+   
+    ngOnInit() {
+       
+        this.Name = this.log.Name; 
+ 
+        this.PhoneNumber = this.log.PhoneNumber; 
+
+        this.Email = this.log.Email; 
+
+        this.Note = this.log.Note; 
+
+
+    }
+
+    savelog(){
+
+      this.log.Name = this.Name;
+      
+      this.log.PhoneNumber = this.PhoneNumber; 
+
+      this.log.Email = this.Email; 
+
+      this.log.Note = this.Note; 
+
+      this.log.RecordTime = new Date().toLocaleDateString() + "-" + new Date().toLocaleTimeString();
+
+      this.logservice.UpdateCustomerLog(this.log).subscribe(
+        res  => {
+            alert(  '修改資料成功!');
+
+            this.bsModalRef.hide(); 
+
+            this.parent.call(this); 
+        },
+        error =>  alert((<any>error))); 
+
+        
+    }
+  }
+

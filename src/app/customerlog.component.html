@@ -12,6 +12,9 @@
         <th>
             通話紀錄
         </th>
+        <th>
+            時間
+        </th>
     </tr>
     
         <tr>
@@ -24,7 +27,6 @@
             <td>
                 <input type="string"
                 [(ngModel)]='PhoneNumber'
-                style="width: em;"
                 /> 
             </td>
             <td>
@@ -36,6 +38,9 @@
                 <textarea [(ngModel)]='Note' class="form-control" >
 
                 </textarea>
+            </td>
+            <td>
+                
             </td>
             <td>
                 <button class="btn btn-primary" (click) = 'addlog()'>
@@ -57,7 +62,7 @@
                         <button class="btn btn-danger" (click) = 'DeleteLog(item.RowKey, item.Name)' >
                                 刪除
                         </button>
-                        <button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button>
+                        <button type="button" class="btn btn-info" (click)="openModal(item)">編輯</button>
                 </td>
 
             </tr>
@@ -68,6 +73,7 @@
 <ng-template #template>
         <div class="modal-header">
           <h4 class="modal-title pull-left">Modal</h4>
+          {{ item.Name }}
           <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
           </button>

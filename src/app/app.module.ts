@@ -24,6 +24,7 @@ import { MenuComponent }        from './menu.component';
 import { CartComponent }        from './cart.component';
 import {StoneweightComponent} from './stoneweight.component'; 
 import {CustomerlogComponent} from './customerlog.component'; 
+import {ModalContentComponent} from './customerlog.component';  
 
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
@@ -68,9 +69,10 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     MenuComponent,
     CartComponent,
     StoneweightComponent, 
-    CustomerlogComponent
+    CustomerlogComponent, 
+    ModalContentComponent
   ],
-
+  entryComponents:[ModalContentComponent], 
   providers: [
     ProductService,
     ShopCartService, 
