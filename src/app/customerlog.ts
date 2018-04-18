@@ -7,6 +7,7 @@ export class customerlog  {
     Note : string; 
     RecordTime : string; 
     RowKey : string; 
+    Comment : string; 
 
     constructor()
     {

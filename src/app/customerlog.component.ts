@@ -85,6 +85,8 @@ export class CustomerlogComponent implements OnInit{
 
     }
 
+    Comment : string; 
+
     _loglist : customerlog[]; 
 
     get logList() : customerlog[]{
@@ -153,6 +155,8 @@ export class CustomerlogComponent implements OnInit{
 
              newitem.Note = this.Note; 
 
+             newitem.Comment = this.Comment; 
+
              newitem.RecordTime = new Date().toLocaleDateString() + "-" + new Date().toLocaleTimeString();
 
              
@@ -175,6 +179,7 @@ export class CustomerlogComponent implements OnInit{
             this.PhoneNumber = ''; 
             this.Email = ''; 
             this.Note = ''; 
+            this.Comment = ''; 
     }
 
 }
@@ -237,6 +242,16 @@ export class CustomerlogComponent implements OnInit{
       </td>
       </tr>
       <tr>
+      <td>
+          備註(後續進展)
+      </td>
+      <td>
+         <textarea [(ngModel)]='Comment' class="form-control"  >
+
+         </textarea>
+      </td>
+      </tr>
+      <tr>
          
               <td>
                   <button class="btn btn-primary" (click) = 'savelog()'>
@@ -268,6 +283,8 @@ export class CustomerlogComponent implements OnInit{
 
     Note : string ; 
 
+    Comment : string; 
+
     parent : Function; 
   
     
@@ -283,6 +300,8 @@ export class CustomerlogComponent implements OnInit{
 
         this.Note = this.log.Note; 
 
+        this.Comment = this.Comment; 
+
 
     }
 
@@ -295,6 +314,8 @@ export class CustomerlogComponent implements OnInit{
       this.log.Email = this.Email; 
 
       this.log.Note = this.Note; 
+
+      this.log.Comment = this.Comment; 
 
       this.log.RecordTime = new Date().toLocaleDateString() + "-" + new Date().toLocaleTimeString();
 
