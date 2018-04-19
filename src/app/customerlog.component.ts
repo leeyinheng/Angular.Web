@@ -300,7 +300,7 @@ export class CustomerlogComponent implements OnInit{
 
         this.Note = this.log.Note; 
 
-        this.Comment = this.Comment; 
+        this.Comment = this.log.Comment; 
 
 
     }
