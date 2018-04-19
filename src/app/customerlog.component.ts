@@ -241,7 +241,7 @@ export class CustomerlogComponent implements OnInit{
          </textarea>
       </td>
       </tr>
-      <tr>
+      <tr  class="warning" >
       <td>
           備註(後續進展)
       </td>
@@ -251,7 +251,7 @@ export class CustomerlogComponent implements OnInit{
          </textarea>
       </td>
       </tr>
-      <tr>
+      <tr >
          
               <td>
                   <button class="btn btn-primary" (click) = 'savelog()'>
