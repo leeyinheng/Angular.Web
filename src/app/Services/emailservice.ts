@@ -4,19 +4,30 @@ import {Headers, RequestOptions} from '@angular/http';
 import {URLSearchParams} from '@angular/http'; 
 import { Observable } from 'rxjs/Observable';
 
+import {EmailMessage} from '../Model/EmailMessage'; 
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import {HttpClient, HttpHeaders} from '@angular/common/http'; 
+
+const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    }), 
+    params : null, 
+    withCredentials: false 
+}; 
 
 @Injectable()
 export class EmailService{
     
-    constructor(private http:Http){}
+    constructor(private http:Http, private httpclient: HttpClient){}
 
     sendemail(to:string,subject:string,message:string)
     {
             var web = 'http://leecloud.azurewebsites.net/api/'; 
 
-            //var web = 'http://localhost:49740/api/Email';
+            //var web = 'http://localhost:49740/api/';
 
             var from = "bio.china@msa.hinet.net"; 
 
@@ -48,6 +59,23 @@ export class EmailService{
            
             
     }
+
+    SendEmailMessage(message: EmailMessage): Observable<object>
+    {
+        var web = 'http://leecloud.azurewebsites.net/api/Email'; 
+
+        //var web = 'http://localhost:49740/api/Email';
+
+        var from = "bio.china@msa.hinet.net"; 
+
+        var webkey = 'adsfasd3w243l2q51230-48-gfd321qm4mndvdcuoisadjq2w3;4;lr8';
+        
+        message.ApiKey = webkey; 
+
+        return  this.httpclient.post(web, message, httpOptions); 
+
+    }
+    
 
       private extractData(res: Response) {
         let body = res.json();

@@ -25,8 +25,9 @@ import { CartComponent }        from './cart.component';
 import {StoneweightComponent} from './stoneweight.component'; 
 import {CustomerlogComponent} from './customerlog.component'; 
 import {ModalContentComponent} from './customerlog.component';  
-
+ 
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { EmailmodalComponent } from './emailmodal/emailmodal.component';
 
 
 
@@ -70,9 +71,9 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     CartComponent,
     StoneweightComponent, 
     CustomerlogComponent, 
-    ModalContentComponent
+    ModalContentComponent, EmailmodalComponent
   ],
-  entryComponents:[ModalContentComponent], 
+  entryComponents:[ModalContentComponent, EmailmodalComponent], 
   providers: [
     ProductService,
     ShopCartService, 

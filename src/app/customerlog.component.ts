@@ -8,6 +8,10 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
+import {EmailmodalComponent} from './emailmodal/emailmodal.component'; 
+
+ 
+
  
 
 
@@ -26,6 +30,8 @@ export class CustomerlogComponent implements OnInit{
     }
 
     bsModalRef: BsModalRef;
+
+    emailModalRef: BsModalRef; 
     
     constructor(public logservice: CustomerlogService,private modalService: BsModalService ){
 
@@ -109,8 +115,16 @@ export class CustomerlogComponent implements OnInit{
           };
 
         this.bsModalRef = this.modalService.show(ModalContentComponent, {initialState});
-
       
+    }
+
+    openEmailModal(item: customerlog){
+        const initialState = {
+            Email: item.Email, 
+            Name: item.Name
+        };
+
+        this.emailModalRef = this.modalService.show(EmailmodalComponent, {initialState}); 
     }
 
     public GetLogList() :void{

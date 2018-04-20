@@ -64,7 +64,9 @@
                 
                 <td>{{ item.Name}}</td>
                 <td>{{ item.PhoneNumber }}</td>
-                <td>{{ item.Email}}</td>
+                <td>{{ item.Email}}
+                    <button *ngIf='item.Email' type="button" class="btn btn-success" (click)="openEmailModal(item)">Email</button>
+                </td>
                 <td>{{ item.Note}}</td>
                 <td>{{ item.Comment}}</td>
                 <td>{{ item.RecordTime}}</td>
@@ -73,6 +75,7 @@
                                 刪除
                         </button>
                         <button type="button" class="btn btn-info" (click)="openModal(item)">編輯</button>
+                      
                 </td>
 
             </tr>
