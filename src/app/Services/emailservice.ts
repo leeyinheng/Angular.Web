@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 
 import {EmailMessage} from '../Model/EmailMessage'; 
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {HttpClient, HttpHeaders} from '@angular/common/http'; 
@@ -21,7 +23,15 @@ const httpOptions = {
 @Injectable()
 export class EmailService{
     
+    private messageSource = new BehaviorSubject<string>("default message");
+
+    currentMessage = this.messageSource.asObservable();
+
     constructor(private http:Http, private httpclient: HttpClient){}
+
+    changeMessage(message: string) {
+        this.messageSource.next(message)
+      }
 
     sendemail(to:string,subject:string,message:string)
     {

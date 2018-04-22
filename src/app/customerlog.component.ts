@@ -10,10 +10,6 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import {EmailmodalComponent} from './emailmodal/emailmodal.component'; 
 
- 
-
- 
-
 
 @Component({
     moduleId: module.id,
@@ -23,19 +19,22 @@ import {EmailmodalComponent} from './emailmodal/emailmodal.component';
 
 
 export class CustomerlogComponent implements OnInit{
-    
-    ngOnInit(): void {
-         
-        this.GetLogList(); 
-    }
-
+      
+  
     bsModalRef: BsModalRef;
 
     emailModalRef: BsModalRef; 
     
-    constructor(public logservice: CustomerlogService,private modalService: BsModalService ){
+    constructor(public logservice: CustomerlogService,private modalService: BsModalService  ){
 
     }
+
+    ngOnInit(): void {
+        
+        
+        this.GetLogList(); 
+    }
+
 
     _name : string; 
 
@@ -107,6 +106,7 @@ export class CustomerlogComponent implements OnInit{
 
     }
 
+    
     openModal(item: customerlog) {
 
         const initialState = {
@@ -120,8 +120,8 @@ export class CustomerlogComponent implements OnInit{
 
     openEmailModal(item: customerlog){
         const initialState = {
-            Email: item.Email, 
-            Name: item.Name
+            log : item, 
+            parentFunction: this.GetLogList
         };
 
         this.emailModalRef = this.modalService.show(EmailmodalComponent, {initialState}); 
@@ -187,6 +187,8 @@ export class CustomerlogComponent implements OnInit{
 
 
     }
+    
+  
 
     resetInput(): void {
             this.Name = ''  

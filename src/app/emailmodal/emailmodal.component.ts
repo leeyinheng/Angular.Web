@@ -8,6 +8,10 @@ import {EmailService} from '../Services/emailservice';
 
 import {EmailMessage} from '../Model/EmailMessage'; 
 
+import {customerlog} from '../customerlog'; 
+
+import {CustomerlogService} from '../Services/customerlog.service'; 
+
 @Component({
   selector: 'app-emailmodal',
   templateUrl: './emailmodal.component.html',
@@ -15,19 +19,40 @@ import {EmailMessage} from '../Model/EmailMessage';
 })
 export class EmailmodalComponent implements OnInit {
 
+  log: customerlog; 
+
   Name: string; 
 
   Email : string;
 
-  Subject: string; 
+  _subject : string; 
+
+    get Subject():string{
+
+        return this._subject; 
+    
+    }
+    set Subject(value:string){
+
+        this._subject = value;    
+    }
 
   Content : string; 
 
   emailfrom : string = 'bio.china@msa.hinet.net'; 
+
+  parentFunction : Function; 
   
-  constructor(private emailservice: EmailService, public bsModalRef: BsModalRef ) { }
+  
+
+  constructor(private emailservice: EmailService, public bsModalRef: BsModalRef, private logservice: CustomerlogService ) { }
 
   ngOnInit() {
+    
+    this.Email = this.log.Email; 
+    
+    this.Name = this.log.Name; 
+    
   }
 
   EmailOut(){
@@ -46,15 +71,41 @@ export class EmailmodalComponent implements OnInit {
 
       this.emailservice.SendEmailMessage(newEmail).subscribe(
         res => {
+
           alert("郵件-" + this.Subject + " 已送出"); 
-          this.bsModalRef.hide(); 
+
+          this.RecordEmailEvent(this.log); 
+         
+        
         }, 
         error=> {
-          alert("郵件-" + this.Subject + " 已送出.." + error); 
+        
+          alert("郵件-" + this.Subject + " 錯誤.." + error); 
+        
           this.bsModalRef.hide(); 
+        
         }
       )
 
+  }
+
+  RecordEmailEvent(log:customerlog)
+  {
+       
+          log.Comment += " 寄出郵件:"  + this.Subject + " | " + new Date().toLocaleDateString() + "-" + new Date().toLocaleTimeString();
+              
+          this.logservice.UpdateCustomerLog(log).subscribe(
+            res  => {
+                       
+              this.parentFunction; 
+
+              this.bsModalRef.hide();
+                       
+            },
+            error =>  alert((<any>error))); 
+    
+            
+        
   }
 
 }
