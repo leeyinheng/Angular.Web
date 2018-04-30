@@ -40,6 +40,11 @@ export class CustomerlogService{
         return this.http.get<customerlog[]>(this.url); 
     }
 
+    GetAllCustomerLogByKey(key:string): Observable<customerlog[]>{
+
+        return this.http.get<customerlog[]>(this.url + key); 
+    }
+
     DeleteCustomerLog(rowkey:string)
     {
         return this.http.delete(this.url + rowkey); 

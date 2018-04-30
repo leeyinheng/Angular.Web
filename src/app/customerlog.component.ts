@@ -35,6 +35,21 @@ export class CustomerlogComponent implements OnInit{
         this.GetLogList(); 
     }
 
+    _search : string; 
+
+    get Search():string{
+
+        return this._search; 
+    
+    }
+
+    set Search(value:string)
+    {
+        this._search = value; 
+
+        this.GetLogListByKey(value); 
+    }
+
 
     _name : string; 
 
@@ -136,6 +151,15 @@ export class CustomerlogComponent implements OnInit{
             error =>  alert((<any>error))); 
        
 
+    }
+
+    private GetLogListByKey(key:string) {
+
+        this.logservice.GetAllCustomerLogByKey(key).subscribe(
+            list => {
+                this.logList = list; 
+            }, 
+            error =>  alert((<any>error))); 
     }
 
     DeleteLog(rowkey:string, key:string)

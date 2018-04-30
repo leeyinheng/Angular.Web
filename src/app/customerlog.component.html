@@ -1,3 +1,10 @@
+<div class="row">
+    <label>搜尋:</label>
+    <input type="string"
+    [(ngModel)]='Search'
+    style="width: 6em;"
+    /> 
+</div>
 <table class="table table-bordered table-striped">
     <tr>
         <th>
@@ -44,7 +51,7 @@
                 </textarea>
             </td>
             <td  class="warning">
-                <textarea [(ngModel)]='Comment' class="form-control" >
+                <textarea [(ngModel)]='Comment' class="form-control">
 
                 </textarea>
             </td>
@@ -68,7 +75,7 @@
                     <button *ngIf='item.Email' type="button" class="btn btn-success" (click)="openEmailModal(item)">Email</button>
                 </td>
                 <td>{{ item.Note}}</td>
-                <td>{{ item.Comment}}</td>
+                <td class="warning">{{ item.Comment}}</td>
                 <td>{{ item.RecordTime}}</td>
                 <td>
                         <button class="btn btn-danger" (click) = 'DeleteLog(item.RowKey, item.Name)' >
