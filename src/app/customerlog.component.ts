@@ -30,8 +30,7 @@ export class CustomerlogComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        
-        
+            
         this.GetLogList(); 
     }
 
@@ -121,6 +120,8 @@ export class CustomerlogComponent implements OnInit{
 
     }
 
+    Hidden : string; 
+
     
     openModal(item: customerlog) {
 
@@ -144,9 +145,14 @@ export class CustomerlogComponent implements OnInit{
 
     public GetLogList() :void{
 
+        document.getElementById('loader').style.display = 'block';
+        
         this.logservice.GetAllCustomerLog().subscribe(
             list => {
+                
                 this.logList = list; 
+
+                document.getElementById('loader').style.display = 'none';
             }, 
             error =>  alert((<any>error))); 
        
@@ -155,9 +161,14 @@ export class CustomerlogComponent implements OnInit{
 
     private GetLogListByKey(key:string) {
 
+        document.getElementById('loader').style.display = 'block';
+        
         this.logservice.GetAllCustomerLogByKey(key).subscribe(
             list => {
+
                 this.logList = list; 
+
+                document.getElementById('loader').style.display = 'none';
             }, 
             error =>  alert((<any>error))); 
     }
