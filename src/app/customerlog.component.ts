@@ -20,7 +20,8 @@ import {EmailmodalComponent} from './emailmodal/emailmodal.component';
 
 export class CustomerlogComponent implements OnInit{
       
-  
+    p: number = 1; 
+
     bsModalRef: BsModalRef;
 
     emailModalRef: BsModalRef; 

@@ -72,7 +72,7 @@
         </tr>
 
         <tbody> 
-            <tr *ngFor = 'let item of logList'>
+            <tr *ngFor = 'let item of logList | paginate: { itemsPerPage: 10, currentPage: p} '>
                 
                 <td>{{ item.Name}}</td>
                 <td>{{ item.PhoneNumber }}</td>
@@ -92,6 +92,7 @@
 
             </tr>
         </tbody>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
    
 </table>
 

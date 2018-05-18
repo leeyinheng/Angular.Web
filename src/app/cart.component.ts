@@ -138,13 +138,13 @@ export class CartComponent implements OnInit {
 
          var subject = "中華生物科技訂單編號: " + this.generateordernumber()
 
-         this.emailservice.sendemail(this.Email, subject, this.htmlstring)
-          .subscribe(
-                     res  => console.log(res),
-                     error =>  console.log(<any>error))
-         ; 
+        //  this.emailservice.(this.Email, subject, this.htmlstring)
+        //   .subscribe(
+        //              res  => console.log(res),
+        //              error =>  console.log(<any>error))
+        //  ; 
 
-          alert("感謝您的訂購, 您的訂單編號: " + this.generateordernumber() + " 已送出, 我們專員會與您聯絡訂購事項" ); 
+          alert("此功能停止使用 !! 感謝您的訂購, 您的訂單編號: " + this.generateordernumber() + " 已送出, 我們專員會與您聯絡訂購事項" ); 
 
           window.location.href = "/";
       }

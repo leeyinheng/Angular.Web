@@ -29,7 +29,7 @@ import {ModalContentComponent} from './customerlog.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { EmailmodalComponent } from './emailmodal/emailmodal.component';
 
-
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -38,6 +38,7 @@ import { EmailmodalComponent } from './emailmodal/emailmodal.component';
     FormsModule,
     HttpClientModule, 
     HttpModule,
+    NgxPaginationModule, 
     ModalModule.forRoot(), 
     //InMemoryWebApiModule.forRoot(InMemoryDataService),
     RouterModule.forRoot([

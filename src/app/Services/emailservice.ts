@@ -2,14 +2,12 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http'; 
 import {Headers, RequestOptions} from '@angular/http'; 
 import {URLSearchParams} from '@angular/http'; 
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  BehaviorSubject } from 'rxjs';
 
-import {EmailMessage} from '../Model/EmailMessage'; 
+import {EmailMessage} from '../Model/EmailMessage';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
 import {HttpClient, HttpHeaders} from '@angular/common/http'; 
 
 const httpOptions = {
@@ -63,8 +61,7 @@ export class EmailService{
             let options = new RequestOptions({ headers: headers});
            
             return this.http.get(urlstring,options)
-                   .map(this.extractData) 
-                   .catch(this.handleError); 
+                   .subscribe(res=> this.extractData = res.json()); 
 
            
             

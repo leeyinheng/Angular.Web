@@ -73,13 +73,13 @@ export class ListEmailService{
 
         htmlstring += "</tbody></table>"; 
 
-        this.emailservice.sendemail(this.Email, this.Subject, htmlstring)
-        .subscribe(
-                   res  => console.log(res),
-                   error =>  console.log(<any>error))
-       ; 
+    //     this.emailservice.sendemail(this.Email, this.Subject, htmlstring)
+    //     .subscribe(
+    //                res  => console.log(res),
+    //                error =>  console.log(<any>error))
+    //    ; 
 
-        alert(" 比重結果已送出至 " + this.Email + " 請繼續使用或更新重來" ); 
+        alert(" 比重結果已送出至 Email 服務已停止使用!! " + this.Email + " 請繼續使用或更新重來" ); 
 
     }
 
