@@ -30,6 +30,12 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { EmailmodalComponent } from './emailmodal/emailmodal.component';
 
 import {NgxPaginationModule} from 'ngx-pagination';
+import { CalendarComponent } from './calendar/calendar.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule } from 'angular-calendar';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DatetimepickerComponent } from './datetimepicker/datetimepicker.component';
 
 
 @NgModule({
@@ -39,6 +45,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
     HttpClientModule, 
     HttpModule,
     NgxPaginationModule, 
+    BrowserAnimationsModule, 
+    CalendarModule.forRoot(), 
+    NgbModule.forRoot(), 
     ModalModule.forRoot(), 
     //InMemoryWebApiModule.forRoot(InMemoryDataService),
     RouterModule.forRoot([
@@ -62,6 +71,10 @@ import {NgxPaginationModule} from 'ngx-pagination';
       {
         path:'customerlog',
         component: CustomerlogComponent
+      }, 
+      {
+        path:'calendar',
+        component: CalendarComponent
       }
     ])
   ],
@@ -72,7 +85,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     CartComponent,
     StoneweightComponent, 
     CustomerlogComponent, 
-    ModalContentComponent, EmailmodalComponent
+    ModalContentComponent, EmailmodalComponent, CalendarComponent, DatetimepickerComponent
   ],
   entryComponents:[ModalContentComponent, EmailmodalComponent], 
   providers: [

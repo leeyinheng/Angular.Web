@@ -21,6 +21,8 @@
     "@angular/platform-browser": "6.0.2",
     "@angular/platform-browser-dynamic": "6.0.2",
     "@angular/router": "6.0.2",
+    "@ng-bootstrap/ng-bootstrap": "^2.0.0",
+    "angular-calendar": "^0.25.2",
     "core-js": "^2.4.1",
     "ngx-bootstrap": "^2.0.3",
     "ngx-pagination": "^3.1.1",
