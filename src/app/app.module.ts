@@ -3,8 +3,8 @@ import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { RouterModule }   from '@angular/router';
 import { HttpModule }    from '@angular/http';
-import { HttpClientModule} from '@angular/common/http'; 
-import {ModalModule, BsModalService} from 'ngx-bootstrap'; 
+import { HttpClientModule} from '@angular/common/http';
+import {ModalModule, BsModalService} from 'ngx-bootstrap';
 //import './rxjs-extensions';
 
  
@@ -30,12 +30,11 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { EmailmodalComponent } from './emailmodal/emailmodal.component';
 
 import {NgxPaginationModule} from 'ngx-pagination';
-import { CalendarComponent } from './calendar/calendar.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule } from 'angular-calendar';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { DatetimepickerComponent } from './datetimepicker/datetimepicker.component';
+ 
+import { BusinesscenterModule } from './businesscenter/businesscenter.module';
 
 
 @NgModule({
@@ -46,10 +45,8 @@ import { DatetimepickerComponent } from './datetimepicker/datetimepicker.compone
     HttpModule,
     NgxPaginationModule, 
     BrowserAnimationsModule, 
-    CalendarModule.forRoot(), 
-    NgbModule.forRoot(), 
-    ModalModule.forRoot(), 
-    //InMemoryWebApiModule.forRoot(InMemoryDataService),
+    NgbModule,
+    ModalModule.forRoot(),
     RouterModule.forRoot([
       {
         path: '',
@@ -71,23 +68,19 @@ import { DatetimepickerComponent } from './datetimepicker/datetimepicker.compone
       {
         path:'customerlog',
         component: CustomerlogComponent
-      }, 
-      {
-        path:'calendar',
-        component: CalendarComponent
       }
-    ])
+    ]), BusinesscenterModule
   ],
   declarations: [
     AppComponent,
     ProductsComponent,
     MenuComponent,
     CartComponent,
-    StoneweightComponent, 
-    CustomerlogComponent, 
-    ModalContentComponent, EmailmodalComponent, CalendarComponent, DatetimepickerComponent
+    StoneweightComponent,
+    CustomerlogComponent,
+    ModalContentComponent, EmailmodalComponent 
   ],
-  entryComponents:[ModalContentComponent, EmailmodalComponent], 
+  entryComponents:[ModalContentComponent, EmailmodalComponent],
   providers: [
     ProductService,
     ShopCartService, 

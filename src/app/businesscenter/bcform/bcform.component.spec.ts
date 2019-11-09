@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatetimepickerComponent } from './datetimepicker.component';
+import { BcformComponent } from './bcform.component';
 
-describe('DatetimepickerComponent', () => {
-  let component: DatetimepickerComponent;
-  let fixture: ComponentFixture<DatetimepickerComponent>;
+describe('BcformComponent', () => {
+  let component: BcformComponent;
+  let fixture: ComponentFixture<BcformComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DatetimepickerComponent ]
+      declarations: [ BcformComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DatetimepickerComponent);
+    fixture = TestBed.createComponent(BcformComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

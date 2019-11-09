@@ -1,19 +1,22 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
  
-import {customerlog} from "./customerlog"; 
+import {customerlog} from './customerlog';
 
-import {CustomerlogService} from './Services/customerlog.service'; 
+import {CustomerlogService} from './Services/customerlog.service';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
-import {EmailmodalComponent} from './emailmodal/emailmodal.component'; 
+import {EmailmodalComponent} from './emailmodal/emailmodal.component';
+
+
+
 
 
 @Component({
     moduleId: module.id,
-    templateUrl:'customerlog.component.html', 
+    templateUrl:'customerlog.component.html',
     styleUrls:['customerlog.component.css']
 })
 
@@ -26,7 +29,7 @@ export class CustomerlogComponent implements OnInit{
 
     emailModalRef: BsModalRef; 
     
-    constructor(public logservice: CustomerlogService,private modalService: BsModalService  ){
+    constructor(public logservice: CustomerlogService, private modalService: BsModalService  ){
 
     }
 
@@ -37,7 +40,7 @@ export class CustomerlogComponent implements OnInit{
 
     _search : string; 
 
-    get Search():string{
+    get Search(): string{
 
         return this._search; 
     
@@ -51,6 +54,7 @@ export class CustomerlogComponent implements OnInit{
     }
 
 
+    // tslint:disable-next-line:member-ordering
     _name : string; 
 
     get Name(): string {
@@ -60,7 +64,7 @@ export class CustomerlogComponent implements OnInit{
 
     set Name(value:string) {
         
-        this._name = value;        
+        this._name = value;
 
     }
 
@@ -144,7 +148,7 @@ export class CustomerlogComponent implements OnInit{
         this.emailModalRef = this.modalService.show(EmailmodalComponent, {initialState}); 
     }
 
-    public GetLogList() :void{
+    public GetLogList() : void{
 
         document.getElementById('loader').style.display = 'block';
         
