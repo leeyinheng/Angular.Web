@@ -1,5 +1,6 @@
-<div class="loader" id="loader"></div>
-
+<button type="button" class="btn btn-primary" onclick="location.href='#/bcform';">新增</button>
+<p></p>
+<ng-template #popTemplate> <div [innerHtml]="pophtml"></div></ng-template>
 <table class="table table-bordered table-striped">
     <tr>
         <th>
@@ -9,30 +10,46 @@
             名稱
         </th>
         <th>
-            電話
+            網站
         </th>
         <th>
             地址
         </th>
+      
         <th>
-            備註 (後續追蹤)
-        </th>
-        <th>
-            時間
+            
         </th>
     </tr>
     
        
         <tbody> 
-            <tr *ngFor = 'let item of List '>
-                
-                <td>{{ item.Id}}</td>
-                <td>{{ item.Name}}</td>
-                <td>{{ item.Phone}}</td>
+            <tr *ngFor = 'let item of List ' [tooltip]="popTemplate" (mouseover)='popup(item)'>
+                <td>
+                    {{item.Id}}
+                </td>
+                <td>{{ item.Name}}
+                      
+                </td>
+                <td> <a href= 'https://{{item.WebSite}}' target="_blank"> {{item.WebSite}} </a></td>
                 <td>{{ item.Address}}</td>
+                <td>
+                        <button type="button" class="btn btn-info" (click) = openform(item.Id)>編輯</button>    |
+                        <button type="button" class="btn btn-danger" (click) = delete(item.Id)>刪除</button>
+                </td>
                 
                 
             </tr>
         </tbody>
        
 </table>
+
+
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>

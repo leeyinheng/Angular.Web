@@ -5,7 +5,10 @@ export class BusinessCenter {
     BusinessHours:  BusinessHour[];
     Phone: string;
     Email: string;
+    WebSite: string;
     Address: string;
+    MinPrice: Number;
+    MaxPrice: Number;
     Coordinates: string;
     RecordTime: string;
     Comment: string;

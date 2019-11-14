@@ -35,6 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
  
 import { BusinesscenterModule } from './businesscenter/businesscenter.module';
+import {ArticleModule} from './article/article.module';
 
 
 @NgModule({
@@ -69,7 +70,9 @@ import { BusinesscenterModule } from './businesscenter/businesscenter.module';
         path:'customerlog',
         component: CustomerlogComponent
       }
-    ]), BusinesscenterModule
+    ]),
+    BusinesscenterModule,
+    ArticleModule
   ],
   declarations: [
     AppComponent,

@@ -1,0 +1,101 @@
+<div class="nav navbar-nav navbar-right">
+        <button type="button" class="btn btn-primary" (click)="SaveEntity()">儲存</button> | 
+        <button type="button" class="btn btn-default" onclick="location.href='#/bccenter';">返回</button>   
+        <p></p>    
+</div>
+
+<div class="body-content">
+
+        <table class="table table-bordered table-striped">
+                <tbody>
+            
+                    <tr>
+                        <td>
+                            ID:
+                        </td>
+                        <TD>
+                                {{Entity.Id}}
+                        </TD>
+                    </tr>
+                    <tr>
+                        <td>
+                               標題:
+                        </td>
+                        <td>
+                                <input [(ngModel)]="Entity.Title" #ctrl="ngModel" required name="title"  #fullName="ngModel" required> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            備註:
+                        </td>
+                        <td>
+                               
+                                <textarea class="form-control" 
+                                name="comment"
+                                rows="2"
+                                [(ngModel)]="Entity.Comment"
+                                #message='ngModel'
+                                ></textarea>
+                        </td>
+                    </tr>
+                                     
+               
+                    <tr>
+                        <td colspan="2">
+                            文章圖片上傳:
+                        
+                                <div class="center">
+                                        <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" 
+                                        (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+                                            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                                              拖曳或是選擇要上傳的圖片
+                                              <button type="button" (click)="openFileSelector()">Browse Files</button>
+                                            </ng-template>
+                                        </ngx-file-drop>
+                                       
+                                </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                                <ul *ngFor="let i of Entity.Pages; let x = index" class="list-group">
+                                    <li class="list-group-item">
+                                        <img [src]="i.Image_Url"   class="img-thumbnail" > <p></p>
+                                        名稱:<input [(ngModel)]="i.Name" #ctrl="ngModel"  name="imagename" class="form-control"/> <p></p>
+                                        備註: <input [(ngModel)]="i.Comment" #ctrl="ngModel"  name="imageComment" type="text"  class="form-control"/><p></p>
+                                        <button type="button" class="btn btn-danger btn-xs" (click) ="RemoveImage(x)">刪除圖片</button>
+                                    </li>
+                                </ul>
+                        </td>
+                    </tr>    
+                </tbody>   
+        </table>
+            
+
+
+
+</div>
+
+    
+    
+  
+     <hr>
+    <div class="nav navbar-nav navbar-right">
+            <button type="button" class="btn btn-primary" (click)="SaveEntity()">儲存</button> | 
+            <button type="button" class="btn btn-default" onclick="location.href='#/bccenter';">返回</button>       
+    </div>
+
+   
+
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>
+
+ 

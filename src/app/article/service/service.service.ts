@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {BusinessCenter} from '../model/BusinessCenter';
+import {Article} from '../model/articlemodel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BcserviceService {
+export class ArticleService {
 
   private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
-  private url = 'api/businesscenterapi/';
+  private url = 'api/articleapi/';
 
   private postImgurl = 'api/UploadFileapi/';
 
@@ -29,24 +29,24 @@ export class BcserviceService {
 
     const url  = this.site + this.url;
 
-    return this.http.get<BusinessCenter[]>(url);
+    return this.http.get<Article[]>(url);
   }
 
   public getEntityById(id: string) {
 
     const url  = this.site + this.url + id;
 
-    return this.http.get<BusinessCenter>(url);
+    return this.http.get<Article>(url);
   }
 
-  public postEntity(entity: BusinessCenter) {
+  public postEntity(entity: Article) {
 
     const url = this.site + this.url;
 
     return this.http.post(url, entity);
   }
 
- public putEntity( entity: BusinessCenter) {
+ public putEntity( entity: Article) {
 
   const url = this.site + this.url + entity.Id;
 
@@ -79,7 +79,7 @@ export class BcserviceService {
 
      // Headers
      const headers = new HttpHeaders ({
-      ContentType: 'multipart/form-data'  
+      ContentType: 'multipart/form-data'
     });
 
 

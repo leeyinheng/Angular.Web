@@ -1,0 +1,26 @@
+<form>
+  <div class="form-group">
+      <div>
+          <label>選擇文章: </label>
+          <select (change)="filterForArticles($event.target.value)" class="form-control">
+            <option value="-1">--選擇--</option>
+            <option *ngFor="let item of List; let i = index" value={{i}}>
+              {{item.Title}}
+            </option>
+          </select>
+        </div>
+        <br>
+       
+        <carousel  interval="0">
+                <slide *ngFor="let item of Entity.Pages">
+                  <img [src]="item.Image_Url" alt="Pages" style="display: block; width: 100%;">
+                  <div class="carousel-caption d-none d-md-block">
+                    <h3>{{item.Name}}</h3>
+                    <p>{{item.Comment}}</p>
+                  </div>
+                </slide> 
+        </carousel>
+        
+
+  </div>
+</form>

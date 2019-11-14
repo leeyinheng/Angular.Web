@@ -44,8 +44,8 @@ export class BcformComponent implements OnInit {
   center: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
     mapTypeId: 'roadmap',
-    zoomControl: false,
-    scrollwheel: true,
+    zoomControl: true,
+    scrollwheel: false,
     disableDoubleClickZoom: false,
     maxZoom: 15,
     minZoom: 8,
@@ -83,18 +83,16 @@ export class BcformComponent implements OnInit {
       );
     }
 
-
-    navigator.geolocation.getCurrentPosition(position => {
-      this.center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
-    });
-
-
-
-    
-
+    if (isNullOrUndefined(this.Entity.Coordinates) !== true) {
+      this.addMarker();
+    } else {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+      });
+    }
   }
 
   /**
@@ -116,14 +114,26 @@ export class BcformComponent implements OnInit {
 
  public  SaveEntity() {
 
+    if (isNullOrUndefined(this.Entity.Name) || this.Entity.Name === '') {
+       alert('請輸入名稱欄位');
+       return;
+     }
+
       this.spinner.show();
 
      this.bcservice.postEntity(this.Entity).subscribe(
       res => {
          alert('儲存完畢');
-         this.addMarker();
+
+        // if (isNullOrUndefined(this.Entity.Coordinates) !== true) {
+        //  this.addMarker();
+        // }
+
          this.spinner.hide();
-      },
+
+         window.open('#/bccenter');
+
+     },
       err => {
         alert(err);
         this.spinner.hide();
@@ -157,7 +167,7 @@ export class BcformComponent implements OnInit {
               const newImage = new BusinessCenterImage();
               newImage.Name = 'Image';
               newImage.Image_Url = val;
-              if (this.Entity.Images === undefined) {
+              if (isNullOrUndefined(this.Entity.Images)) {
                  const images: BusinessCenterImage[] = [];
                  images.push(newImage);
                  this.Entity.Images = images;
@@ -246,6 +256,11 @@ addMarker() {
       animation: google.maps.Animation.DROP
     }
   });
+
+  this.center = {
+    lat: Number(coord[0]),
+    lng: Number(coord[1]),
+  };
 
 }
 

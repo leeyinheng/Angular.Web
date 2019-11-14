@@ -15,7 +15,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BusinesshourmodalComponent } from './businesshourmodal/businesshourmodal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { GoogleMapsModule } from '@angular/google-maps'
+import { GoogleMapsModule } from '@angular/google-maps';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { GoogleMapsModule } from '@angular/google-maps'
     MatInputModule,
     NgbModule,
     GoogleMapsModule,
+    TooltipModule.forRoot(),
     RouterModule.forChild([
       {
         path: 'bccenter', component: BclistComponent
