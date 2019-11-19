@@ -5,12 +5,12 @@
           <select (change)="filterForArticles($event.target.value)" class="form-control">
             <option value="-1">--選擇--</option>
             <option *ngFor="let item of List; let i = index" value={{i}}>
-              {{item.Title}}
+              {{item.Title}} | {{item.Comment}}
             </option>
           </select>
         </div>
         <br>
-       
+        
         <carousel  interval="0">
                 <slide *ngFor="let item of Entity.Pages">
                   <img [src]="item.Image_Url" alt="Pages" style="display: block; width: 100%;">
@@ -24,3 +24,8 @@
 
   </div>
 </form>
+
+<div>
+  推廣網頁QR
+  <a href='https://leecloud.blob.core.windows.net/image/qr.jpg' download="TeaQR.jpg"><img src='https://leecloud.blob.core.windows.net/image/qr.jpg' width=20% height=20% /></a>
+</div>

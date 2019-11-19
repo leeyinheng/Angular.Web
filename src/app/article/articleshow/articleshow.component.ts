@@ -46,29 +46,11 @@ export class ArticleshowComponent implements OnInit {
   constructor(private service: ArticleService, private spinner: NgxSpinnerService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-
-    this.spinner.show();
-
-    const ID: string = this.route.snapshot.paramMap.get('id');
-
-
-    if (isNullOrUndefined(ID)) {
-      this.GetList();
-      this.spinner.hide();
-    } else {
-      this.service.getEntityById(ID).subscribe(val => {
-        this.Entity = val;
-        this.spinner.hide();
-      },
-      err => {
-        alert('Not Found');
-        this.spinner.hide();
-      }
-      );
-    }
+    this.GetList();
   }
 
  public GetList() {
+  this.spinner.show();
 
   this.service.getList().subscribe(val => {
     this.List = val;

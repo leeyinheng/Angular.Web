@@ -1,6 +1,6 @@
 <div class="nav navbar-nav navbar-right">
         <button type="button" class="btn btn-primary" (click)="SaveEntity()">儲存</button> | 
-        <button type="button" class="btn btn-default" onclick="location.href='#/bccenter';">返回</button>   
+        <button type="button" class="btn btn-default" onclick="location.href='#/articlelist';">返回</button>   
         <p></p>    
 </div>
 
@@ -22,7 +22,7 @@
                                標題:
                         </td>
                         <td>
-                                <input [(ngModel)]="Entity.Title" #ctrl="ngModel" required name="title"  #fullName="ngModel" required> 
+                                <input [(ngModel)]="Entity.Title" #ctrl="ngModel" required name="title"  #fullName="ngModel"  class="form-control"  required> 
                         </td>
                     </tr>
                     <tr>
@@ -83,7 +83,7 @@
      <hr>
     <div class="nav navbar-nav navbar-right">
             <button type="button" class="btn btn-primary" (click)="SaveEntity()">儲存</button> | 
-            <button type="button" class="btn btn-default" onclick="location.href='#/bccenter';">返回</button>       
+            <button type="button" class="btn btn-default" onclick="location.href='#/articlelist';">返回</button>       
     </div>
 
    

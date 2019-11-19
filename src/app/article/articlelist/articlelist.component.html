@@ -1,1 +1,55 @@
-<p>articlelist works!</p>
+<button type="button" class="btn btn-primary" onclick="location.href='#/articleform';">新增文章</button>
+
+<div class="nav navbar-nav navbar-right">
+    <button type="button" class="btn btn-secondary" onclick="location.href='#/articleshow';">回到展示介面</button>
+</div>
+<p></p>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            文章標題
+        </th>
+        <th>
+            備註
+        </th>    
+        <th>
+            
+        </th>
+    </tr>
+    
+       
+        <tbody> 
+            <tr *ngFor = 'let item of List ' >
+                <td>
+                    {{item.Id}}
+                </td>
+                <td>{{ item.Title}}
+                      
+                </td>
+                <td>{{ item.Comment }}</td>
+              
+                <td>
+                        <button type="button" class="btn btn-info" (click) = openform(item.Id)>編輯文章</button>    |
+                        <button type="button" class="btn btn-danger" (click) = delete(item.Id)>刪除文章</button>
+                </td>
+                
+                
+            </tr>
+        </tbody>
+       
+</table>
+
+
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>
