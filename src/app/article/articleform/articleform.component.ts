@@ -116,6 +116,12 @@ public dropped(files: NgxFileDropEntry[]) {
         // Here you can access the real file
         console.log(droppedFile.relativePath, file);
 
+        if (file.size > 4194304)
+        {
+          alert(file.name + ' 已經大於4mb,請縮小後再上傳'); 
+          return;
+        }
+
         // You could upload it like this:
         const formData = new FormData();
         formData.append(file.name, file, droppedFile.relativePath);
@@ -147,6 +153,21 @@ public dropped(files: NgxFileDropEntry[]) {
       const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
       console.log(droppedFile.relativePath, fileEntry);
     }
+  }
+}
+
+public autopage(){
+ 
+  if (isNullOrUndefined(this.Entity.Pages.length) !== true)
+  {
+    const totalpages = this.Entity.Pages.length;
+
+    let i : number = 0;
+
+    this.Entity.Pages.forEach(p=> {
+      i++;
+      p.Name = i + '/' + totalpages;  
+    });
   }
 }
 

@@ -49,12 +49,19 @@
                                         <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" 
                                         (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
                                             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                                              拖曳或是選擇要上傳的圖片
+                                              拖曳或是選擇要上傳的圖片(必須小於4mb)
                                               <button type="button" (click)="openFileSelector()">Browse Files</button>
                                             </ng-template>
                                         </ngx-file-drop>
                                        
                                 </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="Entity.Pages !== null && Entity.Pages !== undefined">
+                        <td colspan="2">
+                            <div>
+                                    <button type="button" class="btn btn-xs btn-primary" (click)="autopage()">自動命名文章</button>
+                            </div>
                         </td>
                     </tr>
                     <tr>
