@@ -17,6 +17,7 @@ import { BusinesshourmodalComponent } from './businesshourmodal/businesshourmoda
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { BcshowComponent } from './bcshow/bcshow.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
       }
     ])
   ],
-  declarations: [BclistComponent, BcformComponent, BcformmodalComponent, BusinesshourmodalComponent],
+  declarations: [BclistComponent, BcformComponent, BcformmodalComponent, BusinesshourmodalComponent, BcshowComponent],
   entryComponents: [BcformmodalComponent, BusinesshourmodalComponent]
 
 })
