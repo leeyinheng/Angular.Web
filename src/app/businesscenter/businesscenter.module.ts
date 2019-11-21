@@ -18,6 +18,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BcshowComponent } from './bcshow/bcshow.component';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { BcshowComponent } from './bcshow/bcshow.component';
     MatInputModule,
     NgbModule,
     GoogleMapsModule,
+    CarouselModule.forRoot(),
     TooltipModule.forRoot(),
     RouterModule.forChild([
       {
@@ -48,6 +50,9 @@ import { BcshowComponent } from './bcshow/bcshow.component';
       },
       {
         path: 'bcform/:id', component: BcformComponent
+      },
+      {
+        path: 'bcshow/:id', component: BcshowComponent
       }
     ])
   ],
