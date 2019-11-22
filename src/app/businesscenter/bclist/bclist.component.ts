@@ -56,6 +56,10 @@ export class BclistComponent implements OnInit {
     window.open('#/bcform/' + Id, '_self');
   }
 
+  public showform(Id: string) {
+    window.open('#/bcshow/' + Id, '_self');
+  }
+
   public delete(Id: string) {
 
     if (confirm('確定刪除 ID: ' + Id + '?')) {

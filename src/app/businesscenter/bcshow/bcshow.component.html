@@ -16,7 +16,7 @@
                 <tr>
                     <td colspan="2">
                            
-                        <carousel  interval="0">
+                        <carousel>
                                 <slide *ngFor="let item of Entity.Images">
                                 <img [src]="item.Image_Url" alt="Image" style="display: block; width: 100%;">
                                 <div class="carousel-caption d-none d-md-block">
@@ -43,7 +43,7 @@
                             商務中心名稱:
                     </td>
                     <td>
-                            {{Entity.Name}} 
+                        <b><h1 class="h4">{{Entity.Name}} </h1></b>
                     </td>
                 </tr>
                 <tr>

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {BusinessCenter, BusinessCenterImage} from '../model/BusinessCenter';
 import {BcserviceService} from '../service/bcservice.service';
-import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';

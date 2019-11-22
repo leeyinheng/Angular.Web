@@ -38,6 +38,7 @@
                 <td> <a href= 'https://{{item.WebSite}}' target="_blank"> {{item.WebSite}} </a></td>
                 <td>{{ item.Address}}</td>
                 <td>
+                        <button type="button" class="btn btn-primary" (click) = showform(item.Id)>展示</button>    |
                         <button type="button" class="btn btn-info" (click) = openform(item.Id)>編輯</button>    |
                         <button type="button" class="btn btn-danger" (click) = delete(item.Id)>刪除</button>
                 </td>

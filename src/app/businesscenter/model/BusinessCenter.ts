@@ -47,3 +47,13 @@ export class BusinessHour {
     StartTime: string;
     EndTime: string;
 }
+
+export class Request {
+    Type: string;
+    HowLong: string;
+    HowManyPeople: string;
+    Comment: string;
+    Name: string;
+    Phone: string;
+    Email: string;
+}
