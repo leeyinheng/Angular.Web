@@ -20,8 +20,8 @@ import {CustomerlogService} from './Services/customerlog.service';
 //Components
 import { AppComponent }         from './app.component';
 import { ProductsComponent }    from './products.component';
-import { MenuComponent }        from './menu.component';
-import { CartComponent }        from './cart.component';
+import { MenuComponent } from './menu.component';
+import { CartComponent } from './cart.component';
 import {StoneweightComponent} from './stoneweight.component'; 
 import {CustomerlogComponent} from './customerlog.component'; 
 import {ModalContentComponent} from './customerlog.component';  
@@ -36,16 +36,17 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
  
 import { BusinesscenterModule } from './businesscenter/businesscenter.module';
 import {ArticleModule} from './article/article.module';
+import {ClientinventoryModule} from './clientinventory/clientinventory.module';
 
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule, 
+    HttpClientModule,
     HttpModule,
-    NgxPaginationModule, 
-    BrowserAnimationsModule, 
+    NgxPaginationModule,
+    BrowserAnimationsModule,
     NgbModule,
     ModalModule.forRoot(),
     RouterModule.forRoot([
@@ -59,20 +60,21 @@ import {ArticleModule} from './article/article.module';
         component: ProductsComponent
       },
       {
-        path:'cart', 
+        path: 'cart',
         component: CartComponent
       },
       {
-        path:'stoneweight',
+        path: 'stoneweight',
         component: StoneweightComponent
-      }, 
+      },
       {
-        path:'customerlog',
+        path: 'customerlog',
         component: CustomerlogComponent
       }
     ]),
     BusinesscenterModule,
-    ArticleModule
+    ArticleModule,
+    ClientinventoryModule
   ],
   declarations: [
     AppComponent,
@@ -81,16 +83,17 @@ import {ArticleModule} from './article/article.module';
     CartComponent,
     StoneweightComponent,
     CustomerlogComponent,
-    ModalContentComponent, EmailmodalComponent 
+    ModalContentComponent,
+    EmailmodalComponent
   ],
-  entryComponents:[ModalContentComponent, EmailmodalComponent],
+  entryComponents: [ModalContentComponent, EmailmodalComponent],
   providers: [
     ProductService,
-    ShopCartService, 
-    EmailService, 
-    ListEmailService, 
-    CustomerlogService, 
-    BsModalService, 
+    ShopCartService,
+    EmailService,
+    ListEmailService,
+    CustomerlogService,
+    BsModalService,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]

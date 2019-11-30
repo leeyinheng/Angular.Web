@@ -49,6 +49,7 @@ export class BusinessHour {
 }
 
 export class Request {
+    RequestOffice: string;
     Type: string;
     HowLong: string;
     HowManyPeople: string;

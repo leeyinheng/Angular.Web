@@ -1,0 +1,48 @@
+ 
+<div>
+        <span> <img src='../assets/Photos/tealogo.jpg' width=20% height=20% /></span>
+        <p></p>
+</div>
+
+<h1>上傳普洱茶倉儲Excel檔案(.xlsx):</h1>
+
+<div class="body-content">
+        <div class="center">
+                <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" accept=".xlsx"
+                (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                      拖曳或是選擇要上傳的Excel檔案(請確定格式正確)
+                      <button type="button" (click)="openFileSelector()">Browse Files</button>
+                    </ng-template>
+                    
+                </ngx-file-drop>
+               
+        </div>
+</div>
+<hr>
+<h1>上傳普洱茶倉儲溫度紀錄照片(.jpg):</h1>
+<div class="body-content">
+        <div class="center">
+                <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" accept=".xlsx"
+                (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                      拖曳或是選擇要上傳的照片(請勿超過4MB)
+                      <button type="button" (click)="openFileSelector()">Browse Files</button>
+                    </ng-template>
+                    
+                </ngx-file-drop>
+               
+        </div>
+</div>
+                        
+
+
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>

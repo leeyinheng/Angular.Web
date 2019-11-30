@@ -19,6 +19,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BcshowComponent } from './bcshow/bcshow.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { RequestmodalComponent } from './requestmodal/requestmodal.component';
 
 @NgModule({
   imports: [
@@ -56,7 +57,8 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
       }
     ])
   ],
-  declarations: [BclistComponent, BcformComponent, BcformmodalComponent, BusinesshourmodalComponent, BcshowComponent],
+  declarations: [BclistComponent, BcformComponent, BcformmodalComponent, BusinesshourmodalComponent,
+    BcshowComponent, RequestmodalComponent],
   entryComponents: [BcformmodalComponent, BusinesshourmodalComponent]
 
 })

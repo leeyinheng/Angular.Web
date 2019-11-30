@@ -10,7 +10,7 @@
 </div>
 <p></p>
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped table-hover">
     <tr>
         <th>
             ID
@@ -39,7 +39,8 @@
               
                 <td>
                         <button type="button" class="btn btn-info" (click) = openform(item.Id)>編輯文章</button>    |
-                        <button type="button" class="btn btn-danger" (click) = delete(item.Id)>刪除文章</button>
+                        <button type="button" class="btn btn-danger" (click) = delete(item.Id)>刪除文章</button>    |
+                        <button type="button" class="btn btn-dark" (click) = showarticle(item.Id)>展示文章</button>
                 </td>
                 
                 

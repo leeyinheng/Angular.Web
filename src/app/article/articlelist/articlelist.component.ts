@@ -51,6 +51,10 @@ export class ArticlelistComponent implements OnInit {
     window.open('#/articleform/' + Id, '_self');
   }
 
+  public showarticle(Id: string) {
+    window.open('#/articleshow/' + Id, '_blank');
+  }
+
 
 
   public delete(Id: string) {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {BusinessCenter} from '../model/BusinessCenter';
+import {BusinessCenter, Request} from '../model/BusinessCenter';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +63,16 @@ export class BcserviceService {
     }
   );
 
- }
+  }
+
+  public PostRequest(req: Request) {
+     
+
+  }
+
+
+
+ 
 
 
  public deleteEntity( id: string) {
@@ -79,7 +88,7 @@ export class BcserviceService {
 
      // Headers
      const headers = new HttpHeaders ({
-      ContentType: 'multipart/form-data'  
+      ContentType: 'multipart/form-data'
     });
 
 

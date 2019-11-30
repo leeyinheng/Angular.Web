@@ -46,7 +46,25 @@ export class ArticleshowComponent implements OnInit {
   constructor(private service: ArticleService, private spinner: NgxSpinnerService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    const ID: string = this.route.snapshot.paramMap.get('id');
+
     this.GetList();
+
+    if (isNullOrUndefined(ID)) {
+      this.spinner.hide();
+    } else {
+      this.service.getEntityById(ID).subscribe(val => {
+        this.Entity = val;
+        this.spinner.hide();
+      },
+      err => {
+        alert('Not Found');
+        this.spinner.hide();
+      }
+      );
+    }
+
   }
 
  public GetList() {
@@ -54,7 +72,7 @@ export class ArticleshowComponent implements OnInit {
 
   this.service.getList().subscribe(val => {
     this.List = val;
-    this.spinner.hide();
+   // this.spinner.hide();
   },
   err => {
     alert('Not Found');
@@ -64,7 +82,7 @@ export class ArticleshowComponent implements OnInit {
   }
 
   filterForArticles(filterVal: string) {
-    
+
     if (filterVal === '-1') {
 
     } else {
