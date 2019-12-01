@@ -1,0 +1,98 @@
+<span> <img src='../assets/Photos/tealogo.jpg' width=20% height=20% /></span>
+<form>
+  <div class="form-group">
+        <table class="table table-bordered table-striped">
+                <tbody>
+  
+                    <tr>
+                        <td>
+                            客戶編號:
+                        </td>
+                        <TD>
+                                {{Entity.ClientId}}
+                        </TD>
+                    </tr>
+                    <tr>
+                        <td>
+                               客戶名稱:
+                        </td>
+                        <td>
+                            <b><h1 class="h4">{{Entity.ClientName}} </h1></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            地址:
+                        </td>
+                        <td>
+                                {{Entity.Address}} 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            電話:
+                        </td>
+                        <td>
+                            {{Entity.Phone}}
+                        </td>
+                </tbody>   
+        </table>
+
+        <table class="table table-bordered table-striped table-hover">
+                <tr>
+                    <th>
+                       產品編號
+                    </th>
+                    <th>
+                        產品名稱
+                    </th>
+                    <th>
+                        庫存
+                    </th>    
+                    <th>
+                        單位
+                    </th>
+                </tr>
+                
+                   
+                    <tbody> 
+                        <tr *ngFor = 'let item of Entity.Inventories' >
+                            <td>
+                                {{item.ProductId}}
+                            </td>
+                            <td>
+                                {{ item.ProductName}}  
+                            </td>
+                            <td>{{ item.Stock }}</td>
+                          
+                            <td>
+                                {{ item.Unit }}  
+                            </td>
+                        </tr>
+                    </tbody>
+                   
+            </table>
+            
+        <h2>近六月溫度資料</h2>
+        <carousel  interval="0">
+                <slide *ngFor="let item of images">
+                  <img [src]="item.ImageUrl" alt="Pages" style="display: block; width: 100%;">
+                  <div class="carousel-caption d-none d-md-block">
+                  </div>
+                </slide> 
+        </carousel>
+        
+
+  </div>
+</form>
+
+ 
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>
