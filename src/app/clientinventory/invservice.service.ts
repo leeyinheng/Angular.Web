@@ -4,6 +4,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {ProjectImages , ClientInventory, Inventory} from './model/projectinventory';
 
+import { isNullOrUndefined } from 'util';
+
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +31,32 @@ export class InvserviceService {
   private getListUrl = 'api/ClientInventoryApi/';
 
 
+  _list: ClientInventory[] = [];
+
+  get list(): ClientInventory[] {
+
+      return this._list;
+
+  }
+
+  set list( value: ClientInventory[]) {
+
+      this._list = value;
+
+  }
+
+
+  private messageSource = new BehaviorSubject<ClientInventory[]>(this.list);
+
+  currentMessage = this.messageSource.asObservable();
+
   constructor(
     private http: HttpClient
   ) { }
+
+  changeMessage(message: ClientInventory[]) {
+    this.messageSource.next(message);
+  }
 
    public postFile(file: FormData) {
 
@@ -74,16 +100,19 @@ export class InvserviceService {
 
 public getEntityById(id: string) {
 
-  const url  = this.site + this.getEntityUrl + id;
+    const url  = this.site + this.getEntityUrl + id;
 
-  return this.http.get<ClientInventory>(url);
+    return this.http.get<ClientInventory>(url);
+
 }
+
 
 public getList() {
 
-  const url  = this.site + this.getEntityUrl;
+  const url  = this.site + this.getListUrl;
 
   return this.http.get<ClientInventory[]>(url);
+
 }
 
 public getImages() {

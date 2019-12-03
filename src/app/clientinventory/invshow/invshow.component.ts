@@ -43,17 +43,24 @@ export class InvshowComponent implements OnInit {
   }
 
   public GetEntity(ID: string) {
+
     this.spinner.show();
 
-    this.service.getEntityById(ID).subscribe(val => {
-      this.Entity = val;
-      this.spinner.hide();
-    },
-    err => {
-      alert('Not Found');
-      this.spinner.hide();
-    });
-
+     this.service.currentMessage.subscribe( val => {
+       if ( val.length === 0) {
+            this.service.getEntityById(ID).subscribe(value => {
+            this.Entity = value;
+            this.spinner.hide();
+            },
+            err => {
+              alert('無此客戶或發生錯誤');
+              this.spinner.hide();
+            });
+       } else {
+        this.Entity =  val.find(x => x.ClientId === ID);
+        this.spinner.hide();
+       }
+     });
     }
 
     public GetProjectImages() {

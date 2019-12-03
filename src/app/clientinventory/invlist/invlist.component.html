@@ -1,0 +1,63 @@
+<div>
+        <span> <img src='../assets/Photos/tealogo.jpg' width=20% height=20% /></span>
+        <p></p>
+    </div>
+    
+    <h1>所有客戶庫存表</h1>   
+
+    <div class="form form-row">
+        <label>搜尋:</label>
+        <input type="string" placeholder="編號或名稱" class="form form-control"
+        [(ngModel)]='Search'
+        style="width: 8em;"
+        /> 
+    </div>
+    <p></p>
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>
+                客戶編號
+            </th>
+            <th>
+                客戶名稱
+            </th>
+            <th>
+                地址
+            </th>    
+            <th>
+                電話
+            </th>
+        </tr>
+        
+           
+            <tbody> 
+                <tr *ngFor = 'let item of list' >
+                    <td>
+                        {{item.ClientId}}
+                    </td>
+                    <td>{{ item.ClientName}}
+                          
+                    </td>
+                    <td>{{ item.Address}}</td>
+                    <td>
+                        {{item.Phone}}
+                    </td>
+                  
+                    <td>
+                        <button type="button" class="btn btn-dark" (click) = showEntity(item.ClientId)>展示庫藏內容</button>
+                    </td>
+                </tr>
+            </tbody>
+           
+    </table>
+    
+    
+    
+    <ngx-spinner
+      bdColor="rgba(51,51,51,0.8)"
+      size="medium"
+      color="#fff"
+      type="ball-scale-multiple"
+    >
+      <p style="font-size: 20px; color: white">處理中...</p>
+    </ngx-spinner>

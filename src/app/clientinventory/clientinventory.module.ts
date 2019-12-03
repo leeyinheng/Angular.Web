@@ -10,10 +10,13 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { InvshowComponent } from './invshow/invshow.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { InvlistComponent } from './invlist/invlist.component';
+
+
 
 
 @NgModule({
-  declarations: [InvuploadComponent, InvshowComponent],
+  declarations: [InvuploadComponent, InvshowComponent, InvlistComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -29,8 +32,12 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
       },
       {
         path: 'clientinv/:id', component: InvshowComponent
+      },
+      {
+        path: 'clientlist', component: InvlistComponent
       }
     ])
-  ]
+  ],
+  providers: []
 })
 export class ClientinventoryModule { }

@@ -16,6 +16,8 @@ import { ShopCartService }    from './Services/shop-cart.service';
 import { EmailService }    from './Services/emailservice';
 import {ListEmailService} from './Services/list-email.service'; 
 import {CustomerlogService} from './Services/customerlog.service'; 
+import {InvserviceService} from './clientinventory/invservice.service';
+
 
 //Components
 import { AppComponent }         from './app.component';
@@ -94,6 +96,7 @@ import {ClientinventoryModule} from './clientinventory/clientinventory.module';
     ListEmailService,
     CustomerlogService,
     BsModalService,
+    InvserviceService,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
