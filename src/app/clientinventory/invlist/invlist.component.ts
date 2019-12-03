@@ -73,16 +73,20 @@ export class InvlistComponent implements OnInit {
     }
 
   public showEntity(id: string) {
-      // const cryptstring: string = this.cryptservice.GetTeaProjectManagerKey(id);
-      const cryptstring = this.cryptservice.GetStaticManagerKey();
-       window.open('#/clientinv/' + id + '?key=' + cryptstring , '_self');
+       
+      const cryptId = this.cryptservice.encrypt(id + '|' + 'manager');
+      this.sendEncodeUrl(cryptId);
   }
 
   public showUserEntity(id: string){
-    //const cryptstring: string = this.cryptservice.GetTeaProejctUserKey(id);
-    const cryptstring = this.cryptservice.GetStaticUserKey();
-    window.open('#/clientinv/' + id + '?key=' + cryptstring + '&eqr=zdsr3342123sazxfasfsda3DSdkfdkjf2334tx' + Date.UTC.toString() , '_self');
+     
+    const cryptId = this.cryptservice.encrypt(id + '|' + 'user');
+    this.sendEncodeUrl(cryptId);
   }
 
+  private sendEncodeUrl(url: string){
+    const encodeurl = encodeURI(url);
+    window.open('#/clientinv/888?key=' + encodeurl  , '_self');
+  }
 
 }

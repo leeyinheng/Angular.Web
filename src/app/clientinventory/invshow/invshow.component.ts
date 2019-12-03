@@ -66,16 +66,13 @@ export class InvshowComponent implements OnInit {
 
   ngOnInit() {
 
-    const ID: string = this.route.snapshot.paramMap.get('id');
+    const EncryptID: string = decodeURI(this.route.snapshot.queryParamMap.get('key'));
 
-    const Key: string = this.route.snapshot.queryParamMap.get("key").trim();
+    const IDstring = this.cryptservice.decrypt(EncryptID);
 
-    if(isNullOrUndefined(Key)){
-      alert('無權限閱讀 請洽詢管理員');
-      return;
-    }
-
-    const role = this.cryptservice.IdentifyTeaProejctLogIn(Key);
+    const ID = IDstring.split('|')[0];
+    
+    const role = IDstring.split('|')[1];
 
     switch (role){
       case 'manager' : {
@@ -86,7 +83,7 @@ export class InvshowComponent implements OnInit {
         this.IsManager = false;
         break;
       }
-      case 'not allow' : {
+      default : {
         alert ('無權限進入');
         return;
       }
