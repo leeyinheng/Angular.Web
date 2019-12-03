@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import {InvserviceService} from '../invservice.service';
 import {Inventory, ClientInventory, ProjectImages} from '../model/projectinventory';
-import { CDK_ROW_TEMPLATE } from '@angular/cdk/table';
+import {CryptserviceService} from '../services/cryptservice.service';
 
 @Component({
   selector: 'app-invlist',
@@ -15,7 +15,7 @@ export class InvlistComponent implements OnInit {
 
   list: ClientInventory[];
 
-  _search: string;
+   _search: string;
 
     get Search(): string {
 
@@ -30,7 +30,7 @@ export class InvlistComponent implements OnInit {
 
  templist: ClientInventory[];
 
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute, private service: InvserviceService) { }
+  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute, private service: InvserviceService, private cryptservice : CryptserviceService) { }
 
   ngOnInit() {
 
@@ -65,6 +65,7 @@ export class InvlistComponent implements OnInit {
         });
       } else {
         this.list = val;
+        this.templist = this.list;
        this.spinner.hide();
       }
     });
@@ -72,7 +73,15 @@ export class InvlistComponent implements OnInit {
     }
 
   public showEntity(id: string) {
-       window.open('#/clientinv/' + id, '_self');
+      // const cryptstring: string = this.cryptservice.GetTeaProjectManagerKey(id);
+      const cryptstring = this.cryptservice.GetStaticManagerKey();
+       window.open('#/clientinv/' + id + '?key=' + cryptstring , '_self');
+  }
+
+  public showUserEntity(id: string){
+    //const cryptstring: string = this.cryptservice.GetTeaProejctUserKey(id);
+    const cryptstring = this.cryptservice.GetStaticUserKey();
+    window.open('#/clientinv/' + id + '?key=' + cryptstring + '&eqr=zdsr3342123sazxfasfsda3DSdkfdkjf2334tx' + Date.UTC.toString() , '_self');
   }
 
 

@@ -11,6 +11,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { InvshowComponent } from './invshow/invshow.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { InvlistComponent } from './invlist/invlist.component';
+import { CryptserviceService} from './services/cryptservice.service';
+
 
 
 

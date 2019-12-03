@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import {InvserviceService} from '../invservice.service';
 import {Inventory, ClientInventory, ProjectImages} from '../model/projectinventory';
+import {CryptserviceService} from '../services/cryptservice.service';
 
 
 @Component({
@@ -12,6 +13,8 @@ import {Inventory, ClientInventory, ProjectImages} from '../model/projectinvento
   styleUrls: ['./invshow.component.css']
 })
 export class InvshowComponent implements OnInit {
+
+  public IsManager: boolean = false;
 
   _entity: ClientInventory = new ClientInventory();
 
@@ -28,13 +31,66 @@ export class InvshowComponent implements OnInit {
 
   }
 
+  userInvertories: Inventory[];
+
   images: ProjectImages[];
 
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute, private service: InvserviceService) { }
+ 
+
+  _stock_sum: number = 0;
+  get stock_sum(): number {
+    return this._stock_sum;
+  }
+  set stock_sum(value: number){
+    this._stock_sum = value;
+  }
+
+  
+  _return_sum: number = 0;
+  get return_sum(): number {
+    return this._return_sum;
+  }
+  set return_sum(value: number){
+    this._return_sum = value;
+  }
+  
+  _notreturn_sum: number = 0;
+  get notreturn_sum(): number {
+    return this._notreturn_sum;
+  }
+  set notreturn_sum(value: number){
+    this._notreturn_sum = value;
+  }
+
+  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute, private service: InvserviceService, private cryptservice: CryptserviceService) { }
 
   ngOnInit() {
 
     const ID: string = this.route.snapshot.paramMap.get('id');
+
+    const Key: string = this.route.snapshot.queryParamMap.get("key").trim();
+
+    if(isNullOrUndefined(Key)){
+      alert('無權限閱讀 請洽詢管理員');
+      return;
+    }
+
+    const role = this.cryptservice.IdentifyTeaProejctLogIn(Key);
+
+    switch (role){
+      case 'manager' : {
+        this.IsManager = true;
+        break;
+      }
+      case 'user' : {
+        this.IsManager = false;
+        break;
+      }
+      case 'not allow' : {
+        alert ('無權限進入');
+        return;
+      }
+    }
 
     this.GetEntity(ID);
 
@@ -50,6 +106,7 @@ export class InvshowComponent implements OnInit {
        if ( val.length === 0) {
             this.service.getEntityById(ID).subscribe(value => {
             this.Entity = value;
+            this.FilterForUser();
             this.spinner.hide();
             },
             err => {
@@ -58,6 +115,7 @@ export class InvshowComponent implements OnInit {
             });
        } else {
         this.Entity =  val.find(x => x.ClientId === ID);
+        this.FilterForUser();
         this.spinner.hide();
        }
      });
@@ -71,6 +129,26 @@ export class InvshowComponent implements OnInit {
       err => {
         alert('溫度圖error');
       });
+    }
+
+    public FilterForUser(){
+
+      if(this.IsManager == false)
+      {
+        let templist: Inventory[] = []; 
+      
+        this.Entity.Inventories.forEach(i => {
+          if (i.Return !== 0){
+            templist.push(i);
+            this.stock_sum += i.Stock;
+            this.return_sum += i.Return;
+            this.notreturn_sum += i.NotReturn;
+          }
+        })
+  
+        this.userInvertories = templist;
+      }
+
     }
 
 }

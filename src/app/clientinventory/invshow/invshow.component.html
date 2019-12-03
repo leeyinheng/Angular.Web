@@ -8,6 +8,7 @@
                 <tbody>
   
                     <tr>
+                        
                         <td>
                             客戶編號:
                         </td>
@@ -40,26 +41,38 @@
                         </td>
                 </tbody>   
         </table>
-
-        <table class="table table-bordered table-striped table-hover">
+        <div *ngIf="IsManager">
+            <table class="table table-bordered table-striped table-hover" style="background: skyblue;">
                 <tr>
+                    <th>
+                        序號
+                    </th>
                     <th>
                        產品編號
                     </th>
                     <th>
                         產品名稱
-                    </th>
+                    </th> 
                     <th>
-                        庫存
+                        借/寄庫量
                     </th>    
                     <th>
                         單位
+                    </th>
+                    <th>
+                        已歸還量
+                    </th>
+                    <th>
+                        未歸還量
                     </th>
                 </tr>
                 
                    
                     <tbody> 
-                        <tr *ngFor = 'let item of Entity.Inventories' >
+                        <tr *ngFor = 'let item of Entity.Inventories; let x = index  ' >
+                            <td>
+                                {{ x  + 1 }}
+                            </td>
                             <td>
                                 {{item.ProductId}}
                             </td>
@@ -71,10 +84,99 @@
                             <td>
                                 {{ item.Unit }}  
                             </td>
+                            <td>
+                                {{ item.Return}}
+                            </td>
+                            <td>
+                                {{ item.NotReturn}}
+                            </td>
+                            
                         </tr>
                     </tbody>
                    
             </table>
+        </div>
+        <div *ngIf="!IsManager">
+            <table class="table table-bordered table-striped table-hover">
+                <tr>
+                    <th>
+                        序號
+                    </th>
+                    <th>
+                       產品編號
+                    </th>
+                    <th>
+                        產品名稱
+                    </th>
+                    <th>
+                        借/寄庫量
+                    </th>    
+                    <th>
+                        單位
+                    </th>
+                    <th>
+                        已歸還量
+                    </th>
+                    <th>
+                        未歸還量
+                    </th>
+                </tr>
+                
+                   
+                    <tbody> 
+                        <tr *ngFor = 'let item of userInvertories; let x = index;' >
+                            <td>
+                                {{ x  + 1 }}
+                            </td>
+                            <td>
+                                {{item.ProductId}}
+                            </td>
+                            <td>
+                                {{ item.ProductName}}  
+                            </td>
+                            <td>{{ item.Stock }}</td>
+                          
+                            <td>
+                                {{ item.Unit }}  
+                            </td>
+                            <td>
+                                {{ item.Return}}
+                            </td>
+                            <td>
+                                {{ item.NotReturn}}
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                            <tr>
+                              <td>總計</td>
+                              <td>
+                                     
+                                </td>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    {{ stock_sum }}
+
+                                </td>
+                              
+                                <td>
+                                   
+                                </td>
+                                <td>
+                                    {{ return_sum}}
+                                </td>
+                                <td>
+                                    {{ notreturn_sum }}
+                                </td>
+                            </tr>
+                          </tfoot>
+                   
+            </table>
+        </div>
+       
             
         <h2>近六月溫度資料</h2>
         <carousel  interval="0">
