@@ -3,6 +3,11 @@
 <span> <img src='../assets/Photos/title2.jpg' width=100% height=100% /></span>
 <p></p>
 <form>
+    <div *ngIf="IsManager">
+           <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>   
+           <p></p>
+   </div>
+      
   <div class="form-group">
         <table class="table table-bordered table-striped">
                 <tbody>
@@ -42,7 +47,7 @@
                 </tbody>   
         </table>
         <div *ngIf="IsManager">
-            <table class="table table-bordered table-striped table-hover" style="background: skyblue;">
+            <table class="table table-bordered table-striped table-hover">
                 <tr>
                     <th>
                         序號
@@ -54,17 +59,17 @@
                         產品名稱
                     </th> 
                     <th>
-                        借/寄庫量
+                        入庫數量
                     </th>    
                     <th>
                         單位
                     </th>
                     <th>
-                        已歸還量
+                        出庫數量
                     </th>
                     <th>
-                        未歸還量
-                    </th>
+                        庫存量
+                  </th>
                 </tr>
                 
                    
@@ -93,33 +98,58 @@
                             
                         </tr>
                     </tbody>
+                    <tfoot>
+                            <tr>
+                              <td>總計</td>
+                              <td>
+                                     
+                                </td>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    {{ stock_sum }}
+
+                                </td>
+                              
+                                <td>
+                                   
+                                </td>
+                                <td>
+                                    {{ return_sum}}
+                                </td>
+                                <td>
+                                    {{ notreturn_sum }}
+                                </td>
+                            </tr>
+                    </tfoot>
                    
             </table>
         </div>
         <div *ngIf="!IsManager">
             <table class="table table-bordered table-striped table-hover">
                 <tr>
-                    <th>
-                        序號
-                    </th>
-                    <th>
-                       產品編號
-                    </th>
-                    <th>
-                        產品名稱
-                    </th>
-                    <th>
-                        借/寄庫量
-                    </th>    
-                    <th>
-                        單位
-                    </th>
-                    <th>
-                        已歸還量
-                    </th>
-                    <th>
-                        未歸還量
-                    </th>
+                        <th>
+                                序號
+                            </th>
+                            <th>
+                               產品編號
+                            </th>
+                            <th>
+                                產品名稱
+                            </th> 
+                            <th>
+                                入庫數量
+                            </th>    
+                            <th>
+                                單位
+                            </th>
+                            <th>
+                                出庫數量
+                            </th>
+                            <th>
+                                庫存量
+                          </th>
                 </tr>
                 
                    
@@ -187,7 +217,11 @@
                 </slide> 
         </carousel>
         
-
+        <div *ngIf="IsManager">
+            <p></p>
+                <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>   
+                <p></p>
+        </div>
   </div>
 </form>
 

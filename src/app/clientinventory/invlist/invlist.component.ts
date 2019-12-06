@@ -5,6 +5,8 @@ import { isNullOrUndefined } from 'util';
 import {InvserviceService} from '../invservice.service';
 import {Inventory, ClientInventory, ProjectImages} from '../model/projectinventory';
 import {CryptserviceService} from '../services/cryptservice.service';
+import {AuthserviceService} from '../services/authservice.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-invlist',
@@ -30,11 +32,21 @@ export class InvlistComponent implements OnInit {
 
  templist: ClientInventory[];
 
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute, private service: InvserviceService, private cryptservice : CryptserviceService) { }
+  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute, 
+    private service: InvserviceService, private cryptservice : CryptserviceService, private authservice: AuthserviceService , private router: Router) { }
 
   ngOnInit() {
 
-    this.GetList();
+    this.authservice.checktoken().subscribe( val =>{
+      if (val === 'OK'){
+        this.GetList();
+      }else{
+        alert('權限不足或失效 請重新登入');
+        this.router.navigate(["login"]);
+      }
+    })
+
+   
 
   }
 
@@ -85,8 +97,8 @@ export class InvlistComponent implements OnInit {
   }
 
   private sendEncodeUrl(url: string){
-    const encodeurl = encodeURI(url);
-    window.open('#/clientinv/888?key=' + encodeurl  , '_self');
+    
+    window.open('#/clientinv/888?key=' + url  , '_self');
   }
 
 }

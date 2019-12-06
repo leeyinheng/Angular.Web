@@ -4,7 +4,10 @@
     </div>
     
     <h1>所有客戶庫存表</h1>   
-
+    <div>
+            <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>   
+            <p></p>
+    </div>
     <div class="form form-row">
         <label>搜尋:</label>
         <input type="string" placeholder="編號或名稱" class="form form-control"
@@ -27,6 +30,9 @@
             <th>
                 電話
             </th>
+            <th>
+
+            </th>
         </tr>
         
            
@@ -44,7 +50,7 @@
                     </td>
                   
                     <td>
-                        <button type="button" class="btn btn-dark" (click) = showEntity(item.ClientId)>庫藏內容</button> |
+                        <button type="button" class="btn btn-success" (click) = showEntity(item.ClientId)>庫藏內容</button> |
                         <button type="button" class="btn btn-info" (click) = showUserEntity(item.ClientId)>藏家展示頁面</button>
                     </td>
                 </tr>
@@ -52,7 +58,10 @@
            
     </table>
     
-    
+    <div>
+            <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>   
+            <p></p>
+    </div>
     
     <ngx-spinner
       bdColor="rgba(51,51,51,0.8)"

@@ -5,6 +5,8 @@ import { isNullOrUndefined } from 'util';
 import {InvserviceService} from '../invservice.service';
 import {Inventory, ClientInventory, ProjectImages} from '../model/projectinventory';
 import {CryptserviceService} from '../services/cryptservice.service';
+import {AuthserviceService} from '../services/authservice.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -14,7 +16,7 @@ import {CryptserviceService} from '../services/cryptservice.service';
 })
 export class InvshowComponent implements OnInit {
 
-  public IsManager: boolean = false;
+  public IsManager = false;
 
   _entity: ClientInventory = new ClientInventory();
 
@@ -37,7 +39,7 @@ export class InvshowComponent implements OnInit {
 
  
 
-  _stock_sum: number = 0;
+  _stock_sum = 0;
   get stock_sum(): number {
     return this._stock_sum;
   }
@@ -46,7 +48,7 @@ export class InvshowComponent implements OnInit {
   }
 
   
-  _return_sum: number = 0;
+  _return_sum = 0;
   get return_sum(): number {
     return this._return_sum;
   }
@@ -54,22 +56,24 @@ export class InvshowComponent implements OnInit {
     this._return_sum = value;
   }
   
-  _notreturn_sum: number = 0;
+  _notreturn_sum = 0;
   get notreturn_sum(): number {
     return this._notreturn_sum;
   }
-  set notreturn_sum(value: number){
+  set notreturn_sum(value: number) {
     this._notreturn_sum = value;
   }
 
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute, private service: InvserviceService, private cryptservice: CryptserviceService) { }
+  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
+    private service: InvserviceService, private cryptservice: CryptserviceService,
+     private authservice: AuthserviceService, private router: Router) { }
 
   ngOnInit() {
-
-    const EncryptID: string = decodeURI(this.route.snapshot.queryParamMap.get('key'));
-
-    const IDstring = this.cryptservice.decrypt(EncryptID);
-
+ 
+    const EncryptID: string = this.route.snapshot.queryParamMap.get('key');
+     
+    const IDstring: string = this.cryptservice.decrypt(EncryptID);
+ 
     const ID = IDstring.split('|')[0];
     
     const role = IDstring.split('|')[1];
@@ -77,6 +81,12 @@ export class InvshowComponent implements OnInit {
     switch (role){
       case 'manager' : {
         this.IsManager = true;
+        this.authservice.checktoken().subscribe( val =>{
+          if (val !== 'OK'){
+            alert('權限不足或失效 請重新登入');
+            this.router.navigate(['login']);
+          }
+        })
         break;
       }
       case 'user' : {
@@ -97,7 +107,7 @@ export class InvshowComponent implements OnInit {
 
   public GetEntity(ID: string) {
 
-    this.spinner.show();
+     this.spinner.show();
 
      this.service.currentMessage.subscribe( val => {
        if ( val.length === 0) {
@@ -128,22 +138,27 @@ export class InvshowComponent implements OnInit {
       });
     }
 
-    public FilterForUser(){
+    public FilterForUser() {
 
-      if(this.IsManager == false)
-      {
-        let templist: Inventory[] = []; 
-      
+      if (this.IsManager === false) {
+        const templist: Inventory[] = [];
         this.Entity.Inventories.forEach(i => {
-          if (i.Return !== 0){
+          if (i.NotReturn !== 0) {
             templist.push(i);
             this.stock_sum += i.Stock;
             this.return_sum += i.Return;
             this.notreturn_sum += i.NotReturn;
           }
-        })
-  
+        });
         this.userInvertories = templist;
+      } else {
+        this.Entity.Inventories.forEach(i => {
+          if (i.NotReturn !== 0) {
+            this.stock_sum += i.Stock;
+            this.return_sum += i.Return;
+            this.notreturn_sum += i.NotReturn;
+          }
+        });
       }
 
     }

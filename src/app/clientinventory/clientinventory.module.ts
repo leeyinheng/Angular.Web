@@ -12,13 +12,17 @@ import { InvshowComponent } from './invshow/invshow.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { InvlistComponent } from './invlist/invlist.component';
 import { CryptserviceService} from './services/cryptservice.service';
+import { LoginComponent } from './login/login.component';
+import { CustomMaterialModule} from '../core/material.module';
+import { PortalComponent } from './portal/portal.component';
+
 
 
 
 
 
 @NgModule({
-  declarations: [InvuploadComponent, InvshowComponent, InvlistComponent],
+  declarations: [InvuploadComponent, InvshowComponent, InvlistComponent, LoginComponent, PortalComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -27,6 +31,7 @@ import { CryptserviceService} from './services/cryptservice.service';
     NgxSpinnerModule,
     FlexLayoutModule,
     FormsModule,
+    CustomMaterialModule,
     CarouselModule.forRoot(),
     RouterModule.forChild([
       {
@@ -37,9 +42,16 @@ import { CryptserviceService} from './services/cryptservice.service';
       },
       {
         path: 'clientlist', component: InvlistComponent
+      }, 
+      {
+        path: 'login', component: LoginComponent
+      }, 
+      {
+        path: 'teaportal', component: PortalComponent
       }
     ])
   ],
-  providers: []
+  providers: [CryptserviceService],
+  exports: [CryptserviceService]
 })
 export class ClientinventoryModule { }
