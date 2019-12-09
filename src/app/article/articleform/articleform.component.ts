@@ -5,6 +5,9 @@ import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
+import {AuthserviceService} from './../../core/shared/service/authservice.service';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-articleform',
@@ -31,10 +34,18 @@ export class ArticleformComponent implements OnInit {
   public files: NgxFileDropEntry[] = [];
 
 
-  constructor(private service: ArticleService, private spinner: NgxSpinnerService, private route: ActivatedRoute) {
+  constructor(private service: ArticleService, private spinner: NgxSpinnerService,
+    private route: ActivatedRoute, public authservice: AuthserviceService, private router: Router) {
      console.log(this.route.snapshot.paramMap.get('id')); }
 
   ngOnInit() {
+
+    this.authservice.checktoken().subscribe( val => {
+      if (val !== 'OK') {
+        alert('權限不足或失效 請重新登入');
+        this.router.navigate(['login']);
+      }
+    });
 
     this.spinner.show();
 

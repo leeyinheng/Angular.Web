@@ -5,6 +5,7 @@ import { RouterModule }   from '@angular/router';
 import { HttpModule }    from '@angular/http';
 import { HttpClientModule} from '@angular/common/http';
 import {ModalModule, BsModalService} from 'ngx-bootstrap';
+import { SharedModule} from './core/shared/shared.module';
 //import './rxjs-extensions';
 
  
@@ -50,6 +51,7 @@ import {ClientinventoryModule} from './clientinventory/clientinventory.module';
     NgxPaginationModule,
     BrowserAnimationsModule,
     NgbModule,
+    SharedModule.forRoot(),
     ModalModule.forRoot(),
     RouterModule.forRoot([
       {

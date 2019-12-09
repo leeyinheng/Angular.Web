@@ -4,8 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import {InvserviceService} from '../invservice.service';
 import {Inventory, ClientInventory, ProjectImages} from '../model/projectinventory';
-import {CryptserviceService} from '../services/cryptservice.service';
-import {AuthserviceService} from '../services/authservice.service';
+import {CryptserviceService} from './../../core/shared/service/cryptservice.service';
+import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {Router} from '@angular/router';
 
 
@@ -65,11 +65,11 @@ export class InvshowComponent implements OnInit {
   }
 
   constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
-    private service: InvserviceService, private cryptservice: CryptserviceService,
-     private authservice: AuthserviceService, private router: Router) { }
+    private service: InvserviceService, public cryptservice: CryptserviceService,
+     public authservice: AuthserviceService, private router: Router) { }
 
   ngOnInit() {
- 
+     
     const EncryptID: string = this.route.snapshot.queryParamMap.get('key');
      
     const IDstring: string = this.cryptservice.decrypt(EncryptID);

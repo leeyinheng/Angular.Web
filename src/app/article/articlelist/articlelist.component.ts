@@ -4,6 +4,8 @@ import { ArticleService} from '../service/service.service';
  import {NgxSpinnerService} from 'ngx-spinner';
 import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
+import {AuthserviceService} from './../../core/shared/service/authservice.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-articlelist',
@@ -28,10 +30,19 @@ export class ArticlelistComponent implements OnInit {
   }
 
 
-  constructor(private service: ArticleService, private spinner: NgxSpinnerService, private route: ActivatedRoute) { }
+  constructor(private service: ArticleService, private spinner: NgxSpinnerService, private route: ActivatedRoute, 
+    public authservice: AuthserviceService, private router: Router) { }
 
   ngOnInit() {
-    this.GetList();
+    this.authservice.checktoken().subscribe( val =>{
+      if (val === 'OK') {
+        this.GetList();
+      } else {
+        alert('權限不足或失效 請重新登入');
+        this.router.navigate(['login']);
+      }
+    } );
+
   }
 
   public GetList(): void {

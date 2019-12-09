@@ -4,6 +4,8 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import {InvserviceService} from '../invservice.service';
+import {AuthserviceService} from './../../core/shared/service/authservice.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-invupload',
@@ -14,9 +16,17 @@ export class InvuploadComponent implements OnInit {
 
   public files: NgxFileDropEntry[] = [];
 
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute, private service: InvserviceService) { }
+  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
+    private service: InvserviceService , public authservice: AuthserviceService, private router: Router) { }
 
   ngOnInit() {
+    this.authservice.checktoken().subscribe( val => {
+      if (val !== 'OK') {
+        alert('權限不足或失效 請重新登入');
+        this.router.navigate(['login']);
+      }
+    } );
+
   }
 
   public dropped(files: NgxFileDropEntry[]) {

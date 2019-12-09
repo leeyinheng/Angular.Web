@@ -11,13 +11,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { InvshowComponent } from './invshow/invshow.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { InvlistComponent } from './invlist/invlist.component';
-import { CryptserviceService} from './services/cryptservice.service';
 import { LoginComponent } from './login/login.component';
 import { CustomMaterialModule} from '../core/material.module';
 import { PortalComponent } from './portal/portal.component';
-
-
-
+import {SharedModule} from '../core/shared/shared.module';
 
 
 
@@ -32,6 +29,7 @@ import { PortalComponent } from './portal/portal.component';
     FlexLayoutModule,
     FormsModule,
     CustomMaterialModule,
+    SharedModule.forRoot(),
     CarouselModule.forRoot(),
     RouterModule.forChild([
       {
@@ -51,7 +49,6 @@ import { PortalComponent } from './portal/portal.component';
       }
     ])
   ],
-  providers: [CryptserviceService],
-  exports: [CryptserviceService]
+  providers: []
 })
 export class ClientinventoryModule { }
