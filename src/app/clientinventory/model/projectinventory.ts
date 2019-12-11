@@ -4,6 +4,13 @@ export class ClientInventory {
     Address: string;
     Phone: string;
     Inventories: Inventory[];
+    private _message: string;
+    get Message() {
+        return this._message;
+    }
+    set Message(value) {
+        this._message = value;
+    }
 }
 
 export class Inventory {

@@ -14,13 +14,15 @@ import { BehaviorSubject } from 'rxjs';
 
 export class InvserviceService {
 
-  private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+  // private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
-  // private site = 'https://localhost:44347/';
+  private site = 'https://localhost:44347/';
 
   private url = 'api/articleapi/';
 
   private postFileurl = 'api/UploadExcelApi/';
+
+  private postPartialFileUrl = 'api/UploadPartialExcelApi/';
 
   private postUpdateTimeUrl = 'api/ClientInventoryApi/';
 
@@ -70,8 +72,6 @@ export class InvserviceService {
      const headers = new HttpHeaders ({
       ContentType: 'multipart/form-data'
     });
-
-
     // return  this.http.post(url, file, {headers: headers});
 
     return this.http
@@ -80,7 +80,17 @@ export class InvserviceService {
             file,
         { headers, responseType: 'text' as 'json' }
         );
- }
+  }
+
+  public postPartialFile(file: FormData) {
+    const url = this.site + this.postPartialFileUrl;
+    const headers = new HttpHeaders ({
+      ContentType: 'multipart/form-data'
+    });
+    return this.http.post<string>(
+      url, file , {headers, responseType: 'text' as 'json'}
+    );
+  }
 
  public postTempImage(file: FormData) {
 

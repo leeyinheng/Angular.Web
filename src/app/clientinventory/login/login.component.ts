@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {LogInUser, AppUser} from '../../core/shared/model/user';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +15,14 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor(private router: Router, public service: AuthserviceService) { }
+  constructor(private router: Router, public service: AuthserviceService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
   }
 
   login(): void {
+
+    this.spinner.show();
 
     const user = new AppUser();
 
@@ -35,11 +38,13 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('user', res.Name);
         localStorage.setItem('logintime', datestring);
         this.service.updatetoken(res.Token);
+        this.spinner.hide();
         this.router.navigate(['teaportal']);
       },
       err => {
         alert('登入錯誤 請重新登入');
         this.service.deletetoken();
+        this.spinner.hide();
     });
   }
 

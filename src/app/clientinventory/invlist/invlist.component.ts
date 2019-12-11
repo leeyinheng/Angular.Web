@@ -7,6 +7,8 @@ import {Inventory, ClientInventory, ProjectImages} from '../model/projectinvento
 import {CryptserviceService} from './../../core/shared/service/cryptservice.service';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {Router} from '@angular/router';
+import { ClipboardService} from 'ngx-clipboard';
+
 
 @Component({
   selector: 'app-invlist',
@@ -34,7 +36,7 @@ export class InvlistComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
     private service: InvserviceService, public cryptservice: CryptserviceService,
-    public authservice: AuthserviceService , private router: Router) { }
+    public authservice: AuthserviceService , private router: Router, private clipboardservice: ClipboardService) { }
 
   ngOnInit() {
 
@@ -89,7 +91,7 @@ export class InvlistComponent implements OnInit {
       this.sendEncodeUrl(cryptId);
   }
 
-  public showUserEntity(id: string){
+  public showUserEntity(id: string) {
      
     const cryptId = this.cryptservice.encrypt(id + '|' + 'user');
     this.sendEncodeUrl(cryptId);
@@ -98,6 +100,18 @@ export class InvlistComponent implements OnInit {
   private sendEncodeUrl(url: string){
     
     window.open('#/clientinv/888?key=' + url  , '_self');
+  }
+
+  private copyEncodeUrl(item: ClientInventory) {
+    const cryptId = this.cryptservice.encrypt(item.ClientId + '|' + 'user');
+    const copyurl = 'http://biotaiwan.azurewebsites.net/#/clientinv/888?key=' + cryptId;
+    this.clipboardservice.copyFromContent(copyurl);
+    this.resetMessages();
+    item.Message = '(已複製)';
+  }
+
+  private resetMessages() {
+    this.list.forEach (item => item.Message = '');
   }
 
 }

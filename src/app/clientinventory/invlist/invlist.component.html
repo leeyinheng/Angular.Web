@@ -50,8 +50,9 @@
                     </td>
                   
                     <td>
-                        <button type="button" class="btn btn-success" (click) = showEntity(item.ClientId)>庫藏內容</button> |
-                        <button type="button" class="btn btn-info" (click) = showUserEntity(item.ClientId)>藏家展示頁面</button>
+                        <button type="button" class="btn btn-sm btn-success" (click) = showEntity(item.ClientId)>庫藏內容</button> |
+                        <button type="button" class="btn btn-sm btn-info" (click) = showUserEntity(item.ClientId)>藏家頁面</button> |
+                        <button type="button" class="btn btn-sm btn-warning" (click) = copyEncodeUrl(item)>複製藏家連結{{item.Message}}</button>
                     </td>
                 </tr>
             </tbody>

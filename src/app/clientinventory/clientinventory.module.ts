@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { CustomMaterialModule} from '../core/material.module';
 import { PortalComponent } from './portal/portal.component';
 import {SharedModule} from '../core/shared/shared.module';
+import {ClipboardModule} from 'ngx-clipboard';
 
 
 
@@ -29,6 +30,7 @@ import {SharedModule} from '../core/shared/shared.module';
     FlexLayoutModule,
     FormsModule,
     CustomMaterialModule,
+    ClipboardModule,
     SharedModule.forRoot(),
     CarouselModule.forRoot(),
     RouterModule.forChild([
