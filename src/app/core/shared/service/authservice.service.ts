@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {LogInUser} from '../model/user';
+import {LogInUser, AppUser} from '../model/user';
 import { isNullOrUndefined } from 'util';
 import { BehaviorSubject } from 'rxjs';
 
@@ -15,7 +15,7 @@ export class AuthserviceService {
 
   private url = 'api/LoginApi/';
 
-  private urlchecktoken = 'api/LoginApi/CheckToken'
+  private urlchecktoken = 'api/LoginApi/CheckToken/888';
 
   private token = new BehaviorSubject<string>('');
 
@@ -28,7 +28,11 @@ export class AuthserviceService {
     localStorage.setItem('token', message);
   }
 
-  public authUser(user: LogInUser) {
+  deletetoken() {
+    localStorage.setItem('token', '');
+  }
+
+  public authUser(user: AppUser) {
 
     const url = this.site + this.url;
   
@@ -41,18 +45,17 @@ export class AuthserviceService {
     // return  this.http.post(url, file, {headers: headers});
   
     return this.http
-        .post<string>(
+        .post<AppUser>(
             url,
-            user,
-        { headers, responseType: 'text' as 'json' }
+            user
         );
      }
 
-  public checktoken(){
+  public checktoken() {
 
     const currenttoken = localStorage.getItem('token');
 
-    // alert(currenttoken);
+   // alert(currenttoken);
 
     const url = this.site + this.urlchecktoken;
   
@@ -60,14 +63,19 @@ export class AuthserviceService {
      const headers = new HttpHeaders ({
       ContentType: 'application/json'
     });
-      
-  
+
     return this.http
         .post<string>(
             url,
             currenttoken,
         { headers, responseType: 'text' as 'json' }
         );
+  }
+
+  public logout() {
+    this.deletetoken();
+    localStorage.setItem('user', '');
+    localStorage.setItem('logintime', '');
   }
 
   

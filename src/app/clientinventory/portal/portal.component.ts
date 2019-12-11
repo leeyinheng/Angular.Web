@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
+import {InvserviceService} from '../invservice.service';
 import {Router} from '@angular/router';
 
 
@@ -10,17 +11,28 @@ import {Router} from '@angular/router';
 })
 export class PortalComponent implements OnInit {
 
-  constructor(public authservice: AuthserviceService, private router: Router) { }
+  User: string;
+  LogInTime: string;
+  LastUpdateTime: string;
+
+  constructor(public authservice: AuthserviceService, private router: Router, private service: InvserviceService) { }
 
   ngOnInit() {
     this.authservice.checktoken().subscribe( val => {
       if (val === 'OK') {
-         console.log('log in on ' + Date.now.toString());
+         this.User = localStorage.getItem('user');
+         this.LogInTime = localStorage.getItem('logintime');
+         this.service.getLastUpdateTime().subscribe(res => this.LastUpdateTime = res.toString());
       } else {
         alert('權限不足或失效 請重新登入');
         this.router.navigate(['login']);
       }
     });
+  }
+
+  public logout() {
+    this.authservice.logout();
+    this.router.navigate(['login']);
   }
 
 }

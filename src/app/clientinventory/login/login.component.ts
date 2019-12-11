@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
-import {LogInUser} from '../../core/shared/model/user';
+import {LogInUser, AppUser} from '../../core/shared/model/user';
 
 @Component({
   selector: 'app-login',
@@ -21,20 +21,25 @@ export class LoginComponent implements OnInit {
 
   login(): void {
 
-    const user = new LogInUser();
+    const user = new AppUser();
 
-    user.ID = this.username;
+    const datestring = new Date().toLocaleString();
+
+    user.UserID = this.username;
     user.Password = this.password;
+    user.Application = 'TeaProject';
+    user.LogInTime = datestring;
     this.service.authUser(user).subscribe(res => {
-      if (res === 'Fail'){
-         alert('登入錯誤 請重新登入');
-      } else {
-        this.service.updatetoken(res);
+        alert('歡迎使用者:' + res.Name + ' 您上次登入時間:' + res.LastLogInTime );
+       // alert(res.Token);
+        localStorage.setItem('user', res.Name);
+        localStorage.setItem('logintime', datestring);
+        this.service.updatetoken(res.Token);
         this.router.navigate(['teaportal']);
-      }
       },
       err => {
-        alert('內部錯誤');
+        alert('登入錯誤 請重新登入');
+        this.service.deletetoken();
     });
   }
 

@@ -50,6 +50,9 @@ export class InvuploadComponent implements OnInit {
             (val) => {
                   alert(val);
                   this.spinner.hide();
+                  this.service.updateTime().subscribe(res => {
+                    console.log(res);
+                  });
             }
           );
         });
@@ -60,6 +63,10 @@ export class InvuploadComponent implements OnInit {
         this.spinner.hide();
       }
     }
+  }
+
+  public test() {
+      this.service.updateTime().subscribe( res => alert(res));
   }
 
 

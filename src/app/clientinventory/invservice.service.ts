@@ -22,6 +22,8 @@ export class InvserviceService {
 
   private postFileurl = 'api/UploadExcelApi/';
 
+  private postUpdateTimeUrl = 'api/ClientInventoryApi/';
+
   private postTempImageUrl = 'api/UploadTempApi/';
 
   private getEntityUrl = 'api/ClientInventoryApi/client/';
@@ -29,6 +31,8 @@ export class InvserviceService {
   private getImagesUrl = 'api/ClientInventoryApi/temp/6';
 
   private getListUrl = 'api/ClientInventoryApi/';
+
+  private getLastUpdateUrl = 'api/ClientInventoryApi/LastUpdate/888';
 
 
   _list: ClientInventory[] = [];
@@ -120,6 +124,23 @@ public getImages() {
   const url  = this.site + this.getImagesUrl ;
 
   return this.http.get<ProjectImages[]>(url);
+}
+
+public updateTime() {
+
+  const url = this.site + this.postUpdateTimeUrl;
+
+  const datestring = new Date().toLocaleString();
+
+  return this.http.put<object>(url, {'date': datestring} );
+}
+
+public getLastUpdateTime() {
+
+  const url = this.site + this.getLastUpdateUrl;
+
+  return this.http.get(url);
+
 }
 
 }
