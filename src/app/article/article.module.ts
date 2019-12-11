@@ -12,6 +12,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ArticleshowComponent } from './articleshow/articleshow.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import {SharedModule} from '../core/shared/shared.module';
+
+
+
 
 @NgModule({
   declarations: [ArticleformComponent, ArticlelistComponent, ArticleshowComponent],
@@ -24,6 +28,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     NgxSpinnerModule,
     FlexLayoutModule,
     NgbModule,
+    SharedModule,
     CarouselModule.forRoot(),
     RouterModule.forChild([
       {
