@@ -8,13 +8,16 @@ import { isNullOrUndefined } from 'util';
 
 import { BehaviorSubject } from 'rxjs';
 
+import {ImageLink} from './../core/shared/model/ImageLink';
+
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class InvserviceService {
 
-  private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+    private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
  // private site = 'https://localhost:44347/';
 
@@ -35,6 +38,8 @@ export class InvserviceService {
   private getListUrl = 'api/ClientInventoryApi/';
 
   private getLastUpdateUrl = 'api/ClientInventoryApi/LastUpdate/888';
+
+  private adImagesUrl = 'api/ClientInventoryApi/AdImages/888';
 
 
   _list: ClientInventory[] = [];
@@ -151,6 +156,33 @@ public getLastUpdateTime() {
 
   return this.http.get(url);
 
+}
+
+public getAdImages() {
+
+  const url = this.site + this.adImagesUrl;
+
+  return this.http.get<ImageLink[]>(url);
+}
+
+public postAdImages(adimages: ImageLink[]) {
+
+  const url = this.site + this.adImagesUrl;
+
+   // Headers
+   const headers = new HttpHeaders ({
+    ContentType: 'multipart/form-data'
+  });
+
+
+  // return  this.http.post(url, file, {headers: headers});
+
+  return this.http
+      .post<string>(
+          url,
+          adimages,
+      { headers, responseType: 'text' as 'json' }
+      );
 }
 
 }

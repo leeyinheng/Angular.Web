@@ -1,0 +1,59 @@
+<div>
+  <span> <img src='../assets/Photos/tealogo.jpg' width=20% height=20% /></span>
+  <p></p>
+</div>
+
+<h1> 藏家頁面廣告管理系統</h1>
+
+
+<div class="d-flex">
+  <div>
+          <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
+  </div>
+  <div class="ml-auto">
+           <button type="button" class="btn btn-primary" (click)="SaveEntity()">儲存</button>
+  </div>
+</div>
+<p></p>
+
+
+  <div class="center">
+    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+          拖曳或是選擇要上傳的圖片(必須小於4mb)
+          <button type="button" (click)="openFileSelector()">Browse Files</button>
+        </ng-template>
+    </ngx-file-drop>
+</div>
+
+<table class="table table-borderless table-striped">
+   <tbody>
+
+  <tr>
+      <td colspan="2">
+              <ul *ngFor="let i of list; let x = index" class="list-group">
+                  <li class="list-group-item">
+                      <img [src]="i.Image_Url"   class="img-thumbnail" > <p></p>
+                      名稱:<input [(ngModel)]="i.Name" #ctrl="ngModel"  name="imagename" class="form-control"/> <p></p>
+                      備註: <input [(ngModel)]="i.Comment" #ctrl="ngModel"  name="imageComment" type="text"  class="form-control"/><p></p>
+                      圖片連結: <input [(ngModel)]="i.Target_Url" #ctrl="ngModel"  name="targeturl" type="text"  class="form-control"/><p></p>
+                      <button type="button" class="btn btn-danger btn-xs" (click) ="RemoveImage(x)">刪除圖片</button>
+                  </li>
+              </ul>
+      </td>
+  </tr>
+   </tbody>
+</table>
+
+
+
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>

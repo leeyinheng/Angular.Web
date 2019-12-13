@@ -1,0 +1,137 @@
+import { Component, OnInit } from '@angular/core';
+import {ImageLink} from '../../core/shared/model/ImageLink';
+import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {ActivatedRoute} from '@angular/router';
+import { isNullOrUndefined } from 'util';
+import {AuthserviceService} from './../../core/shared/service/authservice.service';
+import {Router} from '@angular/router';
+import {PostFileService} from './../../core/shared/service/postservice.service';
+import {InvserviceService} from '../invservice.service';
+
+@Component({
+  selector: 'app-adimage',
+  templateUrl: './adimage.component.html',
+  styleUrls: ['./adimage.component.css']
+})
+export class AdimageComponent implements OnInit {
+
+  public files: NgxFileDropEntry[] = [];
+
+  public list: ImageLink[] = [];
+
+  constructor(private spinner: NgxSpinnerService,
+    private route: ActivatedRoute,
+    public authservice: AuthserviceService,
+    private router: Router, public postservice: PostFileService,
+    private service: InvserviceService) { }
+
+  ngOnInit() {
+
+    this.authservice.checktoken().subscribe( val => {
+      if (val !== 'OK') {
+        alert('權限不足或失效 請重新登入');
+        this.router.navigate(['login']);
+      }
+    });
+
+    this.spinner.show();
+
+    this.service.getAdImages().subscribe( res => {
+
+      if (!isNullOrUndefined(res)) {
+        this.list = res;
+      }
+      this.spinner.hide();
+    },
+    error => {
+      alert ('內部錯誤');
+      this.spinner.hide();
+    });
+
+  }
+
+  public  SaveEntity() {
+
+      this.spinner.show();
+
+     this.service.postAdImages(this.list).subscribe(
+      res => {
+         alert('儲存完畢');
+         this.spinner.hide();
+         window.open('#/teaportal', '_self');
+     },
+      err => {
+        alert(err);
+        this.spinner.hide();
+      }
+    );
+  }
+
+
+  public dropped(files: NgxFileDropEntry[]) {
+
+    this.files = files;
+    for (const droppedFile of files) {
+
+      // Is it a file?
+      if (droppedFile.fileEntry.isFile) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
+
+          // Here you can access the real file
+          console.log(droppedFile.relativePath, file);
+
+          if (file.size > 4194304)
+          {
+            alert(file.name + ' 已經大於4mb,請縮小後再上傳');
+            return;
+          }
+          // You could upload it like this:
+          const formData = new FormData();
+
+          formData.append(file.name, file, droppedFile.relativePath);
+
+          this.spinner.show();
+
+          this.postservice.postImage(formData).subscribe(
+            (val) => {
+
+                const newImage = new ImageLink();
+                newImage.Name = 'Title';
+                newImage.Image_Url = val;
+                this.list.push(newImage);
+
+               this.spinner.hide();
+            }
+          );
+        });
+      } else {
+        // It was a directory (empty directories are added, otherwise only files)
+        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+        console.log(droppedFile.relativePath, fileEntry);
+      }
+    }
+  }
+
+  public fileOver(event) {
+    console.log(event);
+  }
+
+  public fileLeave(event) {
+    console.log(event);
+  }
+
+  public RemoveImage(i: number) {
+
+    i++;
+
+    const orginialItems = this.list;
+
+    const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
+
+    this.list = filterItems;
+  }
+
+
+}

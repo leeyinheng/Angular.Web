@@ -1,19 +1,33 @@
 <span> <img src='../assets/Photos/tealogo.jpg' width=20% height=20% /></span>
 <p></p>
-<span> <img src='../assets/Photos/title2.jpg' width=100% height=100% /></span>
+
+
+<carousel  >
+  <slide *ngFor="let item of AdImages">
+    <a [href] = "item.Target_Url" target="_blank">
+
+    <img [src]="item.Image_Url" alt="Pages" style="display: block; width: 100%;">
+    <div class="carousel-caption d-none d-md-block" style="color: black;">
+        <h3>{{item.Name}}</h3>
+        <p>{{item.Comment}}</p>
+      </div>
+
+      </a>
+  </slide>
+</carousel>
 <p></p>
 <form>
     <div *ngIf="IsManager">
-           <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>   
+           <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>
            <p></p>
    </div>
-      
+
   <div class="form-group">
         <table class="table table-bordered table-striped">
                 <tbody>
-  
+
                     <tr>
-                        
+
                         <td>
                             客戶編號:
                         </td>
@@ -34,7 +48,7 @@
                             地址:
                         </td>
                         <td>
-                                {{Entity.Address}} 
+                                {{Entity.Address}}
                         </td>
                     </tr>
                     <tr>
@@ -44,7 +58,7 @@
                         <td>
                             {{Entity.Phone}}
                         </td>
-                </tbody>   
+                </tbody>
         </table>
         <div *ngIf="IsManager">
             <table class="table table-bordered table-striped table-hover">
@@ -57,10 +71,10 @@
                     </th>
                     <th>
                         產品名稱
-                    </th> 
+                    </th>
                     <th>
                         入庫數量
-                    </th>    
+                    </th>
                     <th>
                         單位
                     </th>
@@ -71,9 +85,9 @@
                         庫存量
                   </th>
                 </tr>
-                
-                   
-                    <tbody> 
+
+
+                    <tbody>
                         <tr *ngFor = 'let item of Entity.Inventories; let x = index  ' >
                             <td>
                                 {{ x  + 1 }}
@@ -82,12 +96,12 @@
                                 {{item.ProductId}}
                             </td>
                             <td>
-                                {{ item.ProductName}}  
+                                {{ item.ProductName}}
                             </td>
                             <td>{{ item.Stock }}</td>
-                          
+
                             <td>
-                                {{ item.Unit }}  
+                                {{ item.Unit }}
                             </td>
                             <td>
                                 {{ item.Return}}
@@ -95,25 +109,25 @@
                             <td>
                                 {{ item.NotReturn}}
                             </td>
-                            
+
                         </tr>
                     </tbody>
                     <tfoot>
                             <tr>
                               <td>總計</td>
                               <td>
-                                     
+
                                 </td>
                                 <td>
-                                    
+
                                 </td>
                                 <td>
                                     {{ stock_sum }}
 
                                 </td>
-                              
+
                                 <td>
-                                   
+
                                 </td>
                                 <td>
                                     {{ return_sum}}
@@ -123,7 +137,7 @@
                                 </td>
                             </tr>
                     </tfoot>
-                   
+
             </table>
         </div>
         <div *ngIf="!IsManager">
@@ -137,10 +151,10 @@
                             </th>
                             <th>
                                 產品名稱
-                            </th> 
+                            </th>
                             <th>
                                 入庫數量
-                            </th>    
+                            </th>
                             <th>
                                 單位
                             </th>
@@ -151,9 +165,9 @@
                                 庫存量
                           </th>
                 </tr>
-                
-                   
-                    <tbody> 
+
+
+                    <tbody>
                         <tr *ngFor = 'let item of userInvertories; let x = index;' >
                             <td>
                                 {{ x  + 1 }}
@@ -162,12 +176,12 @@
                                 {{item.ProductId}}
                             </td>
                             <td>
-                                {{ item.ProductName}}  
+                                {{ item.ProductName}}
                             </td>
                             <td>{{ item.Stock }}</td>
-                          
+
                             <td>
-                                {{ item.Unit }}  
+                                {{ item.Unit }}
                             </td>
                             <td>
                                 {{ item.Return}}
@@ -175,25 +189,25 @@
                             <td>
                                 {{ item.NotReturn}}
                             </td>
-                            
+
                         </tr>
                     </tbody>
                     <tfoot>
                             <tr>
                               <td>總計</td>
                               <td>
-                                     
+
                                 </td>
                                 <td>
-                                    
+
                                 </td>
                                 <td>
                                     {{ stock_sum }}
 
                                 </td>
-                              
+
                                 <td>
-                                   
+
                                 </td>
                                 <td>
                                     {{ return_sum}}
@@ -203,29 +217,29 @@
                                 </td>
                             </tr>
                           </tfoot>
-                   
+
             </table>
         </div>
-       
-            
+
+
         <h2>近六月溫度資料</h2>
         <carousel  interval="0">
                 <slide *ngFor="let item of images">
                   <img [src]="item.ImageUrl" alt="Pages" style="display: block; width: 100%;">
                   <div class="carousel-caption d-none d-md-block">
                   </div>
-                </slide> 
+                </slide>
         </carousel>
-        
+
         <div *ngIf="IsManager">
             <p></p>
-                <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>   
+                <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>
                 <p></p>
         </div>
   </div>
 </form>
 
- 
+
 
 <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"

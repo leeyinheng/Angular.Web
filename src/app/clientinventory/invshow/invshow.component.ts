@@ -7,6 +7,7 @@ import {Inventory, ClientInventory, ProjectImages} from '../model/projectinvento
 import {CryptserviceService} from './../../core/shared/service/cryptservice.service';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {Router} from '@angular/router';
+import {ImageLink} from './../../core/shared/model/ImageLink';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class InvshowComponent implements OnInit {
 
   images: ProjectImages[];
 
- 
+  AdImages: ImageLink[];
+
 
   _stock_sum = 0;
   get stock_sum(): number {
@@ -47,7 +49,7 @@ export class InvshowComponent implements OnInit {
     this._stock_sum = value;
   }
 
-  
+
   _return_sum = 0;
   get return_sum(): number {
     return this._return_sum;
@@ -55,7 +57,7 @@ export class InvshowComponent implements OnInit {
   set return_sum(value: number){
     this._return_sum = value;
   }
-  
+
   _notreturn_sum = 0;
   get notreturn_sum(): number {
     return this._notreturn_sum;
@@ -69,13 +71,13 @@ export class InvshowComponent implements OnInit {
      public authservice: AuthserviceService, private router: Router) { }
 
   ngOnInit() {
-     
+
     const EncryptID: string = this.route.snapshot.queryParamMap.get('key');
-     
+
     const IDstring: string = this.cryptservice.decrypt(EncryptID);
- 
+
     const ID = IDstring.split('|')[0];
-    
+
     const role = IDstring.split('|')[1];
 
     switch (role){
@@ -102,6 +104,8 @@ export class InvshowComponent implements OnInit {
     this.GetEntity(ID);
 
     this.GetProjectImages();
+
+    this.GetAdImages();
 
   }
 
@@ -161,6 +165,14 @@ export class InvshowComponent implements OnInit {
         });
       }
 
+    }
+
+    public GetAdImages() {
+      this.service.getAdImages().subscribe (res => {
+
+         this.AdImages = res;
+
+      });
     }
 
 }

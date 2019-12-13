@@ -16,11 +16,12 @@ import { CustomMaterialModule} from '../core/material.module';
 import { PortalComponent } from './portal/portal.component';
 import {SharedModule} from '../core/shared/shared.module';
 import {ClipboardModule} from 'ngx-clipboard';
+import { AdimageComponent } from './adimage/adimage.component';
 
 
 
 @NgModule({
-  declarations: [InvuploadComponent, InvshowComponent, InvlistComponent, LoginComponent, PortalComponent],
+  declarations: [InvuploadComponent, InvshowComponent, InvlistComponent, LoginComponent, PortalComponent, AdimageComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -42,12 +43,15 @@ import {ClipboardModule} from 'ngx-clipboard';
       },
       {
         path: 'clientlist', component: InvlistComponent
-      }, 
+      },
       {
         path: 'login', component: LoginComponent
-      }, 
+      },
       {
         path: 'teaportal', component: PortalComponent
+      },
+      {
+        path: 'adimage', component: AdimageComponent
       }
     ])
   ],
