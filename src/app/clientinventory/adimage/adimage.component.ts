@@ -20,6 +20,8 @@ export class AdimageComponent implements OnInit {
 
   public list: ImageLink[] = [];
 
+  public textLInks: ImageLink[] = [];
+
   constructor(private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
     public authservice: AuthserviceService,
@@ -46,6 +48,18 @@ export class AdimageComponent implements OnInit {
     },
     error => {
       alert ('內部錯誤');
+      this.spinner.hide();
+    });
+
+    this.service.getAdTextLinks().subscribe( res => {
+
+      if (!isNullOrUndefined(res)) {
+        this.textLInks = res;
+      }
+      // this.spinner.hide();
+    },
+    error => {
+      alert ('內部錯誤 (TextLinks)');
       this.spinner.hide();
     });
 
@@ -132,6 +146,47 @@ export class AdimageComponent implements OnInit {
 
     this.list = filterItems;
   }
+
+  public RemoveTextLink(i: number) {
+
+    i++;
+
+    const orginialItems = this.textLInks;
+
+    const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
+
+    this.textLInks = filterItems;
+  }
+
+  public AddNewTextLink() {
+
+    const textlink = new ImageLink();
+
+    textlink.Name = '廣告文案';
+    textlink.Target_Url = '連結 url';
+
+    this.textLInks.push(textlink);
+  }
+
+  public  SaveTextLinks() {
+
+    this.spinner.show();
+
+   this.service.postAdTextLinks(this.textLInks).subscribe(
+    res => {
+       alert('儲存廣告連結完畢');
+       this.spinner.hide();
+       // window.open('#/teaportal', '_self');
+   },
+    err => {
+      alert(err);
+      this.spinner.hide();
+    }
+  );
+}
+
+
+
 
 
 }

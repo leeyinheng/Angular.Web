@@ -1,0 +1,7 @@
+.igx-carousel__inner {
+  width: 90%;
+  text-align: center;
+}
+a > igx-icon > span{
+  color: #e41c77;
+}

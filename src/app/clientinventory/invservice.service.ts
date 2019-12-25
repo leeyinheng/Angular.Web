@@ -17,7 +17,7 @@ import {ImageLink} from './../core/shared/model/ImageLink';
 
 export class InvserviceService {
 
-    private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+  private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
  // private site = 'https://localhost:44347/';
 
@@ -40,6 +40,8 @@ export class InvserviceService {
   private getLastUpdateUrl = 'api/ClientInventoryApi/LastUpdate/888';
 
   private adImagesUrl = 'api/ClientInventoryApi/AdImages/888';
+
+  private adTextLinkUrl = 'api/ClientInventoryApi/AdTextLink/888';
 
 
   _list: ClientInventory[] = [];
@@ -184,5 +186,33 @@ public postAdImages(adimages: ImageLink[]) {
       { headers, responseType: 'text' as 'json' }
       );
 }
+
+public getAdTextLinks() {
+
+  const url = this.site + this.adTextLinkUrl;
+
+  return this.http.get<ImageLink[]>(url);
+}
+
+public postAdTextLinks(adimages: ImageLink[]) {
+
+  const url = this.site + this.adTextLinkUrl;
+
+   // Headers
+   const headers = new HttpHeaders ({
+    ContentType: 'multipart/form-data'
+  });
+
+
+  // return  this.http.post(url, file, {headers: headers});
+
+  return this.http
+      .post<string>(
+          url,
+          adimages,
+      { headers, responseType: 'text' as 'json' }
+      );
+}
+
 
 }

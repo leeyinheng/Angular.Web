@@ -40,6 +40,8 @@ export class InvshowComponent implements OnInit {
 
   AdImages: ImageLink[];
 
+  AdTextLinks: ImageLink[];
+
 
   _stock_sum = 0;
   get stock_sum(): number {
@@ -106,6 +108,8 @@ export class InvshowComponent implements OnInit {
     this.GetProjectImages();
 
     this.GetAdImages();
+
+    this.GetAdTextLinks();
 
   }
 
@@ -174,5 +178,15 @@ export class InvshowComponent implements OnInit {
 
       });
     }
+
+    public GetAdTextLinks() {
+      this.service.getAdTextLinks().subscribe (res => {
+
+         this.AdTextLinks = res;
+
+      });
+    }
+
+
 
 }

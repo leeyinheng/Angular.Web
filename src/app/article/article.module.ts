@@ -13,12 +13,14 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ArticleshowComponent } from './articleshow/articleshow.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import {SharedModule} from '../core/shared/shared.module';
+import { AuctionComponent } from './auction/auction.component';
+import { IgxCarouselModule } from 'igniteui-angular';
 
 
 
 
 @NgModule({
-  declarations: [ArticleformComponent, ArticlelistComponent, ArticleshowComponent],
+  declarations: [ArticleformComponent, ArticlelistComponent, ArticleshowComponent, AuctionComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -29,6 +31,7 @@ import {SharedModule} from '../core/shared/shared.module';
     FlexLayoutModule,
     NgbModule,
     SharedModule,
+    IgxCarouselModule,
     CarouselModule.forRoot(),
     RouterModule.forChild([
       {
@@ -45,6 +48,9 @@ import {SharedModule} from '../core/shared/shared.module';
       },
       {
         path: 'articleshow/:id', component: ArticleshowComponent
+      },
+      {
+        path: 'auction', component: AuctionComponent
       }
     ])
   ]

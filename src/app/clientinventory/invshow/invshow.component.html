@@ -3,7 +3,7 @@
 
 
 <carousel  >
-  <slide *ngFor="let item of AdImages">
+  <slide *ngFor="let item of AdImages" class="animated fadeIn">
     <a [href] = "item.Target_Url" target="_blank">
 
     <img [src]="item.Image_Url" alt="Pages" style="display: block; width: 100%;">
@@ -236,6 +236,17 @@
                 <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>
                 <p></p>
         </div>
+
+        <hr>
+
+
+        <ul>
+          <li *ngFor="let item of AdTextLinks">
+           <h2> <a [href]="item.Target_Url" target="_blank"> {{item.Name}}</a></h2>
+          </li>
+        </ul>
+
+
   </div>
 </form>
 

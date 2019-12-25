@@ -46,6 +46,35 @@
    </tbody>
 </table>
 
+<hr>
+
+<h1> 廣告連結管理</h1>
+<table class="table table-borderless table-striped">
+  <tbody>
+ <tr>
+   <td>
+    <button type="button" class="btn btn-primary btn-xs" (click) ="AddNewTextLink()">新增廣告連結</button>
+   </td>
+   <td>
+    <button type="button" class="btn btn-success btn-xs" (click) ="SaveTextLinks()">儲存廣告連結</button>
+   </td>
+ </tr>
+ <tr>
+     <td colspan="2">
+             <ul *ngFor="let i of textLInks; let x = index" class="list-group">
+                 <li class="list-group-item">
+                     廣告連結名稱:<input [(ngModel)]="i.Name" #ctrl="ngModel"  name="imagename" class="form-control"/> <p></p>
+                     連結(url): <input [(ngModel)]="i.Target_Url" #ctrl="ngModel"  name="targeturl" type="text"  class="form-control"/><p></p>
+                     <button type="button" class="btn btn-danger btn-xs" (click) ="RemoveTextLink(x)">刪除廣告連結</button>
+                 </li>
+             </ul>
+     </td>
+ </tr>
+
+  </tbody>
+</table>
+
+
 
 
 

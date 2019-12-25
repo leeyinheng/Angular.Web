@@ -4,3 +4,5 @@ export class ImageLink  {
   Comment: string;
   Target_Url: string;
 }
+
+

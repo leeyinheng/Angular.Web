@@ -1,0 +1,166 @@
+<div>
+
+  <select (change)="filterForArticles($event.target.value)" class="form-control">
+    <option value="-1">--選擇--</option>
+    <option *ngFor="let item of List; let i = index" value={{i}}>
+      {{item.ClientName}}
+    </option>
+  </select>
+</div>
+
+<div *ngIf= "Entity.ClientId">
+
+  <table class="table table-bordered table-striped">
+    <tbody>
+
+        <tr>
+
+            <td>
+                   編號:
+            </td>
+            <Td>
+                    {{Entity.ClientId}}
+            </Td>
+        </tr>
+        <tr>
+            <td>
+                   名稱:
+            </td>
+            <td>
+                <b><h1 class="h4">{{Entity.ClientName}} </h1></b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                地址:
+            </td>
+            <td>
+                    {{Entity.Address}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                電話:
+            </td>
+            <td>
+                {{Entity.Phone}}
+            </td>
+        </tr>
+        <tr>
+          <td>
+            身高:
+          </td>
+          <td>
+            {{Entity.Info.Height}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            備註:
+          </td>
+          <td>
+            {{Entity.Info.Note}}
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-bordered table-striped">
+
+      <tbody>
+        <th>
+          時間
+        </th>
+        <th>
+          體重(KG)
+        </th>
+        <th>
+          步數
+        </th>
+        <th>
+          血壓
+        </th>
+        <th>
+          餐飲
+        </th>
+        <th>
+          <button type="button" class="btn btn-primary" (click) = "openModal()">新增紀錄</button>
+        </th>
+        <tr *ngFor = 'let item of Entity.InfoHistory' >
+            <td>
+                {{item.DateTime}}
+            </td>
+            <td>{{ item.Weight}}
+
+            </td>
+            <td>{{ item.WalkSteps }}</td>
+
+            <td>
+                <table>
+                  <th>
+                    收縮壓
+                  </th>
+                  <th>
+                    舒張壓
+                  </th>
+                  <th>
+                    脈搏
+                  </th>
+                  <th>
+                    時間
+                  </th>
+                  <tbody class="table table-bordered table-striped">
+                    <tr *ngFor = "let blood of item.BloodPressures">
+                      <td> {{blood.BloodHigh}}</td>
+                      <td> {{blood.BloodLow}}</td>
+                      <td> {{blood.Pulse}}</td>
+                      <td> {{blood.DateTime}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </td>
+            <td>
+              <table>
+                <th>
+                  餐飲
+                </th>
+                <th>
+                  照片
+                </th>
+                <th>
+                  時間
+                </th>
+                <tbody class="table table-bordered table-striped">
+                  <tr *ngFor = "let meal of item.Meals">
+                    <td> {{meal.Name}}</td>
+                    <td> <img [src] = "meal.ImageLink" style="width: 50%;"/> </td>
+                    <td>  {{meal.DateTime}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+
+            <td>
+                   <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-success" (click) = openform(item.Id)>編輯</button>    |
+                        <button type="button" class="btn btn-sm btn-danger" (click) = delete(item.Id)>刪除</button>
+                   </div>
+            </td>
+
+        </tr>
+
+
+  </table>
+
+</div>
+
+
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>
