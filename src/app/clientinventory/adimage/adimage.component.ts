@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {ImageLink} from '../../core/shared/model/ImageLink';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import {NgxSpinnerService} from 'ngx-spinner';
@@ -9,18 +9,31 @@ import {Router} from '@angular/router';
 import {PostFileService} from './../../core/shared/service/postservice.service';
 import {InvserviceService} from '../invservice.service';
 
+
+
 @Component({
   selector: 'app-adimage',
   templateUrl: './adimage.component.html',
   styleUrls: ['./adimage.component.css']
 })
+
+
 export class AdimageComponent implements OnInit {
 
   public files: NgxFileDropEntry[] = [];
 
   public list: ImageLink[] = [];
 
-  public textLInks: ImageLink[] = [];
+
+
+  _textLInks: ImageLink[] = [];
+  get textLInks():  ImageLink[]  {
+      return this._textLInks;
+  }
+
+  set textLInks( value:  ImageLink[] ) {
+      this._textLInks = value;
+  }
 
   constructor(private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
@@ -65,15 +78,17 @@ export class AdimageComponent implements OnInit {
 
   }
 
+
+
   public  SaveEntity() {
 
       this.spinner.show();
 
      this.service.postAdImages(this.list).subscribe(
       res => {
-         alert('儲存完畢');
+         alert('廣告圖片連結儲存完畢');
          this.spinner.hide();
-         window.open('#/teaportal', '_self');
+        // window.open('#/teaportal', '_self');
      },
       err => {
         alert(err);
@@ -114,9 +129,14 @@ export class AdimageComponent implements OnInit {
                 const newImage = new ImageLink();
                 newImage.Name = 'Title';
                 newImage.Image_Url = val;
-                this.list.push(newImage);
 
-               this.spinner.hide();
+                const orginialItems = this.list;
+
+                orginialItems.push(newImage);
+
+                this.list = orginialItems.filter(x => x.Image_Url !== ''); // workaround wtih sorttable refresh
+
+                this.spinner.hide();
             }
           );
         });
@@ -165,7 +185,12 @@ export class AdimageComponent implements OnInit {
     textlink.Name = '廣告文案';
     textlink.Target_Url = '連結 url';
 
-    this.textLInks.push(textlink);
+    const orginialItems = this.textLInks;
+
+    orginialItems.push(textlink);
+
+    this.textLInks = orginialItems.filter(x => x.Name !== '');  // workaround wtih sorttable refresh
+
   }
 
   public  SaveTextLinks() {

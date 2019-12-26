@@ -17,6 +17,7 @@ import { PortalComponent } from './portal/portal.component';
 import {SharedModule} from '../core/shared/shared.module';
 import {ClipboardModule} from 'ngx-clipboard';
 import { AdimageComponent } from './adimage/adimage.component';
+import { SortableModule } from 'ngx-bootstrap';
 
 
 
@@ -34,6 +35,7 @@ import { AdimageComponent } from './adimage/adimage.component';
     ClipboardModule,
     SharedModule.forRoot(),
     CarouselModule.forRoot(),
+    SortableModule.forRoot(),
     RouterModule.forChild([
       {
         path: 'uploadinvfile', component: InvuploadComponent

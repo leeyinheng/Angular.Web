@@ -11,7 +11,7 @@
           <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
   </div>
   <div class="ml-auto">
-           <button type="button" class="btn btn-primary" (click)="SaveEntity()">儲存</button>
+           <button type="button" class="btn btn-primary" (click)="SaveEntity()">儲存廣告圖片連結</button>
   </div>
 </div>
 <p></p>
@@ -32,15 +32,19 @@
 
   <tr>
       <td colspan="2">
-              <ul *ngFor="let i of list; let x = index" class="list-group">
-                  <li class="list-group-item">
-                      <img [src]="i.Image_Url"   class="img-thumbnail" > <p></p>
-                      名稱:<input [(ngModel)]="i.Name" #ctrl="ngModel"  name="imagename" class="form-control"/> <p></p>
-                      備註: <input [(ngModel)]="i.Comment" #ctrl="ngModel"  name="imageComment" type="text"  class="form-control"/><p></p>
-                      圖片連結: <input [(ngModel)]="i.Target_Url" #ctrl="ngModel"  name="targeturl" type="text"  class="form-control"/><p></p>
-                      <button type="button" class="btn btn-danger btn-xs" (click) ="RemoveImage(x)">刪除圖片</button>
-                  </li>
-              </ul>
+
+
+              <div>
+                <bs-sortable
+                  [(ngModel)]="list"
+                  [itemTemplate]="itemTemplateImage"
+                  itemClass="sortable-item"
+                  itemActiveClass="sortable-item-active"
+                  placeholderItem="Drag here"
+                  placeholderClass="placeholderStyle"
+                  wrapperClass="sortable-wrapper"
+                ></bs-sortable>
+              </div>
       </td>
   </tr>
    </tbody>
@@ -49,6 +53,9 @@
 <hr>
 
 <h1> 廣告連結管理</h1>
+
+
+
 <table class="table table-borderless table-striped">
   <tbody>
  <tr>
@@ -61,19 +68,63 @@
  </tr>
  <tr>
      <td colspan="2">
-             <ul *ngFor="let i of textLInks; let x = index" class="list-group">
-                 <li class="list-group-item">
-                     廣告連結名稱:<input [(ngModel)]="i.Name" #ctrl="ngModel"  name="imagename" class="form-control"/> <p></p>
-                     連結(url): <input [(ngModel)]="i.Target_Url" #ctrl="ngModel"  name="targeturl" type="text"  class="form-control"/><p></p>
-                     <button type="button" class="btn btn-danger btn-xs" (click) ="RemoveTextLink(x)">刪除廣告連結</button>
-                 </li>
-             </ul>
+
+
+
+              <div>
+                <bs-sortable
+                  [(ngModel)]="textLInks"
+                  [itemTemplate]="itemTemplate"
+                  itemClass="sortable-item"
+                  itemActiveClass="sortable-item-active"
+                  placeholderItem="Drag here"
+                  placeholderClass="placeholderStyle"
+                  wrapperClass="sortable-wrapper"
+                ></bs-sortable>
+              </div>
+
+
      </td>
+
+
  </tr>
 
   </tbody>
 </table>
 
+
+
+<ng-template #itemTemplateImage let-item="item" let-index="index">
+
+  <div class="row"  style="border-style:solid; border-width: thin; border-color: lightblue;">
+
+    <img [src]="item.value.Image_Url"   class="img-thumbnail" > <p></p>
+    名稱:<input [(ngModel)]="item.value.Name" #ctrl="ngModel"  name="imagename" class="form-control"/> <p></p>
+    備註: <input [(ngModel)]="item.value.Comment" #ctrl="ngModel"  name="imageComment" type="text"  class="form-control"/><p></p>
+    圖片連結: <input [(ngModel)]="item.value.Target_Url" #ctrl="ngModel"  name="targeturl" type="text"  class="form-control"/><p></p>
+    <button type="button" class="btn btn-danger btn-xs" (click) ="RemoveImage(index)">刪除圖片</button>
+
+  </div>
+
+  <p></p>
+
+</ng-template>
+
+
+
+
+<ng-template #itemTemplate let-item="item" let-index="index">
+
+  <div style="border-style:solid; border-width: thin;">
+    廣告連結名稱:<input [(ngModel)]="item.value.Name" #ctrl="ngModel"  name="imagename" class="form-control"/> <p></p>
+    連結(url): <input [(ngModel)]="item.value.Target_Url" #ctrl="ngModel"  name="targeturl" type="text"  class="form-control"/><p></p>
+    <button type="button" class="btn btn-danger btn-xs" (click) ="RemoveTextLink(index)">刪除廣告連結</button>
+
+  </div>
+
+  <p></p>
+
+</ng-template>
 
 
 
