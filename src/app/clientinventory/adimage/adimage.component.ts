@@ -10,7 +10,6 @@ import {PostFileService} from './../../core/shared/service/postservice.service';
 import {InvserviceService} from '../invservice.service';
 
 
-
 @Component({
   selector: 'app-adimage',
   templateUrl: './adimage.component.html',
@@ -23,7 +22,6 @@ export class AdimageComponent implements OnInit {
   public files: NgxFileDropEntry[] = [];
 
   public list: ImageLink[] = [];
-
 
 
   _textLInks: ImageLink[] = [];

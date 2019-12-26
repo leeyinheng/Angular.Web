@@ -103,10 +103,10 @@ export class HealthviewComponent implements OnInit {
 
       const now = new Date;
 
-      newEntity.DateTime = now.getFullYear().toString() + '/' + now.getMonth().toPrecision() + '/' +  now.getDate().toString();
+      newEntity.DateTime = now.getFullYear().toString() + '/' + (now.getMonth() + 1).toString() + '/' +  now.getDate().toString();
 
-      newEntity.WalkSteps = 0;
-      newEntity.Weight = 60;
+      newEntity.WalkSteps = 7000;
+      newEntity.Weight = 75;
       newEntity.BloodPressures = [];
       newEntity.Meals = [];
 
@@ -116,5 +116,7 @@ export class HealthviewComponent implements OnInit {
         };
 
       this.bsModalRef = this.modalService.show(HealthviewmodalComponent, {initialState});
+
+      this.bsModalRef.setClass('modal-lg');
     }
 }
