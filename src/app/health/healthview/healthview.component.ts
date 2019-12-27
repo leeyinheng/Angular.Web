@@ -17,6 +17,8 @@ export class HealthviewComponent implements OnInit {
 
   bsModalRef: BsModalRef;
 
+  refresh = false;
+
   _list: UserInfo<HealthInfo, HealthHistory>[] = [];
 
     get List(): UserInfo<HealthInfo, HealthHistory>[] {
@@ -112,8 +114,24 @@ export class HealthviewComponent implements OnInit {
 
       const initialState = {
             Entity: this.Entity,
-            History: newEntity
+            History: newEntity,
+            Mode: 'Add'
         };
+
+      this.bsModalRef = this.modalService.show(HealthviewmodalComponent, {initialState});
+
+      this.bsModalRef.setClass('modal-lg');
+    }
+
+    public editform(i: number) {
+
+      this.refresh = true;
+
+      const initialState = {
+        Entity: this.Entity,
+        History: this.Entity.InfoHistory[i],
+        Mode: 'Edit'
+    };
 
       this.bsModalRef = this.modalService.show(HealthviewmodalComponent, {initialState});
 
@@ -122,20 +140,46 @@ export class HealthviewComponent implements OnInit {
 
     public delete(i: number) {
 
+      this.refresh = true;
+
       i++;
-  
+
       const orginialItems = this.Entity.InfoHistory;
       const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
       this.Entity.InfoHistory = filterItems;
-  
+
     }
 
-    public save(){
-      this.service.postEntity(this.Entity).subscribe( x => {
-        alert("儲存完成");
-      }, 
-      err => {
-        alert("Error");
-      })
+    public save() {
+
+      this.spinner.show();
+
+      if (this.refresh === true) {
+
+        this.service.postRefreshEntity(this.Entity).subscribe( x => {
+          alert('更新完成');
+          this.refresh = false;
+          this.spinner.hide();
+        },
+        err => {
+          alert('Error');
+          this.spinner.hide();
+        } );
+
+      } else {
+
+        this.service.postEntity(this.Entity).subscribe( x => {
+          alert('新增完成');
+          this.refresh = false;
+          this.spinner.hide();
+        },
+        err => {
+          alert('Error');
+          this.spinner.hide();
+        } );
+
+      }
+
+
     }
 }

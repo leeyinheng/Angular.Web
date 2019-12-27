@@ -9,6 +9,7 @@ import {UserInfo, HealthInfo, HealthHistory} from '../../core/shared/model/useri
 export class HealthserviceService {
 
   private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+  // private site = 'https://localhost:44347/';  // URL to web api
   private url = 'api/healthapi/';
   private postImgurl = 'api/UploadFileapi/';
   list: string[];
@@ -31,7 +32,14 @@ export class HealthserviceService {
 
   public postEntity(entity: UserInfo<HealthInfo, HealthHistory>) {
 
-    const url = this.site + this.url;
+    const url = this.site + this.url ;
+
+    return this.http.post(url, entity);
+  }
+
+  public postRefreshEntity(entity: UserInfo<HealthInfo, HealthHistory>) {
+
+    const url = this.site + this.url + '?refresh=true';
 
     return this.http.post(url, entity);
   }

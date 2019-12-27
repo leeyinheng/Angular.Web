@@ -24,6 +24,8 @@ export class HealthviewmodalComponent implements OnInit {
 
   History: HealthHistory;
 
+  Mode = 'Add';
+
   public files: NgxFileDropEntry[] = [];
 
 
@@ -65,9 +67,10 @@ export class HealthviewmodalComponent implements OnInit {
 
   public save() {
 
-    this.Entity.InfoHistory.unshift(this.History);
-
-    this.bsModalRef.hide();
+    if (this.Mode === 'Add') {
+      this.Entity.InfoHistory.unshift(this.History);
+    }
+     this.bsModalRef.hide();
   }
 
 
