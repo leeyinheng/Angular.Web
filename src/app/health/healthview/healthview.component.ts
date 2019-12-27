@@ -119,4 +119,23 @@ export class HealthviewComponent implements OnInit {
 
       this.bsModalRef.setClass('modal-lg');
     }
+
+    public delete(i: number) {
+
+      i++;
+  
+      const orginialItems = this.Entity.InfoHistory;
+      const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
+      this.Entity.InfoHistory = filterItems;
+  
+    }
+
+    public save(){
+      this.service.postEntity(this.Entity).subscribe( x => {
+        alert("儲存完成");
+      }, 
+      err => {
+        alert("Error");
+      })
+    }
 }
