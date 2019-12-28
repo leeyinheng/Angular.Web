@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {ActivatedRoute} from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute } from '@angular/router';
 import { isNullOrUndefined } from 'util';
-import {UserInfo, HealthInfo, HealthHistory} from '../../core/shared/model/userinfo';
-import {HealthserviceService} from './../service/healthservice.service';
+import { UserInfo, HealthInfo, HealthHistory } from '../../core/shared/model/userinfo';
+import { HealthserviceService } from './../service/healthservice.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { HealthviewmodalComponent } from '../healthviewmodal/healthviewmodal.component';
@@ -19,35 +19,37 @@ export class HealthviewComponent implements OnInit {
 
   refresh = false;
 
+  change = false;
+
   _list: UserInfo<HealthInfo, HealthHistory>[] = [];
 
-    get List(): UserInfo<HealthInfo, HealthHistory>[] {
+  get List(): UserInfo<HealthInfo, HealthHistory>[] {
 
-        return this._list;
-
-    }
-
-    set List( value: UserInfo<HealthInfo, HealthHistory>[]) {
-
-
-        this._list = value;
-
-    }
-
-
-
-  _entity: UserInfo<HealthInfo, HealthHistory > = new UserInfo<HealthInfo, HealthHistory >();
-
-  get Entity(): UserInfo<HealthInfo, HealthHistory > {
-
-      return this._entity;
+    return this._list;
 
   }
 
-  set Entity( value: UserInfo<HealthInfo, HealthHistory >) {
+  set List(value: UserInfo<HealthInfo, HealthHistory>[]) {
 
 
-      this._entity = value;
+    this._list = value;
+
+  }
+
+
+
+  _entity: UserInfo<HealthInfo, HealthHistory> = new UserInfo<HealthInfo, HealthHistory>();
+
+  get Entity(): UserInfo<HealthInfo, HealthHistory> {
+
+    return this._entity;
+
+  }
+
+  set Entity(value: UserInfo<HealthInfo, HealthHistory>) {
+
+
+    this._entity = value;
 
   }
 
@@ -70,116 +72,126 @@ export class HealthviewComponent implements OnInit {
       this.List = val;
       this.spinner.hide();
     },
-    err => {
-      alert('Not Found');
-      this.spinner.hide();
-    });
+      err => {
+        alert('Not Found');
+        this.spinner.hide();
+      });
 
-    }
+  }
 
   public addHealthHistory() {
 
-      const newEntity = new HealthHistory();
+    const newEntity = new HealthHistory();
 
-      const now = new Date;
+    const now = new Date;
 
-      newEntity.DateTime = now.getFullYear().toString() + '/' + now.getMonth().toPrecision() + '/' +  now.getDate().toString();
+    newEntity.DateTime = now.getFullYear().toString() + '/' + now.getMonth().toPrecision() + '/' + now.getDate().toString();
 
-      this.Entity.InfoHistory.push(newEntity);
+    this.Entity.InfoHistory.push(newEntity);
+
+    this.change = true;
   }
 
-    filterForArticles(filterVal: string) {
+  filterForArticles(filterVal: string) {
 
-      if (filterVal === '-1') {
+    if (filterVal === '-1') {
 
-      } else {
+    } else {
 
-        this.Entity = this.List[Number(filterVal)];
-      }
-
+      this.Entity = this.List[Number(filterVal)];
     }
 
-    openModal() {
+  }
 
-      const newEntity = new HealthHistory();
+  openModal() {
 
-      const now = new Date;
+    const newEntity = new HealthHistory();
 
-      newEntity.DateTime = now.getFullYear().toString() + '/' + (now.getMonth() + 1).toString() + '/' +  now.getDate().toString();
+    const now = new Date;
 
-      newEntity.WalkSteps = 7000;
-      newEntity.Weight = 75;
-      newEntity.BloodPressures = [];
-      newEntity.Meals = [];
+    newEntity.DateTime = now.getFullYear().toString() + '/' + (now.getMonth() + 1).toString() + '/' + now.getDate().toString();
 
-      const initialState = {
-            Entity: this.Entity,
-            History: newEntity,
-            Mode: 'Add'
-        };
+    newEntity.WalkSteps = 7000;
+    newEntity.Weight = 75;
+    newEntity.BloodPressures = [];
+    newEntity.Meals = [];
 
-      this.bsModalRef = this.modalService.show(HealthviewmodalComponent, {initialState});
-
-      this.bsModalRef.setClass('modal-lg');
-    }
-
-    public editform(i: number) {
-
-      this.refresh = true;
-
-      const initialState = {
-        Entity: this.Entity,
-        History: this.Entity.InfoHistory[i],
-        Mode: 'Edit'
+    const initialState = {
+      Entity: this.Entity,
+      History: newEntity,
+      Mode: 'Add'
     };
 
-      this.bsModalRef = this.modalService.show(HealthviewmodalComponent, {initialState});
+    this.bsModalRef = this.modalService.show(HealthviewmodalComponent, { initialState });
 
-      this.bsModalRef.setClass('modal-lg');
-    }
+    this.bsModalRef.setClass('modal-lg');
 
-    public delete(i: number) {
+    this.change = true;
+  }
 
-      this.refresh = true;
+  public editform(i: number) {
 
-      i++;
+    this.refresh = true;
 
-      const orginialItems = this.Entity.InfoHistory;
-      const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
-      this.Entity.InfoHistory = filterItems;
+    const initialState = {
+      Entity: this.Entity,
+      History: this.Entity.InfoHistory[i],
+      Mode: 'Edit'
+    };
 
-    }
+    this.bsModalRef = this.modalService.show(HealthviewmodalComponent, { initialState });
 
-    public save() {
+    this.bsModalRef.setClass('modal-lg');
 
-      this.spinner.show();
+    this.change = true;
+  }
 
-      if (this.refresh === true) {
+  public delete(i: number) {
 
-        this.service.postRefreshEntity(this.Entity).subscribe( x => {
-          alert('更新完成');
-          this.refresh = false;
-          this.spinner.hide();
-        },
+    this.refresh = true;
+
+    i++;
+
+    const orginialItems = this.Entity.InfoHistory;
+    const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
+    this.Entity.InfoHistory = filterItems;
+
+    this.change = true;
+
+  }
+
+  public save() {
+
+    this.spinner.show();
+
+    this.change = false;
+
+    if (this.refresh === true) {
+
+      this.service.postRefreshEntity(this.Entity).subscribe(x => {
+        alert('更新完成');
+        this.refresh = false;
+        this.spinner.hide();
+      },
         err => {
           alert('Error');
           this.spinner.hide();
-        } );
+        });
 
-      } else {
+    } else {
 
-        this.service.postEntity(this.Entity).subscribe( x => {
-          alert('新增完成');
-          this.refresh = false;
-          this.spinner.hide();
-        },
+      this.service.postEntity(this.Entity).subscribe(x => {
+        alert('新增完成');
+        this.refresh = false;
+        this.spinner.hide();
+      },
         err => {
           alert('Error');
           this.spinner.hide();
-        } );
-
-      }
-
+        });
 
     }
+
+
+  }
 }

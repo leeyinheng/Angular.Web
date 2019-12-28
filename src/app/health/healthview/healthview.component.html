@@ -67,6 +67,7 @@
     </tbody>
   </table>
   <button type="button" class="btn btn-lg btn-primary" (click)=save()>儲存紀錄</button>
+  <div *ngIf="change" style="color: red;">The change needs to be clicked the button to save!</div>
   <p></p>
   <table class="table table-bordered table-striped">
 
@@ -84,10 +85,25 @@
       <tr *ngFor='let item of Entity.InfoHistory; let x = index'>
         <td>
           {{item.DateTime}} 體重:
-          {{ item.Weight}} 步數:
-          {{ item.WalkSteps }}
-          <button type="button" class="btn btn-sm btn-warning" (click)=editform(x)>編輯</button>
-          <button type="button" class="btn btn-sm btn-danger" (click)=delete(x)>刪除</button>
+          {{ item.Weight}}KG 步數:
+          <span *ngIf="item.WalkSteps < 10000">{{ item.WalkSteps }} </span>
+          <span *ngIf="item.WalkSteps >= 10000" style="color: red;">{{ item.WalkSteps }} </span>步
+          <span *ngIf="item.Comment" style="color:blue;">({{item.Comment}})</span>
+
+          <table>
+            <tr>
+              <td>
+                <button type="button" class="btn btn-sm btn-warning" (click)=editform(x)>編輯</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button type="button" class="btn btn-sm btn-danger" (click)=delete(x)>刪除</button>
+              </td>
+            </tr>
+          </table>
+
+
 
         </td>
 
