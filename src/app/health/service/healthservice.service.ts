@@ -11,7 +11,7 @@ export class HealthserviceService {
   private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
   // private site = 'https://localhost:44347/';  // URL to web api
   private url = 'api/healthapi/';
-  private postImgurl = 'api/UploadFileapi/';
+  private postImgurl = 'api/UploadWebPhotoapi/';
   list: string[];
 
   constructor(private http: HttpClient) { }
