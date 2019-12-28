@@ -10,147 +10,118 @@
 
 <p></p>
 
-<div *ngIf= "Entity.ClientId">
+<div *ngIf="Entity.ClientId">
 
   <table class="table table-bordered table-striped">
     <tbody>
 
-        <tr>
+      <tr>
 
-            <td>
-                   編號:
-            </td>
-            <Td>
-                    {{Entity.ClientId}}
-            </Td>
-        </tr>
-        <tr>
-            <td>
-                   名稱:
-            </td>
-            <td>
-                <b>{{Entity.ClientName}} </b>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                地址:
-            </td>
-            <td>
-                    {{Entity.Address}}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                電話:
-            </td>
-            <td>
-                {{Entity.Phone}}
-            </td>
-        </tr>
-        <tr>
-          <td>
-            身高:
-          </td>
-          <td>
-            {{Entity.Info.Height}}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            備註:
-          </td>
-          <td>
-            {{Entity.Info.Note}}
-          </td>
-        </tr>
+        <td>
+          編號:
+        </td>
+        <Td>
+          {{Entity.ClientId}}
+        </Td>
+      </tr>
+      <tr>
+        <td>
+          名稱:
+        </td>
+        <td>
+          <b>{{Entity.ClientName}} </b>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          地址:
+        </td>
+        <td>
+          {{Entity.Address}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          電話:
+        </td>
+        <td>
+          {{Entity.Phone}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          身高:
+        </td>
+        <td>
+          {{Entity.Info.Height}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          備註:
+        </td>
+        <td>
+          {{Entity.Info.Note}}
+        </td>
+      </tr>
     </tbody>
   </table>
-  <button type="button" class="btn btn-lg btn-primary" (click) = save()>儲存紀錄</button>
+  <button type="button" class="btn btn-lg btn-primary" (click)=save()>儲存紀錄</button>
   <p></p>
   <table class="table table-bordered table-striped">
 
-      <tbody>
-        <th>
-          時間
-        </th>
-        <th>
-          體重(KG)
-        </th>
-        <th>
-          步數
-        </th>
-        <th>
-          血壓
-        </th>
-        <th>
-          餐飲
-        </th>
-        <th>
-          <button type="button" class="btn btn-success" (click) = "openModal()">新增紀錄</button>
-        </th>
-        <tr *ngFor = 'let item of Entity.InfoHistory; let x = index' >
-            <td>
-                {{item.DateTime}}
-            </td>
-            <td>{{ item.Weight}}
+    <tbody>
+      <th>
+        基本數據 <button type="button" class="btn btn-success" (click)="openModal()">新增紀錄</button>
+      </th>
+      <th>
+        血壓
+      </th>
+      <th>
+        餐飲
+      </th>
 
-            </td>
-            <td>{{ item.WalkSteps }}</td>
+      <tr *ngFor='let item of Entity.InfoHistory; let x = index'>
+        <td>
+          {{item.DateTime}} 體重:
+          {{ item.Weight}} 步數:
+          {{ item.WalkSteps }}
+          <button type="button" class="btn btn-sm btn-warning" (click)=editform(x)>編輯</button>
+          <button type="button" class="btn btn-sm btn-danger" (click)=delete(x)>刪除</button>
 
-            <td>
-                <table>
-                  <th>
-                    收縮壓
-                  </th>
-                  <th>
-                    舒張壓
-                  </th>
-                  <th>
-                    脈搏
-                  </th>
-                  <th>
-                    時間
-                  </th>
-                  <tbody class="table table-bordered table-striped">
-                    <tr *ngFor = "let blood of item.BloodPressures">
-                      <td> {{blood.BloodHigh}}</td>
-                      <td> {{blood.BloodLow}}</td>
-                      <td> {{blood.Pulse}}</td>
-                      <td> {{blood.DateTime}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-            </td>
-            <td>
-              <table>
-                <th>
-                  餐飲
-                </th>
-                <th>
-                  照片
-                </th>
-                <th>
-                  時間
-                </th>
-                <tbody class="table table-bordered table-striped">
-                  <tr *ngFor = "let meal of item.Meals">
-                    <td> {{meal.Name}}</td>
-                    <td> <img [src] = "meal.ImageLink" style="width: 50%;"/> </td>
-                    <td>  {{meal.DateTime}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
+        </td>
 
-            <td>
-                   <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-warning" (click) = editform(x)>編輯</button>    |
-                        <button type="button" class="btn btn-sm btn-danger" (click) = delete(x)>刪除</button>
-                   </div>
-            </td>
+        <td>
+          <table>
 
-        </tr>
+            <tbody class="table table-bordered table-striped">
+              <tr *ngFor="let blood of item.BloodPressures">
+                <td> 收縮壓:{{blood.BloodHigh}}
+                  舒張壓:{{blood.BloodLow}}
+                  脈搏: {{blood.Pulse}}
+                  {{blood.DateTime}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        <td>
+          <table>
+
+
+            <tbody class="table table-bordered table-striped">
+              <tr *ngFor="let meal of item.Meals">
+                <td> {{meal.DateTime}} - {{meal.Name}}
+                  <img [src]="meal.ImageLink" style="width: 100%;" /> </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </td>
+
+
+
+      </tr>
 
 
   </table>
@@ -159,11 +130,6 @@
 
 
 
-<ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple"
->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
   <p style="font-size: 20px; color: white">處理中...</p>
 </ngx-spinner>

@@ -38,8 +38,7 @@ export class HealthviewmodalComponent implements OnInit {
   public newblood() {
     const newblood = new BloodPressure();
     const now = new Date;
-    newblood.DateTime = now.getFullYear().toString() + '/' + (now.getMonth() + 1).toString() + '/'
-    +  now.getDate().toString() + ' ' + now.getHours().toString() + ':' + now.getMinutes().toString();
+    newblood.DateTime = now.toLocaleString();
     this.History.BloodPressures.push(newblood);
   }
 

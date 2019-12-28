@@ -1,144 +1,146 @@
+<div class="modal-header table-hover">
+    <h4 class="modal-title pull-left">{{History.DateTime}}</h4>
+</div>
+<div class="modal-body">
+  <table class="table table-bordered">
+    <tr>
+      <td>
+        每日步數
+      </td>
+      <td>
+        <input type="number" [(ngModel)]='History.WalkSteps' />
+      </td>
+    </tr>
 
+    <tr>
+      <td>
+        體重(kg)
+      </td>
+      <td>
+        <input type="number" [(ngModel)]='History.Weight' />
+      </td>
+    </tr>
 
-    <div class="modal-header table-hover">
-        <h4 class="modal-title pull-left">{{History.DateTime}}</h4>
-    </div>
-        <div class="modal-body">
-          <table class="table table-bordered">
-            <tr>
-                <td>
-                    每日步數
-                </td>
-                <td>
-                <input type="number"
-                [(ngModel)]='History.WalkSteps'
-                 />
-                </td>
-            </tr>
+    <tr>
+      <td>
+        血壓 <button type="button" class="btn btn-sm btn-danger" (click)=newblood();>新增</button>
+      </td>
+      <td>
+        <table>
 
-            <tr>
-                <td>
-                    體重(kg)
-                </td>
-                <td>
-                <input type="number"
-                [(ngModel)]='History.Weight'
-                 />
-                </td>
-            </tr>
+          <tbody class="table table-bordered table-striped">
+            <tr *ngFor="let blood of History.BloodPressures; let x = index">
+              <td>
 
-            <tr>
-            <td>
-               血壓    <button type="button" class="btn btn-sm btn-danger" (click) = newblood();>新增</button>
-            </td>
-            <td>
-              <table>
-                <th>
-                  收縮壓
-                </th>
-                <th>
-                  舒張壓
-                </th>
-                <th>
-                  脈搏
-                </th>
-                <th>
-                  時間
-                </th>
-                <tbody class="table table-bordered table-striped">
-                  <tr *ngFor = "let blood of History.BloodPressures; let x = index">
-                    <td>  <input type="number"
-                      [(ngModel)]='blood.BloodHigh' style="width: 50%;"
-                       />  </td>
+                <table>
+                  <tr>
                     <td>
-                      <input type="number"
-                      [(ngModel)]='blood.BloodLow'  style="width: 50%;"
-                      />
+                      收縮壓 :
                     </td>
                     <td>
-                      <input type="number"
-                      [(ngModel)]='blood.Pulse'  style="width: 50%;"
-                      />
-
-                    </td>
-                    <td>
-                      {{blood.DateTime}}
-                    </td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-danger" (click)="removeblood(x)">刪除</button>
+                      <input [(ngModel)]="blood.BloodHigh" #ctrl="ngModel" type="number" style="width: 60%;">  
                     </td>
                   </tr>
-                </tbody>
-              </table>
+                  <tr>
+                    <td>
+                      舒張壓 :
+                    </td>
+                    <td>
+                      <input [(ngModel)]="blood.BloodLow" #ctrl="ngModel" type="number" style="width: 60%;">  
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      脈搏 :
+                    </td>
+                    <td>
+                      <input [(ngModel)]="blood.Pulse" #ctrl="ngModel" type="number" style="width: 60%;">  
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      時間 :
+                    </td>
+                    <td>
+                      {{blood.DateTime}} 
+                    </td>
+                  </tr>
+                </table>
 
+              </td>
 
-            </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                餐飲
-                <div class="center">
-                  <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
-                  (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-                      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                        拖曳或是選擇要上傳的餐飲圖片(必須小於4mb)
-                        <button type="button" (click)="openFileSelector()">Browse Files</button>
-                      </ng-template>
-                  </ngx-file-drop>
-                  </div>
+              <td>
+                <button type="button" class="btn btn-sm btn-danger" (click)="removeblood(x)">刪除</button>
               </td>
             </tr>
-            <tr>
-              <td colspan="2">
+          </tbody>
+        </table>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        餐飲
+        <div class="center">
+          <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+            (onFileLeave)="fileLeave($event)">
+            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+              拖曳或是選擇要上傳的餐飲圖片(必須小於4mb)
+              <button type="button" (click)="openFileSelector()">Browse Files</button>
+            </ng-template>
+          </ngx-file-drop>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <table>
+          <tbody class="table table-bordered table-striped">
+            <tr *ngFor="let meal of History.Meals; let x = index">
+              <td>
                 <table>
-                  <th>
-                    照片
-                  </th>
-                  <th>
-                    餐食
-                  </th>
-                  <th>
-                    時間
-                  </th>
-                <tbody class="table table-bordered table-striped">
-                  <tr *ngFor = "let meal of History.Meals; let x = index">
-                    <td style="width: 50%;">  <img [src] = "meal.ImageLink"/></td>
+                  <tr>
                     <td>
-                      <input type="string"
-                      [(ngModel)]='meal.Name'  style="width: 90%;"
-                      />
+                      <img [src]="meal.ImageLink" />
                     </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="string" [(ngModel)]='meal.Name' style="width: 90%;" />
+                    </td>
+                  </tr>
+                  <tr>
                     <td>
                       {{meal.DateTime}}
                     </td>
+                  </tr>
+                  <tr>
                     <td>
                       <button type="button" class="btn btn-sm btn-danger" (click)="removeMeal(x)">刪除</button>
                     </td>
                   </tr>
-                </tbody>
-              </table>
+                </table>
               </td>
             </tr>
-            <tr>
-            <td>
-                其他事項
-            </td>
-            <td>
-               <textarea [(ngModel)]='History.Comment' class="form-control" >
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        其他事項
+      </td>
+      <td>
+        <textarea [(ngModel)]='History.Comment' class="form-control">
 
                </textarea>
-            </td>
-            </tr>
+      </td>
+    </tr>
 
-          </table>
-        </div>
-              <div class="modal-footer">
-                     <button type="button" class="btn btn-primary" (click)="save()">儲存</button>
-                    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">取消</button>
-              </div>
-
-
-
-
-
-
+  </table>
+</div>
+      <div class="modal-footer">
+           <button type="button" class="btn btn-primary" (click)="save()">儲存</button>
+  <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">取消</button>
+        </div>
