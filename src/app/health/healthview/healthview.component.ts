@@ -68,8 +68,14 @@ export class HealthviewComponent implements OnInit {
 
     this.spinner.show();
 
+    const ID: string = this.route.snapshot.queryParamMap.get('id');
+
     this.service.getList().subscribe(val => {
       this.List = val;
+      if (!isNullOrUndefined(ID)) {
+        this.Entity = this.List.filter(x => x.ClientId === ID)[0];
+      }
+
       this.spinner.hide();
     },
       err => {
@@ -90,6 +96,9 @@ export class HealthviewComponent implements OnInit {
     this.Entity.InfoHistory.push(newEntity);
 
     this.change = true;
+
+
+
   }
 
   filterForArticles(filterVal: string) {

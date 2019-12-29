@@ -1,5 +1,6 @@
 <div class="modal-header table-hover">
     <h4 class="modal-title pull-left">{{History.DateTime}}</h4>
+    <button type="button" class="btn btn-primary" (click)="save()">儲存</button>
 </div>
 <div class="modal-body">
   <table class="table table-bordered">
@@ -38,7 +39,7 @@
                       收縮壓 :
                     </td>
                     <td>
-                      <input [(ngModel)]="blood.BloodHigh" #ctrl="ngModel" type="number" style="width: 60%;">  
+                      <input [(ngModel)]="blood.BloodHigh" #ctrl="ngModel" type="number" style="width: 60%;">
                     </td>
                   </tr>
                   <tr>
@@ -46,7 +47,7 @@
                       舒張壓 :
                     </td>
                     <td>
-                      <input [(ngModel)]="blood.BloodLow" #ctrl="ngModel" type="number" style="width: 60%;">  
+                      <input [(ngModel)]="blood.BloodLow" #ctrl="ngModel" type="number" style="width: 60%;">
                     </td>
                   </tr>
                   <tr>
@@ -54,7 +55,7 @@
                       脈搏 :
                     </td>
                     <td>
-                      <input [(ngModel)]="blood.Pulse" #ctrl="ngModel" type="number" style="width: 60%;">  
+                      <input [(ngModel)]="blood.Pulse" #ctrl="ngModel" type="number" style="width: 60%;">
                     </td>
                   </tr>
                   <tr>
@@ -62,7 +63,7 @@
                       時間 :
                     </td>
                     <td>
-                      {{blood.DateTime}} 
+                      {{blood.DateTime}}
                     </td>
                   </tr>
                 </table>
