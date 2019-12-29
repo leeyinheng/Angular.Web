@@ -86,11 +86,11 @@ public dropped(files: NgxFileDropEntry[]) {
         // Here you can access the real file
         console.log(droppedFile.relativePath, file);
 
-        if (file.size > 4194304)
-        {
-          alert(file.name + ' 已經大於4mb,請縮小後再上傳');
-          return;
-        }
+      //  if (file.size > 4194304)
+      //  {
+      //    alert(file.name + ' 已經大於4mb,請縮小後再上傳');
+      //    return;
+      //  }
 
         // You could upload it like this:
         const formData = new FormData();

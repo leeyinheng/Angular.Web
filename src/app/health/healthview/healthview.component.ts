@@ -164,14 +164,13 @@ export class HealthviewComponent implements OnInit {
 
     this.spinner.show();
 
-    this.change = false;
-
     if (this.refresh === true) {
 
       this.service.postRefreshEntity(this.Entity).subscribe(x => {
         alert('更新完成');
         this.refresh = false;
         this.spinner.hide();
+        this.change = false;
       },
         err => {
           alert('Error');
@@ -184,6 +183,7 @@ export class HealthviewComponent implements OnInit {
         alert('新增完成');
         this.refresh = false;
         this.spinner.hide();
+        this.change = false;
       },
         err => {
           alert('Error');

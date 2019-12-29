@@ -8,7 +8,7 @@ import {UserInfo, HealthInfo, HealthHistory} from '../../core/shared/model/useri
 })
 export class HealthserviceService {
 
-  private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+   private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
   // private site = 'https://localhost:44347/';  // URL to web api
   private url = 'api/healthapi/';
   private postImgurl = 'api/UploadWebPhotoapi/';
