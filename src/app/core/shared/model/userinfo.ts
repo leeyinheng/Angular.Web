@@ -42,3 +42,23 @@ export class Meal {
   ImageLink: string;
   DateTime: string;
 }
+
+
+export class PaymentInfo {
+  NextPaymentDate: string;
+  LastPaymentDate: string;
+  TotalStock: number;
+  TotalFee: number;
+  PaymentPeriod: number; // month unit
+  PaymentStatus: string;
+  Comment: string;
+}
+
+export class PaymentHistory {
+  Date: string;
+  Item: string;
+  PaymentType: string;
+  Amount: string;
+  Comment: string;
+  DataKey: string;
+}

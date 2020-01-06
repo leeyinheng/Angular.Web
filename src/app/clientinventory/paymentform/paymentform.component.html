@@ -1,0 +1,176 @@
+<span> <img src='../assets/Photos/tealogo.jpg' width=20% height=20% /></span>
+<p></p>
+<div>
+  <button type="button" class="btn btn-success" onclick="location.href='#/paymentlist';">返回總表</button>
+  <p></p>
+</div>
+<div *ngIf="Entity.ClientId">
+  <table class="table table-bordered table-striped">
+    <tbody>
+      <tr>
+        <td>
+          編號:
+        </td>
+        <Td>
+          {{Entity.ClientId}}
+        </Td>
+      </tr>
+      <tr>
+        <td>
+          名稱:
+        </td>
+        <td>
+          <b>{{Entity.ClientName}} </b>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          地址:
+        </td>
+        <td>
+          {{Entity.Address}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          電話:
+        </td>
+        <td>
+          {{Entity.Phone}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="Entity.Info">
+    <table class="table table-bordered table-striped">
+      <tbody>
+        <tr>
+          <td>
+            目前倉儲庫存(片)
+          </td>
+          <td>
+            <input [(ngModel)]="Entity.Info.TotalStock" #ctrl="ngModel" type="number" style="width: 60%;">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            目前管理費
+          </td>
+          <td>
+              <input [(ngModel)]="Entity.Info.TotalFee" #ctrl="ngModel" type="number" style="width: 60%;">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            付費週期
+          </td>
+          <td>
+            <mat-form-field>
+              <select matNativeControl [(ngModel)]="Entity.Info.PaymentPeriod" (ngModelChange) = "updatepaymentdate()" required>
+                <option value=1>每月付</option>
+                <option value=3>每三個月付</option>
+                <option value=6>每六個月付</option>
+                <option value=12>每年付</option>
+              </select>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            上次付費日期
+          </td>
+          <td>
+            <div class="input-group">
+              {{Entity.Info.LastPaymentDate}}
+              <input  [(ngModel)]="model"   #ctrl="ngModel" type="text" style="width: 0%;"  ngbDatepicker #d="ngbDatepicker" (ngModelChange)="selectlastspaymentday(model)">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar fa fa-calendar" (click)="d.toggle()" type="button"></button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            下次付費日期
+          </td>
+          <td>
+            <div class="input-group">
+
+             <span   [@changeValue]=currentState>{{Entity.Info.NextPaymentDate}}</span>
+              <input [(ngModel)]="model2"  #ctrl="ngModel" type="text" style="width: 0%;" ngbDatepicker #d1="ngbDatepicker" (ngModelChange)="selectnextpaymentday(model2)">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar fa fa-calendar" (click)="d1.toggle()" type="button"></button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            備註
+          </td>
+          <td>
+            <input [(ngModel)]="Entity.Info.Comment" #ctrl="ngModel" type="string" style="width: 100%;">
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+  <button type="button" class="btn btn-lg btn-primary" (click)=save()>儲存紀錄</button>
+  <div *ngIf="change" style="color: red;">所有更新尚未儲存 請按下儲存按鈕至雲端</div>
+  <p></p>
+  <table class="table table-bordered table-striped">
+
+    <tbody>
+      <th>
+        付款日期 <button type="button" class="btn btn-success" (click)="addnewhistory()">新增紀錄</button>
+      </th>
+      <th>
+        付款名目
+      </th>
+      <th>
+        付款方式
+      </th>
+      <th>
+        付款總額
+      </th>
+      <th>
+        備註
+      </th>
+
+      <tr *ngFor='let item of Entity.InfoHistory; let x = index'>
+        <td>
+          <input [(ngModel)]="item.Date" #ctrl="ngModel" type="string" style="width: 80%;">
+        </td>
+        <td>
+          <input [(ngModel)]="item.Item" #ctrl="ngModel" type="string" style="width: 80%;">
+        <td>
+         <mat-form-field>
+            <select matNativeControl [(ngModel)]="item.PaymentType" required>
+              <option value="信用卡">信用卡</option>
+              <option value="匯款">匯款</option>
+              <option value="現金">現金</option>
+              <option value="其他">其他</option>
+            </select>
+          </mat-form-field>
+        </td>
+        <td>
+          <input [(ngModel)]="item.Amount" #ctrl="ngModel" type="number" style="width: 80%;">
+        </td>
+        <td>
+          <input [(ngModel)]="item.Comment" #ctrl="ngModel" type="string" style="width: 100%;">
+        </td>
+        <td>
+          <button type="button" class="btn btn-sm btn-danger" (click)=delete(x)>刪除</button>
+        </td>
+      </tr>
+  </table>
+
+</div>
+
+
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>

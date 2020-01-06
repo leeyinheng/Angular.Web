@@ -18,7 +18,7 @@
 <p></p>
 <form>
     <div *ngIf="IsManager">
-           <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>
+           <button type="button" class="btn btn-success" onclick="location.href='#/clientlist';">返回列表</button>
            <p></p>
    </div>
 
@@ -60,6 +60,54 @@
                         </td>
                 </tbody>
         </table>
+        <div>
+          <table class="table table-bordered table-striped table-hover">
+            <tr>
+              <th>
+                倉儲管理費
+              </th>
+              <th>
+                上次付費日期
+              </th>
+              <th>
+                下次付費日期
+              </th>
+              <th>
+                備註
+              </th>
+            </tr>
+            <tr>
+              <td>{{paymentInfo.Info.TotalFee}}</td>
+              <td>{{paymentInfo.Info.LastPaymentDate}}</td>
+              <td>{{paymentInfo.Info.NextPaymentDate}}</td>
+              <td>{{paymentInfo.Info.Comment}}</td>
+            </tr>
+            <tr>
+              <table>
+                <tbody>
+                  <tr *ngFor = 'let item of paymentInfo.InfoHistory; let x = index  ' >
+                    <td>
+                      {{item.Date}}
+                    </td>
+                    <td>
+                      {{item.Item}}
+                    </td>
+                    <td>
+                      {{item.PaymentType}}
+                    </td>
+                    <td>
+                      {{item.Amount}}
+                    </td>
+                    <td>
+                      {{item.Comment}}
+                    </td>
+                  </tr>
+                </tbody>
+
+              </table>
+            </tr>
+          </table>
+        </div>
         <div *ngIf="IsManager">
             <table class="table table-bordered table-striped table-hover">
                 <tr>
@@ -233,7 +281,7 @@
 
         <div *ngIf="IsManager">
             <p></p>
-                <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>
+                <button type="button" class="btn btn-success" onclick="location.href='#/clientlist';">返回列表</button>
                 <p></p>
         </div>
 

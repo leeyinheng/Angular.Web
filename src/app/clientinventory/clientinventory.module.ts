@@ -18,11 +18,19 @@ import {SharedModule} from '../core/shared/shared.module';
 import {ClipboardModule} from 'ngx-clipboard';
 import { AdimageComponent } from './adimage/adimage.component';
 import { SortableModule } from 'ngx-bootstrap';
+import { PaymentformComponent } from './paymentform/paymentform.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatSelectModule} from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PaymentlistComponent } from './paymentlist/paymentlist.component';
+import { ɵangular_packages_platform_browser_dynamic_testing_testing_b } from '@angular/platform-browser-dynamic/testing';
+
 
 
 
 @NgModule({
-  declarations: [InvuploadComponent, InvshowComponent, InvlistComponent, LoginComponent, PortalComponent, AdimageComponent],
+  declarations: [InvuploadComponent, InvshowComponent, InvlistComponent, LoginComponent,
+     PortalComponent, AdimageComponent, PaymentformComponent, PaymentlistComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -33,6 +41,9 @@ import { SortableModule } from 'ngx-bootstrap';
     FormsModule,
     CustomMaterialModule,
     ClipboardModule,
+    NgbModule,
+    MatSelectModule,
+    BrowserAnimationsModule,
     SharedModule.forRoot(),
     CarouselModule.forRoot(),
     SortableModule.forRoot(),
@@ -54,6 +65,12 @@ import { SortableModule } from 'ngx-bootstrap';
       },
       {
         path: 'adimage', component: AdimageComponent
+      },
+      {
+        path: 'payment/:id', component: PaymentformComponent
+      },
+      {
+        path: 'paymentlist', component: PaymentlistComponent
       }
     ])
   ],

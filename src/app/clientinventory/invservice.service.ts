@@ -10,6 +10,8 @@ import { BehaviorSubject } from 'rxjs';
 
 import {ImageLink} from './../core/shared/model/ImageLink';
 
+import { UserInfo, PaymentInfo , PaymentHistory } from '../core/shared/model/userinfo';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class InvserviceService {
 
   private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
- // private site = 'https://localhost:44347/';
+  // private site = 'https://localhost:44347/';
 
   private url = 'api/articleapi/';
 
@@ -43,6 +45,14 @@ export class InvserviceService {
 
   private adTextLinkUrl = 'api/ClientInventoryApi/AdTextLink/888';
 
+  private paymentGetUrl = 'api/PaymentApi/GetEntity/';
+
+  private paymentPostUrl = 'api/PaymentApi/';
+
+  private paymentGetListUrl = 'api/PaymentApi/';
+
+
+
 
   _list: ClientInventory[] = [];
 
@@ -58,10 +68,22 @@ export class InvserviceService {
 
   }
 
+  paymentInfo: UserInfo<PaymentInfo, PaymentHistory>;
+
+  paymentInfoList:  UserInfo<PaymentInfo, PaymentHistory>[];
+
 
   private messageSource = new BehaviorSubject<ClientInventory[]>(this.list);
 
   currentMessage = this.messageSource.asObservable();
+
+  private paymentdataSource = new BehaviorSubject<UserInfo<PaymentInfo, PaymentHistory>>(this.paymentInfo);
+
+  currentPaymentInfo = this.paymentdataSource.asObservable();
+
+  private paymentlistdataSource = new BehaviorSubject<UserInfo<PaymentInfo, PaymentHistory>[]>(this.paymentInfoList);
+
+  currentPaymentList = this.paymentlistdataSource.asObservable();
 
   constructor(
     private http: HttpClient
@@ -69,6 +91,14 @@ export class InvserviceService {
 
   changeMessage(message: ClientInventory[]) {
     this.messageSource.next(message);
+  }
+
+  changePaymentInfo(info: UserInfo<PaymentInfo, PaymentHistory>) {
+    this.paymentdataSource.next(info);
+  }
+
+  changePaymentInfoList(info: UserInfo<PaymentInfo, PaymentHistory>[]) {
+    this.paymentlistdataSource.next(info);
   }
 
    public postFile(file: FormData) {
@@ -192,6 +222,32 @@ public getAdTextLinks() {
   const url = this.site + this.adTextLinkUrl;
 
   return this.http.get<ImageLink[]>(url);
+}
+
+public getPaymentEntity(id: string) {
+
+  const url = this.site + this.paymentGetUrl + id;
+
+  return this.http.get<UserInfo<PaymentInfo, PaymentHistory>>(url);
+
+}
+
+public postPaymentEntity(entity: UserInfo<PaymentInfo, PaymentHistory>) {
+
+   const url = this.site + this.paymentPostUrl;
+
+   return this.http
+   .post<UserInfo<PaymentInfo, PaymentHistory>>(
+       url,
+       entity,
+    { responseType: 'text' as 'json' }
+   );
+
+}
+
+public getPaymentList() {
+  const url = this.site + this.paymentGetListUrl;
+  return this.http.get<UserInfo<PaymentInfo, PaymentHistory>[]>(url);
 }
 
 public postAdTextLinks(adimages: ImageLink[]) {

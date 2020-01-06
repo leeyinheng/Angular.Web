@@ -10,6 +10,7 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {ModalModule} from 'ngx-bootstrap';
 import { HealthviewmodalComponent } from './healthviewmodal/healthviewmodal.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { HealthviewmodalComponent } from './healthviewmodal/healthviewmodal.comp
     NgxFileDropModule,
     NgxSpinnerModule,
     FlexLayoutModule,
+    NgxPaginationModule,
     RouterModule.forChild([
       {
         path: 'health', component: HealthviewComponent

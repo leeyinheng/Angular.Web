@@ -82,7 +82,7 @@
         餐飲
       </th>
 
-      <tr *ngFor='let item of Entity.InfoHistory; let x = index'>
+      <tr *ngFor='let item of Entity.InfoHistory | paginate: { itemsPerPage: 7, currentPage: p} ; let x = index'>
         <td>
           {{item.DateTime}} 體重:
           {{ item.Weight}}KG 步數:
@@ -134,12 +134,9 @@
             </tbody>
           </table>
         </td>
-
-
-
       </tr>
-
-
+      </tbody>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </table>
 
 </div>

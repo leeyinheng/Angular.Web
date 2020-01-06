@@ -8,6 +8,7 @@ import {CryptserviceService} from './../../core/shared/service/cryptservice.serv
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {Router} from '@angular/router';
 import {ImageLink} from './../../core/shared/model/ImageLink';
+import { UserInfo, PaymentInfo , PaymentHistory } from '../../core/shared/model/userinfo';
 
 
 @Component({
@@ -33,6 +34,8 @@ export class InvshowComponent implements OnInit {
       this._entity = value;
 
   }
+
+  paymentInfo: UserInfo<PaymentInfo, PaymentHistory>;
 
   userInvertories: Inventory[];
 
@@ -82,7 +85,7 @@ export class InvshowComponent implements OnInit {
 
     const role = IDstring.split('|')[1];
 
-    switch (role){
+    switch (role) {
       case 'manager' : {
         this.IsManager = true;
         this.authservice.checktoken().subscribe( val =>{
@@ -104,6 +107,8 @@ export class InvshowComponent implements OnInit {
     }
 
     this.GetEntity(ID);
+
+    this.GetPaymentInfo(ID);
 
     this.GetProjectImages();
 
@@ -134,7 +139,17 @@ export class InvshowComponent implements OnInit {
         this.spinner.hide();
        }
      });
-    }
+  }
+
+  public GetPaymentInfo(ID: string) {
+
+    this.service.getPaymentEntity(ID).subscribe(val => {
+              this.paymentInfo = val;
+            },
+              err => {
+                alert('Payment Info Not Found');
+              });
+  }
 
     public GetProjectImages() {
 
