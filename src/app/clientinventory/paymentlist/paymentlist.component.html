@@ -4,10 +4,20 @@
 </div>
 
 <h3>所有客戶付款表</h3>
-<div>
-      <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
-      <p></p>
+
+<div class="row">
+  <div class="col-sm-4">
+    <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
+  </div>
+  <div class="col-sm-4">
+
+  </div>
+  <div class="col-sm-4">
+    <button type="button" class="btn btn-warning" (click)="updateUsers()">更新付款人名單</button>
+  </div>
 </div>
+
+<p></p>
 <div class="form form-row">
   <label>搜尋:</label>
   <input type="string" placeholder="編號或名稱" class="form form-control"
@@ -38,6 +48,9 @@
       </th>
       <th>
          下次付款日期
+      </th>
+      <th>
+
       </th>
   </tr>
 

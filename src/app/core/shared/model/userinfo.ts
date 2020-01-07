@@ -23,7 +23,7 @@ export class HealthHistory {
   BloodPressures: BloodPressure[];
   Meals: Meal[];
   WalkSteps: number;
-  Weight: number;
+  Weight: string;
   DateTime: string;
   Comment: string;
   DataKey: string;

@@ -17,7 +17,6 @@
 </carousel>
 <p></p>
 <form>
-<<<<<<< HEAD
     <div *ngIf="IsManager">
            <button type="button" class="btn btn-success" onclick="location.href='#/clientlist';">返回列表</button>
            <p></p>
@@ -268,231 +267,16 @@
                           </tfoot>
 
             </table>
-=======
-  <div *ngIf="IsManager">
-    <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>
-    <p></p>
-  </div>
-
-  <div class="form-group">
-    <table class="table table-bordered table-striped">
-      <tbody>
-
-        <tr>
-
-          <td>
-            客戶編號:
-          </td>
-          <TD>
-            {{Entity.ClientId}}
-          </TD>
-        </tr>
-        <tr>
-          <td>
-            客戶名稱:
-          </td>
-          <td>
-            <b>
-              <h1 class="h4">{{Entity.ClientName}} </h1>
-            </b>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            地址:
-          </td>
-          <td>
-            {{Entity.Address}}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            電話:
-          </td>
-          <td>
-            {{Entity.Phone}}
-          </td>
-      </tbody>
-    </table>
-    <div *ngIf="IsManager">
-      <table class="table table-bordered table-striped table-hover">
-        <tr>
-          <th>
-            序號
-          </th>
-          <th>
-            產品編號
-          </th>
-          <th>
-            產品名稱
-          </th>
-          <th>
-            入庫數量
-          </th>
-          <th>
-            單位
-          </th>
-          <th>
-            出庫數量
-          </th>
-          <th>
-            庫存量
-          </th>
-        </tr>
-
-
-        <tbody>
-          <tr *ngFor='let item of Entity.Inventories; let x = index  '>
-            <td>
-              {{ x  + 1 }}
-            </td>
-            <td>
-              {{item.ProductId}}
-            </td>
-            <td>
-              {{ item.ProductName}}
-            </td>
-            <td>{{ item.Stock }}</td>
-
-            <td>
-              {{ item.Unit }}
-            </td>
-            <td>
-              {{ item.Return}}
-            </td>
-            <td>
-              {{ item.NotReturn}}
-            </td>
-
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td>總計</td>
-            <td>
-
-            </td>
-            <td>
-
-            </td>
-            <td>
-              {{ stock_sum }}
-
-            </td>
-
-            <td>
-
-            </td>
-            <td>
-              {{ return_sum}}
-            </td>
-            <td>
-              {{ notreturn_sum }}
-            </td>
-          </tr>
-        </tfoot>
-
-      </table>
-    </div>
-    <div *ngIf="!IsManager">
-      <table class="table table-bordered table-striped table-hover">
-        <tr>
-          <th>
-            序號
-          </th>
-          <th>
-            產品編號
-          </th>
-          <th>
-            產品名稱
-          </th>
-          <th>
-            入庫數量
-          </th>
-          <th>
-            單位
-          </th>
-          <th>
-            出庫數量
-          </th>
-          <th>
-            庫存量
-          </th>
-        </tr>
-
-
-        <tbody>
-          <tr *ngFor='let item of userInvertories; let x = index;'>
-            <td>
-              {{ x  + 1 }}
-            </td>
-            <td>
-              {{item.ProductId}}
-            </td>
-            <td>
-              {{ item.ProductName}}
-            </td>
-            <td>{{ item.Stock }}</td>
-
-            <td>
-              {{ item.Unit }}
-            </td>
-            <td>
-              {{ item.Return}}
-            </td>
-            <td>
-              {{ item.NotReturn}}
-            </td>
-
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td>總計</td>
-            <td>
-
-            </td>
-            <td>
-
-            </td>
-            <td>
-              {{ stock_sum }}
-
-            </td>
-
-            <td>
-
-            </td>
-            <td>
-              {{ return_sum}}
-            </td>
-            <td>
-              {{ notreturn_sum }}
-            </td>
-          </tr>
-        </tfoot>
-
-      </table>
-    </div>
-
-
-    <h2>近六月溫濕度資料表</h2>
-    <carousel interval="0">
-      <slide *ngFor="let item of images">
-        <img [src]="item.ImageUrl" alt="Pages" style="display: block; width: 100%;">
-        <div class="carousel-caption d-none d-md-block">
->>>>>>> dd0c838e1ae32191cdf58dbe29391690294aec40
         </div>
-      </slide>
-    </carousel>
+
+
 
     <div *ngIf="IsManager">
       <p></p>
-      <button type="button" class="btn btn-info" onclick="location.href='#/clientlist';">返回列表</button>
+      <button type="button" class="btn btn-success" onclick="location.href='#/clientlist';">返回列表</button>
       <p></p>
     </div>
 
-<<<<<<< HEAD
         <h2>近六月溫濕度資料表</h2>
         <carousel  interval="0">
                 <slide *ngFor="let item of images">
@@ -509,9 +293,6 @@
         </div>
 
         <hr>
-=======
-    <hr>
->>>>>>> dd0c838e1ae32191cdf58dbe29391690294aec40
 
 
     <ul>

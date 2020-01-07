@@ -106,5 +106,21 @@ export class PaymentlistComponent implements OnInit {
     this.router.navigate(['payment', id]);
   }
 
+  public updateUsers() {
+
+    this.spinner.show();
+
+    this.service.updatePaymentUsers().subscribe(
+      val => {
+        alert('藏家名單更新完成 請重新更新頁面');
+        this.spinner.hide();
+      },
+      err => {
+        alert('發生錯誤');
+        this.spinner.hide();
+      }
+    );
+  }
+
 
 }

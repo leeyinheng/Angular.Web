@@ -121,7 +121,7 @@ export class HealthviewComponent implements OnInit {
     newEntity.DateTime = now.getFullYear().toString() + '/' + (now.getMonth() + 1).toString() + '/' + now.getDate().toString();
 
     newEntity.WalkSteps = 7000;
-    newEntity.Weight = 75;
+    newEntity.Weight = '75';
     newEntity.BloodPressures = [];
     newEntity.Meals = [];
 

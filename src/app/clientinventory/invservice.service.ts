@@ -51,6 +51,8 @@ export class InvserviceService {
 
   private paymentGetListUrl = 'api/PaymentApi/';
 
+  private paymentUpdateUsersUrl = 'api/PaymentApi/UpdateUsers/888';
+
 
 
 
@@ -229,6 +231,14 @@ public getPaymentEntity(id: string) {
   const url = this.site + this.paymentGetUrl + id;
 
   return this.http.get<UserInfo<PaymentInfo, PaymentHistory>>(url);
+
+}
+
+public updatePaymentUsers() {
+
+  const url = this.site + this.paymentUpdateUsersUrl;
+
+  return this.http.get(url);
 
 }
 
