@@ -36,7 +36,7 @@ export class HealthviewComponent implements OnInit {
 
   }
 
-
+  days: string[] = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
   _entity: UserInfo<HealthInfo, HealthHistory> = new UserInfo<HealthInfo, HealthHistory>();
 
@@ -85,21 +85,6 @@ export class HealthviewComponent implements OnInit {
 
   }
 
-  public addHealthHistory() {
-
-    const newEntity = new HealthHistory();
-
-    const now = new Date;
-
-    newEntity.DateTime = now.getFullYear().toString() + '/' + now.getMonth().toPrecision() + '/' + now.getDate().toString();
-
-    this.Entity.InfoHistory.push(newEntity);
-
-    this.change = true;
-
-
-
-  }
 
   filterForArticles(filterVal: string) {
 
@@ -118,7 +103,8 @@ export class HealthviewComponent implements OnInit {
 
     const now = new Date;
 
-    newEntity.DateTime = now.getFullYear().toString() + '/' + (now.getMonth() + 1).toString() + '/' + now.getDate().toString();
+    newEntity.DateTime = now.getFullYear().toString() + '/' + (now.getMonth() + 1).toString() + '/'
+     + now.getDate().toString() + ' ' + this.days[now.getDay()];
 
     newEntity.WalkSteps = 7000;
     newEntity.Weight = '75';

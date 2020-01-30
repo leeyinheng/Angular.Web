@@ -1,0 +1,7 @@
+{
+  "*": {
+      "target": "https://in-hub-dev.azurewebsites.net/",
+      "secure": false,
+      "logLevel": "debug"
+  }
+}

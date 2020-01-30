@@ -1,0 +1,88 @@
+<div>
+  <span><img src='../assets/Photos/inhublogo.png' width=10% height=10% /></span>
+  <p></p>
+</div>
+
+
+<p></p>
+
+
+<div class="row">
+  <div class="col-sm-4">
+    <button type="button" class="btn btn-primary" onclick="location.href='#/bcuserform';">新增</button>
+  </div>
+  <div class="col-sm-4">
+
+  </div>
+  <div class="col-sm-4">
+    <button type="button" class="btn btn-primary" onclick="location.href='#/bccenter';">到商務中心管理</button>
+  </div>
+</div>
+<p></p>
+
+<table class="table table-bordered table-striped">
+  <tr>
+      <th>
+          ID
+      </th>
+      <th>
+        Email
+      </th>
+      <th>
+          名
+      </th>
+      <th>
+          姓
+      </th>
+      <th>
+          電話
+      </th>
+
+      <th>
+        點數
+      </th>
+
+      <th>
+
+      </th>
+  </tr>
+
+
+      <tbody>
+          <tr *ngFor = 'let item of List ' [tooltip]="popTemplate" (mouseover)='popup(item)'>
+              <td>
+                  {{item.Id}}
+              </td>
+              <td>
+                {{item.Email}}
+              </td>
+              <td>{{ item.FirstName}}
+
+              </td>
+              <td>   {{item.LastName}} </td>
+              <td>{{ item.Cell}}</td>
+              <td>
+                {{item.Points}}
+              </td>
+              <td>
+                      <!-- <button type="button" class="btn btn-primary" (click) = showform(item.Id)>展示</button>    | -->
+                      <button type="button" class="btn btn-info" (click) = openform(item.Id)>編輯</button>    |
+                      <button type="button" class="btn btn-danger" (click) = delete(item.Id)>刪除</button>
+              </td>
+
+
+          </tr>
+      </tbody>
+
+</table>
+
+
+
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>

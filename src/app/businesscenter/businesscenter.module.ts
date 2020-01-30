@@ -17,10 +17,11 @@ import { BusinesshourmodalComponent } from './businesshourmodal/businesshourmoda
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { BcshowComponent } from './bcshow/bcshow.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { RequestmodalComponent } from './requestmodal/requestmodal.component';
-
+import { UserlistComponent } from './userlist/userlist.component';
+import { UserformComponent } from './userform/userform.component';
+import {BcserviceService} from './service/bcservice.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -47,19 +48,28 @@ import { RequestmodalComponent } from './requestmodal/requestmodal.component';
         path: 'bccenter', component: BclistComponent
       },
       {
-        path: 'bcform', component: BcformComponent
-      },
-      {
         path: 'bcform/:id', component: BcformComponent
       },
       {
-        path: 'bcshow/:id', component: BcshowComponent
+        path: 'bcform', component: BcformComponent
+      },
+      {
+        path: 'bcuser', component: UserlistComponent
+      },
+      {
+        path: 'bcuserform', component: UserformComponent
+      },
+      {
+        path: 'bcuserform/:id', component: UserformComponent
       }
     ])
   ],
   declarations: [BclistComponent, BcformComponent, BcformmodalComponent, BusinesshourmodalComponent,
-    BcshowComponent, RequestmodalComponent],
-  entryComponents: [BcformmodalComponent, BusinesshourmodalComponent]
+     RequestmodalComponent,
+     UserlistComponent,
+     UserformComponent],
+  entryComponents: [BcformmodalComponent, BusinesshourmodalComponent],
+  providers: [BcserviceService]
 
 })
 export class BusinesscenterModule { }

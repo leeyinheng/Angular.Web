@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {BusinessCenter, BusinessCenterImage} from '../model/BusinessCenter';
+import { BusinessCenterImage} from '../model/BusinessCenter';
 import {BcserviceService} from '../service/bcservice.service';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import {NgxSpinnerService} from 'ngx-spinner';
@@ -10,6 +10,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import {BcformmodalComponent} from '../bcformmodal/bcformmodal.component';
 import { BusinesshourmodalComponent} from '../businesshourmodal/businesshourmodal.component';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
+import { Vendor } from '../model/Inhub';
 
 @Component({
   selector: 'app-bcform',
@@ -22,15 +23,17 @@ export class BcformComponent implements OnInit {
 
   bsModalRef: BsModalRef;
 
-  _entity: BusinessCenter = new BusinessCenter();
+  isAdd = false;
 
-    get Entity(): BusinessCenter {
+  _entity: Vendor = new Vendor();
+
+    get Entity(): Vendor {
 
         return this._entity;
 
     }
 
-    set Entity( value: BusinessCenter) {
+    set Entity( value: Vendor) {
 
 
         this._entity = value;
@@ -66,13 +69,14 @@ export class BcformComponent implements OnInit {
 
 
     if (isNullOrUndefined(ID)) {
+      this.isAdd = true;
       this.AddNew();
       this.spinner.hide();
     } else {
       this.bcservice.getEntityById(ID).subscribe(val => {
         this.Entity = val;
         this.spinner.hide();
-        if (isNullOrUndefined(this.Entity.Coordinates) !== true) {
+        if (isNullOrUndefined(this.Entity.Latitude) !== true) {
              this.addMarker();
         }
       },
@@ -83,7 +87,7 @@ export class BcformComponent implements OnInit {
       );
     }
 
-    if (isNullOrUndefined(this.Entity.Coordinates) !== true) {
+    if (isNullOrUndefined(this.Entity.Latitude) !== true) {
       this.addMarker();
     } else {
       navigator.geolocation.getCurrentPosition(position => {
@@ -100,45 +104,80 @@ export class BcformComponent implements OnInit {
    */
   public AddNew() {
 
-      const newEntity = new BusinessCenter();
+      const newEntity = new Vendor();
 
       const now = new Date;
       const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() ,
       now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
 
-      newEntity.Id = 'bc' + '-' + utc_timestamp.toString();
+      newEntity.Id = 'VendorTest' + '_' + utc_timestamp.toString();
 
       this.Entity = newEntity;
+  }
+
+  public saveGPS() {
+
+    if (!isNullOrUndefined(this.Entity.Longitude) && !isNullOrUndefined(this.Entity.Longitude)) {
+      this.spinner.show();
+      this.bcservice.updateGPS(this.Entity).subscribe(
+        res => {
+          alert('儲存GPS完畢');
+          this.spinner.hide();
+        },
+        err => {
+          alert('error');
+          this.spinner.hide();
+        }
+      );
+    } else {
+
+      alert('Please enter GPS info');
+
+    }
+
+
   }
 
 
  public  SaveEntity() {
 
-    if (isNullOrUndefined(this.Entity.Name) || this.Entity.Name === '') {
+    if (isNullOrUndefined(this.Entity.Company) || this.Entity.Company === '') {
        alert('請輸入名稱欄位');
        return;
      }
 
       this.spinner.show();
 
-     this.bcservice.postEntity(this.Entity).subscribe(
-      res => {
-         alert('儲存完畢');
+      if (this.isAdd === true) {
 
-        // if (isNullOrUndefined(this.Entity.Coordinates) !== true) {
-        //  this.addMarker();
-        // }
+        this.bcservice.postEntity(this.Entity).subscribe(
+          res => {
+             alert('新增完畢');
+             this.spinner.hide();
+             window.open('#/bccenter');
+         },
+          err => {
+            alert(err);
+            this.spinner.hide();
+          }
+        );
 
-         this.spinner.hide();
+      } else {
 
-         window.open('#/bccenter');
+        this.bcservice.updateEntity(this.Entity).subscribe(
+          res => {
+             alert('更新完畢');
+             this.spinner.hide();
+           //  window.open('#/bccenter');
+         },
+          err => {
+            alert(err);
+            this.spinner.hide();
+          }
+        );
 
-     },
-      err => {
-        alert(err);
-        this.spinner.hide();
       }
-    );
+
 
  }
 
@@ -164,16 +203,16 @@ export class BcformComponent implements OnInit {
         this.bcservice.postImage(formData).subscribe(
           (val) => {
 
-              const newImage = new BusinessCenterImage();
-              newImage.Name = 'Image';
-              newImage.Image_Url = val;
-              if (isNullOrUndefined(this.Entity.Images)) {
-                 const images: BusinessCenterImage[] = [];
-                 images.push(newImage);
-                 this.Entity.Images = images;
-              } else {
-                this.Entity.Images.push(newImage);
-              }
+           //   const newImage = new BusinessCenterImage();
+           //   newImage.Name = 'Image';
+           //   newImage.Image_Url = val;
+             // if (isNullOrUndefined(this.Entity.Images)) {
+              //   const images: BusinessCenterImage[] = [];
+              //   images.push(newImage);
+            //     this.Entity.Images = images;
+            //  } else {
+             //   this.Entity.Images.push(newImage);
+            //  }
 
              this.spinner.hide();
           }
@@ -201,14 +240,15 @@ public RemoveImage(i: number) {
 
   i++;
 
-  const orginialItems = this.Entity.Images;
+  // const orginialItems = this.Entity.Images;
 
-  const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
+  // const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
 
-  this.Entity.Images = filterItems;
+  // this.Entity.Images = filterItems;
 }
 
 openModal() {
+
 
   const initialState = {
         entity: this.Entity
@@ -239,33 +279,33 @@ addMarker() {
 
   this.markers = [];
 
-  const coord = this.Entity.Coordinates.split(',');
+ // const coord = this.Entity.Coordinates.split(',');
   this.markers.push({
     position: {
-      lat: Number(coord[0]),
-      lng: Number(coord[1]),
+      lat: Number(this.Entity.Latitude),
+      lng: Number(this.Entity.Longitude),
     },
     label: {
       color: 'red',
-      text: this.Entity.Name + (this.markers.length + 1),
+      text: this.Entity.Company + (this.markers.length + 1),
     },
-    title: this.Entity.Name + (this.markers.length + 1),
+    title: this.Entity.Company + (this.markers.length + 1),
     info: 'Marker info ' + (this.markers.length + 1),
-    url: 'https://www.google.com/maps/place/' + this.Entity.Coordinates ,
+    url: 'https://www.google.com/maps/place/' + this.Entity.Latitude + ',' + this.Entity.Longitude ,
     options: {
       animation: google.maps.Animation.DROP
     }
   });
 
   this.center = {
-    lat: Number(coord[0]),
-    lng: Number(coord[1]),
+    lat: Number(this.Entity.Latitude),
+    lng: Number(this.Entity.Longitude),
   };
 
 }
 
 public opengooglemap() {
-  const url = 'https://www.google.com/maps/place/' + this.Entity.Coordinates;
+  const url = 'https://www.google.com/maps/place/' + this.Entity.Latitude + ',' + this.Entity.Longitude;
 
   window.open(
      url

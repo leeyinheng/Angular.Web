@@ -1,0 +1,135 @@
+
+<div>
+  <span><img src='../assets/Photos/inhublogo.png' width=10% height=10% /></span>
+  <p></p>
+</div>
+
+<div class="nav navbar-nav navbar-right">
+      <button type="button" class="btn btn-primary" (click)="SaveEntity()">儲存</button> |
+      <button type="button" class="btn btn-default" onclick="location.href='#/bcuser';">返回</button>
+      <p></p>
+</div>
+
+<div class="body-content">
+
+      <table class="table table-bordered table-striped">
+              <tbody>
+
+                  <tr>
+                      <td>
+                          ID:
+                      </td>
+                      <td>
+                             <div *ngIf="!isAdd">
+                              {{Entity.Id}}
+                             </div>
+
+                              <div *ngIf="isAdd">
+                                <input [(ngModel)]="Entity.Id" #ctrl="ngModel" required name="ID"  #fullName="ngModel" class="form-control" required>
+                              </div>
+
+                      </td>
+                  </tr>
+                  <tr>
+                    <td>
+                            Email :
+                    </td>
+                    <td>
+                            <input [(ngModel)]="Entity.Email" #ctrl="ngModel" required name="Email"  #fullName="ngModel" class="form-control" required>
+                    </td>
+                </tr>
+                <tr>
+                  <td>
+                          Password :
+                          <div *ngIf="!isAdd">
+                            <button type="button" class="btn btn-sm btn-warning" (click)="UpdatePassword()">更新Password</button>
+                          </div>
+                  </td>
+                  <td>
+                          <input [(ngModel)]="Entity.Password" #ctrl="ngModel" required name="Password"  #fullName="ngModel" class="form-control" required>
+                  </td>
+              </tr>
+
+                  <tr>
+                      <td>
+                              名:
+                      </td>
+                      <td>
+                              <input [(ngModel)]="Entity.FirstName" #ctrl="ngModel" required name="FirstName"  #fullName="ngModel" class="form-control" required>
+                      </td>
+                  </tr>
+                  <tr>
+                    <td>
+                            姓:
+                    </td>
+                    <td>
+                            <input [(ngModel)]="Entity.LastName" #ctrl="ngModel" required name="LastName"  #fullName="ngModel" class="form-control">
+                    </td>
+                </tr>
+
+                  <tr>
+                      <td>
+                          電話:
+                      </td>
+                      <td>
+                              <input [(ngModel)]="Entity.Cell " #ctrl="ngModel" name="Cell" class="form-control">
+                      </td>
+                  </tr>
+                  <tr *ngIf="!isAdd">
+                    <td>
+                        點數:
+                    </td>
+                    <td>
+                            <input [(ngModel)]="Entity.Points" #ctrl="ngModel" name="Points" class="form-control" type="number">
+                    </td>
+                </tr>
+
+                  <tr *ngIf="!isAdd">
+                          <td>
+                             管理的 Vendor <button type="button" class="btn btn-sm btn-warning" (click)="AssignVendor()">指定管理的商務中心</button>
+                          </td>
+                          <td>
+                                 {{Entity.Vendor.company}}
+
+
+                                  <div>
+                                    <select (change)="filterForArticles($event.target.value)" class="form-control">
+                                      <option value="-1">--選擇--</option>
+                                      <option *ngFor="let item of List; let i = index" value={{item.Id}}>
+                                        {{item.Company}}
+                                      </option>
+                                    </select>
+
+                                  </div>
+                          </td>
+                  </tr>
+
+              </tbody>
+              </table>
+
+
+
+
+</div>
+
+
+
+
+   <hr>
+  <div class="nav navbar-nav navbar-right">
+          <button type="button" class="btn btn-primary" (click)="SaveEntity()">儲存</button> |
+          <button type="button" class="btn btn-default" onclick="location.href='#/bcuser';">返回</button>
+  </div>
+
+
+
+
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>
+

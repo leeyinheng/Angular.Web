@@ -3,7 +3,22 @@
     <p></p>
 </div>
 
-<button type="button" class="btn btn-primary" onclick="location.href='#/bcform';">新增</button>
+
+<p></p>
+
+
+<div class="row">
+  <div class="col-sm-4">
+    <button type="button" class="btn btn-primary" onclick="location.href='#/bcform';">新增</button>
+  </div>
+  <div class="col-sm-4">
+
+  </div>
+  <div class="col-sm-4">
+    <button type="button" class="btn btn-primary" onclick="location.href='#/bcuser';">到使用者/會員管理</button>
+  </div>
+</div>
+
 <p></p>
 <ng-template #popTemplate> <div [innerHtml]="pophtml"></div></ng-template>
 <table class="table table-bordered table-striped">
@@ -15,38 +30,38 @@
             名稱
         </th>
         <th>
-            網站
+            城市
         </th>
         <th>
             地址
         </th>
-      
+
         <th>
-            
+
         </th>
     </tr>
-    
-       
-        <tbody> 
+
+
+        <tbody>
             <tr *ngFor = 'let item of List ' [tooltip]="popTemplate" (mouseover)='popup(item)'>
                 <td>
                     {{item.Id}}
                 </td>
-                <td>{{ item.Name}}
-                      
+                <td>{{ item.Company}}
+
                 </td>
-                <td> <a href= 'https://{{item.WebSite}}' target="_blank"> {{item.WebSite}} </a></td>
-                <td>{{ item.Address}}</td>
+                <td>   {{item.County}} </td>
+                <td>{{ item.Street}}</td>
                 <td>
-                        <button type="button" class="btn btn-primary" (click) = showform(item.Id)>展示</button>    |
+                        <!-- <button type="button" class="btn btn-primary" (click) = showform(item.Id)>展示</button>    | -->
                         <button type="button" class="btn btn-info" (click) = openform(item.Id)>編輯</button>    |
                         <button type="button" class="btn btn-danger" (click) = delete(item.Id)>刪除</button>
                 </td>
-                
-                
+
+
             </tr>
         </tbody>
-       
+
 </table>
 
 

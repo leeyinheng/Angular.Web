@@ -6,6 +6,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { BcformmodalComponent} from '../bcformmodal/bcformmodal.component';
 import { isNullOrUndefined } from 'util';
+import { Vendor } from '../model/Inhub';
 
 @Component({
   selector: 'app-bclist',
@@ -21,22 +22,22 @@ export class BclistComponent implements OnInit {
 
     bsModalRef: BsModalRef;
 
-  _list: BusinessCenter[];
+  _list: Vendor[];
 
-    get List(): BusinessCenter[] {
+    get List(): Vendor[] {
 
         return this._list;
 
     }
 
-    set List( value: BusinessCenter[]) {
+    set List( value: Vendor[]) {
 
         this._list = value;
 
     }
 
   ngOnInit() {
-     this.GetList();
+    this.GetList();
   }
 
   public GetList(): void {
@@ -73,6 +74,7 @@ export class BclistComponent implements OnInit {
       this.bcservice.deleteEntity(Id).subscribe(
         res => {
           console.log(res);
+          alert('已刪除 Id:' + Id);
         },
         err => {
           alert(err);
