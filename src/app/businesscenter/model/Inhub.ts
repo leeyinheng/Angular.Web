@@ -14,6 +14,8 @@ export class Vendor {
   ImageUrls: string[];
   Features: Feature[];
   Points: number;
+  Intro: string;
+  Intro_en: string;
 }
 
 export class Feature {

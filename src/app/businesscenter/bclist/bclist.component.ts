@@ -84,19 +84,19 @@ export class BclistComponent implements OnInit {
     }
   }
 
-  public popup(item: BusinessCenter) {
+  public popup(item: Vendor) {
     const initialState = {
       entity: item
   };
 
   let imageurl = '';
 
-  if (isNullOrUndefined(item.Images) !== true) {
-    imageurl = item.Images[0].Image_Url;
+  if (isNullOrUndefined(item.ImageUrls) !== true) {
+    imageurl = item.ImageUrls[0];
   }
 
    this.pophtml = '<talbe> <tr> <td>' + item.Intro + '</td> </tr>';
-   this.pophtml += '<tr><td>' + '<img src=' + imageurl + ' width=90% height=90%> </td></tr>';
+   this.pophtml += '<tr><td>' + '<img src=https://in-hub-dev.azurewebsites.net/' + imageurl + ' width=90% height=90%> </td></tr>';
    this.pophtml += '</table>';
 
 

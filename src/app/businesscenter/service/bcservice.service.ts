@@ -21,13 +21,13 @@ export class BcserviceService {
 
   private url = 'api/businesscenterapi/';
 
-  private postImgurl = 'api/UploadFileapi/';
+  private postImgurl = '/upload';
 
 
 
   constructor(
     private http: HttpClient
-  ) { this.gettoken(); }
+  ) {  this.gettoken(); }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
@@ -36,15 +36,18 @@ export class BcserviceService {
 
   public gettoken() {
     this.http.get(this.tokenurl, {responseType: 'text'}).subscribe(val => {
-      localStorage.setItem('token', val.toString());
+      sessionStorage.setItem('token', val.toString());
     });
   }
 
-  public getHttpoption() {
+  public getHttpoption(isImage: boolean = false) {
 
-    const t = localStorage.getItem('token');
+    const t = sessionStorage.getItem('token');
 
-    const headers_object = new HttpHeaders({
+    if (isImage === true) {
+
+      const headers_object = new HttpHeaders({
+        'ContentType': 'multipart/form-data',
         'Authorization': 'Bearer ' + t
     });
 
@@ -54,12 +57,30 @@ export class BcserviceService {
 
     return httpOptions;
 
+    } else {
+
+      const headers_object = new HttpHeaders({
+        'Authorization': 'Bearer ' + t
+    });
+
+    const httpOptions = {
+          headers: headers_object
+    };
+
+    return httpOptions;
+    }
+
   }
 
 
   public getList() {
 
     const url  = this.vendorurl;
+
+    if (isNullOrUndefined(sessionStorage.getItem('token'))) {
+      alert('Session is expired, Please refresh again');
+      return;
+    }
 
     return this.http.get<Vendor[]>(url, this.getHttpoption());
   }
@@ -175,26 +196,33 @@ public updatePassword(userId: string, password: string) {
 
 
 
- public postImage(file: FormData) {
+ public postImage(vendorId: string , image: FormData) {
 
-    const url = this.site + this.postImgurl;
+  const url = this.vendorurl + '/' + vendorId + '/upload';
 
-     // Headers
-     const headers = new HttpHeaders ({
-      ContentType: 'multipart/form-data'
-    });
+
+    //  // Headers
+    //  const headers = new HttpHeaders ({
+    //   ContentType: 'multipart/form-data'
+    // });
 
 
     // return  this.http.post(url, file, {headers: headers});
 
     return this.http
-        .post<string>(
+        .post(
             url,
-            file,
-        { headers, responseType: 'text' as 'json' }
+            image,
+            this.getHttpoption(true)
         );
 
+ }
 
+ public removeImage( vendorId: string, imagename: string) {
+
+  const url = this.vendorurl + '/' + vendorId + '/imageUrl/' + imagename;
+
+  return this.http.delete(url, this.getHttpoption());
  }
 
 

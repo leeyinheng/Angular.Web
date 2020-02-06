@@ -196,25 +196,18 @@ export class BcformComponent implements OnInit {
 
         // You could upload it like this:
         const formData = new FormData();
-        formData.append(file.name, file, droppedFile.relativePath);
+        formData.append('image', file, droppedFile.relativePath);
 
         this.spinner.show();
 
-        this.bcservice.postImage(formData).subscribe(
+        this.bcservice.postImage(this.Entity.Id, formData).subscribe(
           (val) => {
-
-           //   const newImage = new BusinessCenterImage();
-           //   newImage.Name = 'Image';
-           //   newImage.Image_Url = val;
-             // if (isNullOrUndefined(this.Entity.Images)) {
-              //   const images: BusinessCenterImage[] = [];
-              //   images.push(newImage);
-            //     this.Entity.Images = images;
-            //  } else {
-             //   this.Entity.Images.push(newImage);
-            //  }
-
-             this.spinner.hide();
+               this.spinner.hide();
+               this.Entity.ImageUrls.push(file.name);
+          },
+          err => {
+              alert('upload image error');
+              this.spinner.hide();
           }
         );
 
@@ -238,13 +231,24 @@ public fileLeave(event) {
 
 public RemoveImage(i: number) {
 
-  i++;
+  const imagename = this.Entity.ImageUrls[i];
 
-  // const orginialItems = this.Entity.Images;
+  if (confirm('Are you sure you want to delete ' + imagename + ' ?')) {
 
-  // const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
+      this.bcservice.removeImage(this.Entity.Id, imagename).subscribe(val => {
+        alert('Image Delete Complete');
+        i++;
 
-  // this.Entity.Images = filterItems;
+        const orginialItems = this.Entity.ImageUrls;
+        const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
+        this.Entity.ImageUrls = filterItems;
+      },
+      err => {
+        alert('Image delete error');
+      });
+
+  }
+
 }
 
 openModal() {

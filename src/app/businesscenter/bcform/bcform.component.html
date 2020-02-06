@@ -39,7 +39,7 @@
                               <input [(ngModel)]="Entity.Company_en" #ctrl="ngModel" required name="entityname_en"  #fullName="ngModel" class="form-control">
                       </td>
                   </tr>
-                    <!-- <tr>
+                  <tr>
                         <td>
                             介紹:
                         </td>
@@ -52,22 +52,22 @@
                                 #message='ngModel'
                                 ></textarea>
                         </td>
-                    </tr> -->
-                    <!-- <tr>
-                        <td>
-                               營業時間: <button type="button" class="btn btn-info" (click)="openBusinessHourModal()">編輯</button>
-                        </td>
-                        <td>
-                            <div fxLayout="column" fxLayoutAlign=" none">
-                                <div fxFlex="100" fxLayout="column" fxLayoutAlign="space-around stretch" fxLayout.xs="column">
-                                  <div *ngFor="let i of Entity.BusinessHours" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
-                                      {{i.Day}} : {{i.StartTime}} - {{i.EndTime}}
-                                  </div>
-                                </div>
-                              </div>
+                    </tr>
+                    <tr>
+                      <td>
+                          介紹 (英文):
+                      </td>
+                      <td>
 
-                        </td>
-                    </tr> -->
+                              <textarea class="form-control"
+                              name="intro_en"
+                              rows="4"
+                              [(ngModel)]="Entity.Intro_en"
+                              #message='ngModel'
+                              ></textarea>
+                      </td>
+                  </tr>
+
 
                     <tr>
                         <td>
@@ -118,7 +118,7 @@
                               <input [(ngModel)]="Entity.District_en" #ctrl="ngModel" name="District_en">
                       </td>
               </tr>
-                    <tr>
+                    <tr *ngIf="!isAdd">
                             <td>
                                 設備:  <button type="button" class="btn btn-info" (click)="openModal()">編輯</button>
                             </td>
@@ -136,15 +136,15 @@
 
                             </td>
                         </tr>
-                        <tr>
+                        <tr  *ngIf="!isAdd">
                           <td>
                               空位數:
                           </td>
                           <td>
                                   <input [(ngModel)]="Entity.DefaultSeats" #ctrl="ngModel" name="DefaultSeats">
                           </td>
-                  </tr>
-                    <tr>
+                  </tr  >
+                    <tr *ngIf="!isAdd">
                         <td>
                             座標:    <button type="button" class="btn btn-sm btn-primary" (click)="saveGPS()">更新GPS</button>
                         </td>
@@ -153,7 +153,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <tr  *ngIf="!isAdd">
                       <td>
 
                       </td>
@@ -161,7 +161,7 @@
                         Longitude  :   <input [(ngModel)]="Entity.Longitude" #ctrl="ngModel" name="Longitude">
                       </td>
                     </tr>
-                    <tr>
+                    <tr  *ngIf="!isAdd">
                         <td colspan="2">
                                 <google-map
                                 height="500px"
@@ -185,7 +185,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <tr  *ngIf="!isAdd">
                         <td colspan="2">
                             圖片:
 
@@ -201,13 +201,13 @@
                                 </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr  *ngIf="!isAdd">
                         <td colspan="2">
-                                <ul *ngFor="let i of Entity.Images; let x = index" class="list-group">
+                                <ul *ngFor="let i of Entity.ImageUrls; let x = index" class="list-group">
                                     <li class="list-group-item">
-                                        <img [src]="i.Image_Url"   class="img-thumbnail" > <p></p>
-                                        名稱:<input [(ngModel)]="i.Name" #ctrl="ngModel"  name="imagename" class="form-control"/> <p></p>
-                                        備註: <input [(ngModel)]="i.Comment" #ctrl="ngModel"  name="imageComment" type="text"  class="form-control"/><p></p>
+                                        <img src='https://in-hub-dev.azurewebsites.net/{{i}}'   class="img-thumbnail" > <p></p>
+                                        <!-- 名稱:<input [(ngModel)]="i.Name" #ctrl="ngModel"  name="imagename" class="form-control"/> <p></p>
+                                        備註: <input [(ngModel)]="i.Comment" #ctrl="ngModel"  name="imageComment" type="text"  class="form-control"/><p></p> -->
                                         <button type="button" class="btn btn-danger btn-xs" (click) ="RemoveImage(x)">Remove</button>
                                     </li>
                                 </ul>
