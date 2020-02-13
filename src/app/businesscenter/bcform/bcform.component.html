@@ -143,7 +143,15 @@
                           <td>
                                   <input [(ngModel)]="Entity.DefaultSeats" #ctrl="ngModel" name="DefaultSeats">
                           </td>
-                  </tr  >
+                        </tr  >
+                        <tr  *ngIf="!isAdd">
+                          <td>
+                              預扣點數:
+                          </td>
+                          <td>
+                                  <input [(ngModel)]="Entity.Points" #ctrl="ngModel" name="Points">
+                          </td>
+                        </tr  >
                     <tr *ngIf="!isAdd">
                         <td>
                             座標:    <button type="button" class="btn btn-sm btn-primary" (click)="saveGPS()">更新GPS</button>

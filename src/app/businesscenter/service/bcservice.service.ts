@@ -78,7 +78,7 @@ export class BcserviceService {
     const url  = this.vendorurl;
 
     if (isNullOrUndefined(sessionStorage.getItem('token'))) {
-      alert('Session is expired, Please refresh again');
+      alert('Session is expired, Please wait a min and then refresh .. ');
       return;
     }
 

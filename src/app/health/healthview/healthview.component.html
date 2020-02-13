@@ -112,8 +112,13 @@
 
             <tbody class="table table-bordered table-striped">
               <tr *ngFor="let blood of item.BloodPressures">
-                <td> 收縮壓:{{blood.BloodHigh}}
-                  舒張壓:{{blood.BloodLow}}
+                <td> 收縮壓:
+                  <span *ngIf="blood.BloodHigh >= 140" style="color: red;">{{ blood.BloodHigh }} </span>
+                  <span *ngIf="blood.BloodHigh < 140" style="color: green;">{{ blood.BloodHigh }} </span>
+
+
+                  舒張壓:<span *ngIf="blood.BloodLow >= 90" style="color: red;">{{ blood.BloodLow }} </span>
+                  <span *ngIf="blood.BloodLow < 90" style="color: green;">{{ blood.BloodLow }} </span>
                   脈搏: {{blood.Pulse}}
                   {{blood.DateTime}}
                 </td>
