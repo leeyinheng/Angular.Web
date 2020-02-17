@@ -8,7 +8,7 @@
     <input type="string"
     [(ngModel)]='Search'
     style="width: 6em;"
-    /> 
+    />
 </div>
 
 <div class="loader" id="loader"></div>
@@ -22,7 +22,7 @@
             電話
         </th>
         <th>
-            Email
+            訂購管道
         </th>
         <th>
             通話紀錄
@@ -34,24 +34,32 @@
             時間
         </th>
     </tr>
-    
+
         <tr>
             <td>
                 <input type="string"
                 [(ngModel)]='Name'
                 style="width: 6em;"
-                /> 
+                />
             </td>
             <td>
                 <input type="string"
                 [(ngModel)]='PhoneNumber'
                 style="width: 6em;"
-                /> 
+                />
             </td>
             <td>
-                <input type="string"
-                [(ngModel)]='Email'  
-                /> 
+              <mat-form-field>
+                <select matNativeControl [(ngModel)]="Channel" required>
+                  <option value="電話直購">電話直購</option>
+                  <option value="簡訊促銷">簡訊促銷</option>
+                  <option value="樂天">樂天</option>
+                  <option value="蝦皮">蝦皮</option>
+                  <option value="官網">官網</option>
+                  <option value="親友員工">親友員工</option>
+                  <option value="其他">其他</option>
+                </select>
+              </mat-form-field>
             </td>
             <td>
                 <textarea [(ngModel)]='Note' class="form-control" >
@@ -64,23 +72,23 @@
                 </textarea>
             </td>
             <td>
-                
+
             </td>
             <td>
                 <button class="btn btn-primary" (click) = 'addlog()'>
                     新增
                  </button>
-                
+
             </td>
         </tr>
 
-        <tbody> 
+        <tbody>
             <tr *ngFor = 'let item of logList | paginate: { itemsPerPage: 10, currentPage: p} '>
-                
+
                 <td>{{ item.Name}}</td>
                 <td>{{ item.PhoneNumber }}</td>
-                <td>{{ item.Email}}
-                    <button *ngIf='item.Email' type="button" class="btn btn-success" (click)="openEmailModal(item)">Email</button>
+                <td>
+                    {{item.Channel}}
                 </td>
                 <td>{{ item.Note}}</td>
                 <td class="warning">{{ item.Comment}}</td>
@@ -90,13 +98,13 @@
                                 刪除
                         </button>
                         <button type="button" class="btn btn-info" (click)="openModal(item)">編輯</button>
-                      
+
                 </td>
 
             </tr>
         </tbody>
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
-   
+
 </table>
 
 {{modalMessage}}

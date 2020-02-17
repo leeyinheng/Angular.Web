@@ -85,7 +85,8 @@
       <tr *ngFor='let item of Entity.InfoHistory | paginate: { itemsPerPage: 7, currentPage: p} ; let x = index'>
         <td>
           {{item.DateTime}} 體重:
-          {{ item.Weight}}KG 步數:
+          {{ item.Weight}}
+          KG 步數:
           <span *ngIf="item.WalkSteps < 10000">{{ item.WalkSteps }} </span>
           <span *ngIf="item.WalkSteps >= 10000" style="color: red;">{{ item.WalkSteps }} </span>步
           <span *ngIf="item.Comment" style="color:blue;">({{item.Comment}})</span>

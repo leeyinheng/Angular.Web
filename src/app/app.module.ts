@@ -40,6 +40,9 @@ import { ArticleModule } from './article/article.module';
 import { ClientinventoryModule } from './clientinventory/clientinventory.module';
 import { HealthModule } from './health/health.module';
 import { IgxCarouselModule } from 'igniteui-angular';
+import { MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+
+
 
 @NgModule({
   imports: [
@@ -49,6 +52,7 @@ import { IgxCarouselModule } from 'igniteui-angular';
     HttpModule,
     NgxPaginationModule,
     BrowserAnimationsModule,
+    MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule, MatInputModule,
     NgbModule,
     SharedModule.forRoot(),
     ModalModule.forRoot(),

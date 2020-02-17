@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
- 
+
 import {customerlog} from './customerlog';
 
 import {CustomerlogService} from './Services/customerlog.service';
@@ -12,8 +12,6 @@ import {EmailmodalComponent} from './emailmodal/emailmodal.component';
 
 
 
-
-
 @Component({
     moduleId: module.id,
     templateUrl:'customerlog.component.html',
@@ -22,85 +20,87 @@ import {EmailmodalComponent} from './emailmodal/emailmodal.component';
 
 
 export class CustomerlogComponent implements OnInit{
-      
-    p: number = 1; 
+
+    p: number = 1;
 
     bsModalRef: BsModalRef;
 
-    emailModalRef: BsModalRef; 
-    
+    emailModalRef: BsModalRef;
+
     constructor(public logservice: CustomerlogService, private modalService: BsModalService  ){
 
     }
 
     ngOnInit(): void {
-            
-        this.GetLogList(); 
+
+        this.GetLogList();
     }
 
-    _search : string; 
+
+
+    _search : string;
 
     get Search(): string{
 
-        return this._search; 
-    
+        return this._search;
+
     }
 
     set Search(value:string)
     {
-        this._search = value; 
+        this._search = value;
 
-        this.GetLogListByKey(value); 
+        this.GetLogListByKey(value);
     }
 
 
     // tslint:disable-next-line:member-ordering
-    _name : string; 
+    _name : string;
 
     get Name(): string {
-        
-        return this._name; 
+
+        return this._name;
     }
 
     set Name(value:string) {
-        
+
         this._name = value;
 
     }
 
-    _phone : string; 
+    _phone : string;
 
     get PhoneNumber():string{
 
-        return this._phone; 
-    
+        return this._phone;
+
     }
 
     set PhoneNumber(value:string){
 
         this._phone = value;
-                
+
     }
 
-    _emailaddress : string; 
+    _emailaddress : string;
 
     get Email(): string {
-    
-        return this._emailaddress; 
-    
+
+        return this._emailaddress;
+
     }
 
     set Email(value:string)
     {
-        this._emailaddress = value; 
+        this._emailaddress = value;
     }
 
-    _note : string; 
+    _note : string;
 
     get Note(): string {
-    
-        return this._note; 
-    
+
+        return this._note;
+
     }
 
     set Note(value:string)  {
@@ -109,73 +109,88 @@ export class CustomerlogComponent implements OnInit{
 
     }
 
-    Comment : string; 
 
-    _loglist : customerlog[]; 
+    _channel: string;
+
+    get Channel(): string {
+
+        return this._channel;
+
+    }
+
+    set Channel(value: string)  {
+
+        this._channel = value;
+
+    }
+
+    Comment : string;
+
+    _loglist : customerlog[];
 
     get logList() : customerlog[]{
 
-        return this._loglist; 
+        return this._loglist;
 
     }
 
     set logList( value :customerlog[] ) {
 
-        this._loglist = value; 
+        this._loglist = value;
 
     }
 
-    Hidden : string; 
+    Hidden : string;
 
-    
+
     openModal(item: customerlog) {
 
         const initialState = {
-              log: item, 
+              log: item,
               parent : this.GetLogList
           };
 
         this.bsModalRef = this.modalService.show(ModalContentComponent, {initialState});
-      
+
     }
 
     openEmailModal(item: customerlog){
         const initialState = {
-            log : item, 
+            log : item,
             parentFunction: this.GetLogList
         };
 
-        this.emailModalRef = this.modalService.show(EmailmodalComponent, {initialState}); 
+        this.emailModalRef = this.modalService.show(EmailmodalComponent, {initialState});
     }
 
     public GetLogList() : void{
 
         document.getElementById('loader').style.display = 'block';
-        
+
         this.logservice.GetAllCustomerLog().subscribe(
             list => {
-                
-                this.logList = list; 
+
+                this.logList = list;
 
                 document.getElementById('loader').style.display = 'none';
-            }, 
-            error =>  alert((<any>error))); 
-       
+            },
+            error =>  alert((<any>error)));
+
 
     }
 
     private GetLogListByKey(key:string) {
 
         document.getElementById('loader').style.display = 'block';
-        
+
         this.logservice.GetAllCustomerLogByKey(key).subscribe(
             list => {
 
-                this.logList = list; 
+                this.logList = list;
 
                 document.getElementById('loader').style.display = 'none';
-            }, 
-            error =>  alert((<any>error))); 
+            },
+            error =>  alert((<any>error)));
     }
 
     DeleteLog(rowkey:string, key:string)
@@ -184,65 +199,67 @@ export class CustomerlogComponent implements OnInit{
        {
            this.logservice.DeleteCustomerLog(rowkey).subscribe(
             r => {
-                alert('資料已被刪除'); 
-                this.GetLogList(); 
-            }, 
-            error =>  alert((<any>error))); 
+                alert('資料已被刪除');
+                this.GetLogList();
+            },
+            error =>  alert((<any>error)));
        }
-       
+
     }
 
     addlog(){
 
-        
+
         if (this.Name !== '' && typeof this.Name !== 'undefined')
         {
-              
-       
-             let newitem = new customerlog();  
 
-             newitem.Name = this.Name; 
 
-             newitem.Email = this.Email; 
+             let newitem = new customerlog();
 
-             newitem.PhoneNumber = this.PhoneNumber; 
+             newitem.Name = this.Name;
 
-             newitem.Note = this.Note; 
+            // newitem.Email = this.Email;
 
-             newitem.Comment = this.Comment; 
+             newitem.PhoneNumber = this.PhoneNumber;
+
+             newitem.Note = this.Note;
+
+             newitem.Comment = this.Comment;
+
+             newitem.Channel = this.Channel;
 
              newitem.RecordTime = new Date().toLocaleDateString() + "-" + new Date().toLocaleTimeString();
 
-             
+
              this.logservice.PostCustomerLog(newitem).subscribe(
                 res  => {
-                    alert(newitem.Name + ' 資料輸入成功!'); 
-                    this.resetInput(); 
-                    this.GetLogList(); 
+                    alert(newitem.Name + ' 資料輸入成功!');
+                    this.resetInput();
+                    this.GetLogList();
                 },
-                error =>  alert((<any>error))); 
-            
-             
+                error =>  alert((<any>error)));
+
+
         }
 
 
     }
-    
-  
+
+
 
     resetInput(): void {
-            this.Name = ''  
-            this.PhoneNumber = ''; 
-            this.Email = ''; 
-            this.Note = ''; 
-            this.Comment = ''; 
+            this.Name = ''
+            this.PhoneNumber = '';
+            this.Email = '';
+            this.Note = '';
+            this.Comment = '';
     }
 
 }
 
 
  /* This is a component which we pass in modal*/
- 
+
  @Component({
     selector: 'modal-content',
     template: `
@@ -261,7 +278,7 @@ export class CustomerlogComponent implements OnInit{
           <td>
           <input type="string"
           [(ngModel)]='Name'
-           />  
+           />
           </td>
       </tr>
 
@@ -272,18 +289,26 @@ export class CustomerlogComponent implements OnInit{
           <td>
           <input type="string"
           [(ngModel)]='PhoneNumber'
-           />  
+           />
           </td>
       </tr>
 
       <tr>
       <td>
-         Email
+         銷售管道
       </td>
       <td>
-      <input type="string"
-      [(ngModel)]='Email'
-       />  
+      <mat-form-field>
+      <select matNativeControl [(ngModel)]="Channel" required>
+        <option value="電話直購">電話直購</option>
+        <option value="簡訊促銷">簡訊促銷</option>
+        <option value="樂天">樂天</option>
+        <option value="蝦皮">蝦皮</option>
+        <option value="官網">官網</option>
+        <option value="親友員工">親友員工</option>
+        <option value="其他">其他</option>
+      </select>
+    </mat-form-field>
       </td>
       </tr>
 
@@ -308,16 +333,16 @@ export class CustomerlogComponent implements OnInit{
       </td>
       </tr>
       <tr >
-         
+
               <td>
                   <button class="btn btn-primary" (click) = 'savelog()'>
                      儲存
                    </button>
-                  
+
               </td>
 
         </tr>
-    </table> 
+    </table>
 
 
       </div>
@@ -326,37 +351,41 @@ export class CustomerlogComponent implements OnInit{
       </div>
     `
   })
-   
+
   export class ModalContentComponent implements OnInit {
-     
-    log: customerlog; 
 
-    Name: string; 
+    log: customerlog;
 
-    PhoneNumber : string; 
+    Name: string;
+
+    PhoneNumber : string;
 
     Email : string;
 
-    Note : string ; 
+    Note : string ;
 
-    Comment : string; 
+    Comment : string;
 
-    parent : Function; 
-  
-    
+    parent : Function;
+
+    Channel: string;
+
+
     constructor(public bsModalRef: BsModalRef , public logservice: CustomerlogService ) {}
-   
+
     ngOnInit() {
-       
-        this.Name = this.log.Name; 
- 
-        this.PhoneNumber = this.log.PhoneNumber; 
 
-        this.Email = this.log.Email; 
+        this.Name = this.log.Name;
 
-        this.Note = this.log.Note; 
+        this.PhoneNumber = this.log.PhoneNumber;
 
-        this.Comment = this.log.Comment; 
+        this.Email = this.log.Email;
+
+        this.Note = this.log.Note;
+
+        this.Comment = this.log.Comment;
+
+        this.Channel = this.log.Channel;
 
 
     }
@@ -364,14 +393,16 @@ export class CustomerlogComponent implements OnInit{
     savelog(){
 
       this.log.Name = this.Name;
-      
-      this.log.PhoneNumber = this.PhoneNumber; 
 
-      this.log.Email = this.Email; 
+      this.log.PhoneNumber = this.PhoneNumber;
 
-      this.log.Note = this.Note; 
+      this.log.Email = this.Email;
 
-      this.log.Comment = this.Comment; 
+      this.log.Note = this.Note;
+
+      this.log.Comment = this.Comment;
+
+      this.log.Channel = this.Channel;
 
       this.log.RecordTime = new Date().toLocaleDateString() + "-" + new Date().toLocaleTimeString();
 
@@ -379,13 +410,13 @@ export class CustomerlogComponent implements OnInit{
         res  => {
             alert(  '修改資料成功!');
 
-            this.bsModalRef.hide(); 
+            this.bsModalRef.hide();
 
-            this.parent.call(this); 
+            this.parent.call(this);
         },
-        error =>  alert((<any>error))); 
+        error =>  alert((<any>error)));
 
-        
+
     }
   }
 
