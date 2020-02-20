@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import {UserInfo, HealthInfo, HealthHistory} from '../../core/shared/model/userinfo';
+import {Weather} from '../../core/shared/model/weather';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,9 @@ export class HealthserviceService {
   // private site = 'https://localhost:44347/';  // URL to web api
   private url = 'api/healthapi/';
   private postImgurl = 'api/UploadWebPhotoapi/';
+
+  private weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?id=1668284&APPID=678b74a297f51d823a3d69b025b4829a&units=metric';
+
   list: string[];
 
   constructor(private http: HttpClient) { }
@@ -85,5 +89,12 @@ export class HealthserviceService {
 
 
  }
+
+  public getTemp() {
+
+    const url = this.weatherUrl;
+
+    return this.http.get<Weather>(url);
+  }
 
 }

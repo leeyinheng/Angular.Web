@@ -24,6 +24,8 @@ export class HealthviewmodalComponent implements OnInit {
 
   History: HealthHistory;
 
+  CurrentTemp = 0;
+
   Mode = 'Add';
 
   public files: NgxFileDropEntry[] = [];
@@ -33,12 +35,19 @@ export class HealthviewmodalComponent implements OnInit {
 
   ngOnInit() {
 
+    this.service.getTemp().subscribe( val => {
+
+      this.CurrentTemp = val.main.temp;
+
+    });
+
   }
 
   public newblood() {
     const newblood = new BloodPressure();
     const now = new Date;
     newblood.DateTime = now.toLocaleString();
+    newblood.Comment = this.CurrentTemp.toString();
     this.History.BloodPressures.push(newblood);
   }
 

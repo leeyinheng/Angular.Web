@@ -121,6 +121,7 @@
                   舒張壓:<span *ngIf="blood.BloodLow >= 90" style="color: red;">{{ blood.BloodLow }} </span>
                   <span *ngIf="blood.BloodLow < 90" style="color: green;">{{ blood.BloodLow }} </span>
                   脈搏: {{blood.Pulse}}
+                  溫度: {{blood.Comment}} c
                   {{blood.DateTime}}
                 </td>
               </tr>
