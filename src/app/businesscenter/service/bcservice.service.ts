@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Request} from '../model/BusinessCenter';
 import { Vendor, Gps, Feature, User } from '../model/Inhub';
 import { isNullOrUndefined } from 'util';
+import {InHubLog} from './../../core/shared/model/log';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,8 @@ export class BcserviceService {
   private url = 'api/businesscenterapi/';
 
   private postImgurl = '/upload';
+
+  private logurl = this.site + 'api/logapi/';
 
 
 
@@ -90,6 +93,13 @@ export class BcserviceService {
     const url = this.userurl;
 
     return this.http.get<User[]>(url, this.getHttpoption());
+  }
+
+  public getLogs() {
+
+    const url = this.logurl;
+
+    return this.http.get<InHubLog[]>(url);
   }
 
   public getEntityById(id: string) {

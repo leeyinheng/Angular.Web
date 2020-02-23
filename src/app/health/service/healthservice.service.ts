@@ -14,7 +14,7 @@ export class HealthserviceService {
   private url = 'api/healthapi/';
   private postImgurl = 'api/UploadWebPhotoapi/';
 
-  private weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?id=1668284&APPID=678b74a297f51d823a3d69b025b4829a&units=metric';
+  private weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?id=1668284&APPID=678b74a297f51d823a3d69b025b4829a&units=metric';
 
   list: string[];
 

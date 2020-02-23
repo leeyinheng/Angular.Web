@@ -22,6 +22,8 @@ import { RequestmodalComponent } from './requestmodal/requestmodal.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { UserformComponent } from './userform/userform.component';
 import {BcserviceService} from './service/bcservice.service';
+import { LogviewComponent } from './logview/logview.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   imports: [
     CommonModule,
@@ -39,6 +41,7 @@ import {BcserviceService} from './service/bcservice.service';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    NgxPaginationModule,
     NgbModule,
     GoogleMapsModule,
     CarouselModule.forRoot(),
@@ -61,13 +64,17 @@ import {BcserviceService} from './service/bcservice.service';
       },
       {
         path: 'bcuserform/:id', component: UserformComponent
+      },
+      {
+        path: 'InHubLog', component: LogviewComponent
       }
     ])
   ],
   declarations: [BclistComponent, BcformComponent, BcformmodalComponent, BusinesshourmodalComponent,
      RequestmodalComponent,
      UserlistComponent,
-     UserformComponent],
+     UserformComponent,
+     LogviewComponent],
   entryComponents: [BcformmodalComponent, BusinesshourmodalComponent],
   providers: [BcserviceService]
 

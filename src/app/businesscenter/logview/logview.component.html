@@ -1,0 +1,50 @@
+<div>
+  <span><img src='../assets/Photos/inhublogo.png' width=10% height=10% /></span>
+  <p></p>
+</div>
+
+
+<p></p>
+
+<button type="button" class="btn btn-primary" onclick="location.href='#/bccenter';">到商務中心管理</button>
+<p></p>
+
+<table class="table table-bordered table-striped">
+  <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Action
+      </th>
+      <th>
+        User
+      </th>
+      <th>
+        RecordTime
+      </th>
+
+      <th>
+        Comment
+      </th>
+  </tr>
+
+
+      <tbody>
+
+          <tr *ngFor = 'let item of List | paginate: { itemsPerPage: 30, currentPage: p} ' >
+              <td>
+                  {{item.Name}}
+              </td>
+              <td>{{ item.Action}}
+
+              </td>
+              <td>   {{item.User}} </td>
+              <td>{{ item.RecordTime}}</td>
+              <td>
+                {{item.Comment}}
+              </td>
+          </tr>
+      </tbody>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</table>
