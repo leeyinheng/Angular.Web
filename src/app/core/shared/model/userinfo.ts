@@ -27,6 +27,8 @@ export class HealthHistory {
   DateTime: string;
   Comment: string;
   DataKey: string;
+  Changed: boolean;
+  Activities: Meal[];
 }
 
 export class BloodPressure {
@@ -41,6 +43,7 @@ export class Meal {
   Name: string;
   ImageLink: string;
   DateTime: string;
+  ImageUrl: string;
 }
 
 

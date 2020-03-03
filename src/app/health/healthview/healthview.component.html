@@ -92,6 +92,20 @@
           <span *ngIf="item.Comment" style="color:blue;">({{item.Comment}})</span>
 
           <table>
+
+
+            <tbody class="table table-bordered table-striped">
+              <tr *ngFor="let meal of item.Activities">
+                <td> {{meal.DateTime}} - {{meal.Name}}
+                  <a [href]= "meal.ImageUrl" target="_blank">
+                  <img [src]="meal.ImageLink" style="width: 100%;" />
+                </a>
+                 </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table>
             <tr>
               <td>
                 <button type="button" class="btn btn-sm btn-warning" (click)=editform(x)>編輯</button>

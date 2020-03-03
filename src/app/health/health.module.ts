@@ -11,6 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {ModalModule} from 'ngx-bootstrap';
 import { HealthviewmodalComponent } from './healthviewmodal/healthviewmodal.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {SharedModule} from '../core/shared/shared.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxSpinnerModule,
     FlexLayoutModule,
     NgxPaginationModule,
+    SharedModule.forRoot(),
     RouterModule.forChild([
       {
         path: 'health', component: HealthviewComponent

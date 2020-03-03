@@ -90,7 +90,7 @@
     </tr>
     <tr>
       <td colspan="2">
-        餐飲
+        餐飲: <button type="button" class="btn btn-sm btn-warning" (click)=newMeal();>新增</button>
         <div class="center">
           <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
             (onFileLeave)="fileLeave($event)">
@@ -127,6 +127,54 @@
                   <tr>
                     <td>
                       <button type="button" class="btn btn-sm btn-danger" (click)="removeMeal(x)">刪除</button>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        活動:
+        <div class="center">
+          <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="acticitydropped($event)" (onFileOver)="fileOver($event)"
+            (onFileLeave)="fileLeave($event)">
+            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+              拖曳或是選擇要上傳的餐飲圖片(必須小於4mb)
+              <button type="button" (click)="openFileSelector()">Browse Files</button>
+            </ng-template>
+          </ngx-file-drop>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <table>
+          <tbody class="table table-bordered table-striped">
+            <tr *ngFor="let meal of History.Activities; let x = index">
+              <td>
+                <table>
+                  <tr>
+                    <td>
+                      <img [src]="meal.ImageLink" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="string" [(ngModel)]='meal.Name' style="width: 90%;" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      {{meal.DateTime}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-danger" (click)="removeActivity(x)">刪除</button>
                     </td>
                   </tr>
                 </table>

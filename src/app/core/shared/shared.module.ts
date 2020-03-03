@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthserviceService } from './service/authservice.service';
 import {CryptserviceService} from './service/cryptservice.service';
 import { PostFileService} from './service/postservice.service';
+import {NewsserviceService} from './service/newsservice.service';
 
 
 
@@ -16,7 +17,7 @@ export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [ AuthserviceService, CryptserviceService, PostFileService ]
+      providers: [ AuthserviceService, CryptserviceService, PostFileService, NewsserviceService ]
     };
   }
 

@@ -110,6 +110,7 @@ export class HealthviewComponent implements OnInit {
     newEntity.Weight = '75';
     newEntity.BloodPressures = [];
     newEntity.Meals = [];
+    newEntity.Activities = [];
 
     const initialState = {
       Entity: this.Entity,
