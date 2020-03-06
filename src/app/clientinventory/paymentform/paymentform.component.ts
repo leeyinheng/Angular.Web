@@ -185,6 +185,12 @@ export class PaymentformComponent implements OnInit {
 
   }
 
+  resetdates() {
+    this.Entity.Info.NextPaymentDate = '';
+    this.Entity.Info.LastPaymentDate = '';
+    this.change = true;
+  }
+
   updatepaymentdate() {
 
 
