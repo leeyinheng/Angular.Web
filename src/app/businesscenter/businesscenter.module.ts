@@ -24,6 +24,7 @@ import { UserformComponent } from './userform/userform.component';
 import {BcserviceService} from './service/bcservice.service';
 import { LogviewComponent } from './logview/logview.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -67,6 +68,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
       },
       {
         path: 'InHubLog', component: LogviewComponent
+      },
+      {
+        path: 'bclogin', component: LoginComponent
       }
     ])
   ],
@@ -74,7 +78,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
      RequestmodalComponent,
      UserlistComponent,
      UserformComponent,
-     LogviewComponent],
+     LogviewComponent,
+     LoginComponent],
   entryComponents: [BcformmodalComponent, BusinesshourmodalComponent],
   providers: [BcserviceService]
 
