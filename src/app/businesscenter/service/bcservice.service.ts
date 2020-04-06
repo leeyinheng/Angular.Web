@@ -6,6 +6,8 @@ import { Request} from '../model/BusinessCenter';
 import { Vendor, Gps, Feature, User } from '../model/Inhub';
 import { isNullOrUndefined } from 'util';
 import {InHubLog} from './../../core/shared/model/log';
+import {Router} from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +31,8 @@ export class BcserviceService {
 
 
   constructor(
-    private http: HttpClient
-  ) {  this.gettoken(); }
+    private http: HttpClient , private router: Router
+  ) {  }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
@@ -38,12 +40,18 @@ export class BcserviceService {
   }
 
   public gettoken() {
-    this.http.get(this.tokenurl, {responseType: 'text'}).subscribe(val => {
-      sessionStorage.setItem('token', val.toString());
-    });
+
+    return this.http.get(this.tokenurl, {responseType: 'text'});
   }
 
+
   public getHttpoption(isImage: boolean = false) {
+
+    if (isNullOrUndefined(sessionStorage.getItem('token'))) {
+      alert('Session Expired or Unauthorized , 請登入');
+      this.router.navigate(['bclogin']);
+      return;
+    }
 
     const t = sessionStorage.getItem('token');
 
@@ -78,18 +86,24 @@ export class BcserviceService {
 
   public getList() {
 
-    const url  = this.vendorurl;
-
     if (isNullOrUndefined(sessionStorage.getItem('token'))) {
-      alert('Session is expired, Please wait a min and then refresh .. ');
+      alert('Session Expired or Unauthorized , 請登入');
+      this.router.navigate(['bclogin']);
       return;
     }
+
+    const url  = this.vendorurl;
 
     return this.http.get<Vendor[]>(url, this.getHttpoption());
   }
 
   public getUserList() {
 
+    if (isNullOrUndefined(sessionStorage.getItem('token'))) {
+      alert('Session Expired or Unauthorized , 請登入');
+      this.router.navigate(['bclogin']);
+      return;
+    }
     const url = this.userurl;
 
     return this.http.get<User[]>(url, this.getHttpoption());

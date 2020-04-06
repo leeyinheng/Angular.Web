@@ -153,7 +153,6 @@ export class PaymentformComponent implements OnInit {
       });
 
 
-
   }
 
 
@@ -166,11 +165,11 @@ export class PaymentformComponent implements OnInit {
 
    const jsDate = new Date(entity.year, entity.month - 1 , entity.day);
 
-   const addmonth = (+jsDate.getMonth() +  +1 +  +this.Entity.Info.PaymentPeriod);
+   const addmonth = ( +jsDate.getMonth()  +  +this.Entity.Info.PaymentPeriod);
 
    const nextpaymentdate = new Date(jsDate.setMonth(addmonth));
 
-   this.model2 = new NgbDate(nextpaymentdate.getFullYear(), nextpaymentdate.getMonth(), nextpaymentdate.getDate());
+   this.model2 = new NgbDate(nextpaymentdate.getFullYear(), nextpaymentdate.getMonth() + 1 , nextpaymentdate.getDate());
 
    this.selectnextpaymentday(this.model2);
 
@@ -192,8 +191,6 @@ export class PaymentformComponent implements OnInit {
   }
 
   updatepaymentdate() {
-
-
 
     if (!isNullOrUndefined(this.model)) {
 

@@ -1,0 +1,344 @@
+<div class="home-banner">
+  <div class="banner-container">
+    <div class="banner-image"></div>
+  </div>
+</div>
+
+<p></p>
+
+<div class="body-content">
+
+    <mat-vertical-stepper  linear=true>
+
+      <mat-step [stepControl]="firstFormGroup" label= "基本資料">
+        <form [formGroup]="firstFormGroup">
+
+          <mat-card>
+            ID: {{Entity.Id}} <br>
+
+            <mat-form-field >
+              <mat-label>姓名</mat-label>
+              <input matInput type="string"
+              [(ngModel)]='Entity.Name' required formControlName="firstCtrl"
+              />
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+              <mat-label>性別</mat-label>
+              <select matNativeControl [(ngModel)]="Entity.Gender" formControlName="firstCtrl" required>
+                <option value="男性">男性</option>
+                <option value="女性">女性</option>
+              </select>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field class="example-full-width">
+              <mat-label>生日 (選擇日期)</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="Entity.Birthday" formControlName="otherCtrl">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field>
+
+            <br>
+
+
+              <mat-label>身高(cm)</mat-label>
+              {{Entity.Height}} 公分
+              <mat-slider [(ngModel)]="Entity.Height" formControlName="otherCtrl"
+              thumbLabel
+              [displayWith]="formatLabel"
+              tickInterval="2"
+              min="140"
+              max="210"></mat-slider>
+
+              <br>
+
+              <mat-label>體重(kg)</mat-label>
+              {{Entity.Weight}} 公斤
+              <mat-slider [(ngModel)]="Entity.Weight" formControlName="otherCtrl"
+              thumbLabel
+              [displayWith]="formatLabel"
+              tickInterval="2"
+              min="40"
+              max="160"></mat-slider>
+
+          </mat-card>
+          <br>
+          <div>
+
+            <button mat-raised-button	color="primary" matStepperNext>下一步</button>
+
+          </div>
+
+        </form>
+
+
+
+      </mat-step>
+
+      <mat-step label= "聯絡方式" [stepControl]="secondFormGroup">
+
+        <form [formGroup]="secondFormGroup">
+
+          <mat-card>
+
+            <mat-form-field>
+              <mat-label>居住地</mat-label>
+              <div>
+                <select matNativeControl [(ngModel)]="Entity.City" (change) = 'CheckInput()' formControlName="secondCtrl"  required>
+
+                  <option value="台北市">台北市</option>
+                  <option value="新北市">新北市</option>
+                  <option value="新竹市">新竹市</option>
+                  <option value="桃園市">桃園市</option>
+                  <option value="台中市">台中市</option>
+                  <option value="台南市">台南市</option>
+                  <option value="高雄市">高雄市</option>
+                  <option value="基隆市">基隆市</option>
+                  <option value="嘉義市">嘉義市</option>
+                  <option value="新竹縣">新竹縣</option>
+                  <option value="苗栗縣">苗栗縣</option>
+                  <option value="彰化縣">彰化縣</option>
+                  <option value="南投縣">南投縣</option>
+                  <option value="雲林縣">雲林縣</option>
+                  <option value="嘉義縣">嘉義縣</option>
+                  <option value="屏東縣">屏東縣</option>
+                  <option value="宜蘭縣">宜蘭縣</option>
+                  <option value="花蓮縣">花蓮縣</option>
+                  <option value="台東縣">台東縣</option>
+                  <option value="澎湖縣">澎湖縣</option>
+                  <option value="中國大陸">中國大陸</option>
+                  <option value="歐美地區">歐美地區</option>
+                  <option value="其他">其他</option>
+                </select>
+              </div>
+
+
+            </mat-form-field>
+
+            <div *ngIf="showInput">
+              <input matInput type="string"
+              [(ngModel)]='showInputVal' formControlName="secondCtrl" placeholder="請手動輸入所在地"
+              />
+            </div>
+
+            <br>
+
+            <mat-form-field>
+              <mat-label>手機號碼</mat-label>
+              <input matInput type="number"
+              [(ngModel)]='Entity.Phone' required formControlName="secondCtrl"
+              />
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+              <mat-label>電子郵件</mat-label>
+              <input matInput type="email"
+              [(ngModel)]='Entity.Email' placeholder="Ex. pat@example.com" required formControlName="other2Ctrl"
+              />
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+              <mat-label>Line ID</mat-label>
+              <input matInput type="string"
+              [(ngModel)]='Entity.LineId' required formControlName="other2Ctrl"
+              />
+            </mat-form-field>
+
+            <br>
+
+          </mat-card>
+          <div>
+            <br>
+            <button mat-raised-button	color="warn" class="btn-space"  mat-button matStepperPrevious>上一步</button>
+            <button mat-raised-button	color="primary"   mat-button matStepperNext>下一步</button>
+          </div>
+
+        </form>
+
+
+      </mat-step>
+
+      <mat-step label= "職業學歷" [stepControl]="thirdFormGroup">
+
+        <form [formGroup]="thirdFormGroup">
+
+          <mat-card>
+
+            <mat-form-field>
+              <mat-label>職業</mat-label>
+              <input matInput type="string"
+              [(ngModel)]='Entity.Occuptation' required formControlName="other3Ctrl"
+              />
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+              <mat-label>學歷</mat-label>
+              <select matNativeControl [(ngModel)]="Entity.School" formControlName="thirdCtrl" required>
+                <option value="高中職">高中職</option>
+                <option value="國內大學">國內大學</option>
+                <option value="國外大學">國外大學</option>
+                <option value="國內碩士">國內碩士</option>
+                <option value="國外碩士">國外碩士</option>
+                <option value="國內博士">國內博士</option>
+                <option value="國外博士">國外博士</option>
+              </select>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+              <mat-label>薪水區間(月薪)</mat-label>
+              <select matNativeControl [(ngModel)]="Entity.SalaryRange" formControlName="thirdCtrl" required>
+                <option value="1">三萬元台幣以下</option>
+                <option value="2">三萬到五萬台幣</option>
+                <option value="3">五萬到十萬台幣</option>
+                <option value="4">十萬台幣以上</option>
+              </select>
+            </mat-form-field>
+
+            <br>
+
+          </mat-card>
+          <br>
+          <div>
+            <button mat-raised-button	color="warn"  class="btn-space" mat-button matStepperPrevious>上一步</button>
+            <button mat-raised-button	color="primary"    mat-button matStepperNext>下一步</button>
+          </div>
+
+        </form>
+
+
+      </mat-step>
+
+      <mat-step label= "生活狀況" >
+
+          <mat-card>
+
+            <mat-form-field>
+              <mat-label>婚姻狀況</mat-label>
+              <select matNativeControl [(ngModel)]="Entity.Married">
+                <option value="單身">單身</option>
+                <option value="二春">二春</option>
+              </select>
+            </mat-form-field>
+
+            <br>
+
+            <mat-checkbox  [(ngModel)]="Entity.HasCar">有車</mat-checkbox>
+
+
+            <br>
+
+            <mat-checkbox  [(ngModel)]="Entity.HasHouse">有房</mat-checkbox>
+
+
+            <br>
+
+
+            <mat-form-field style="width: 70%;">
+              <mat-label>自我簡介</mat-label>
+              <textarea matInput [(ngModel)]="Entity.Intro" placeholder="多告訴一點未來的對象關於您自己!"></textarea>
+            </mat-form-field>
+
+
+          </mat-card>
+          <br>
+          <div>
+            <button mat-raised-button	color="warn" class="btn-space"  mat-button matStepperPrevious>上一步</button>
+            <button mat-raised-button	color="primary"    mat-button matStepperNext>下一步</button>
+          </div>
+
+      </mat-step>
+
+      <mat-step label= "上傳相片" >
+
+        <mat-card>
+
+          <div class="center">
+            <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+            (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+                <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                  拖曳或是選擇要上傳的圖片
+                  <button type="button" (click)="openFileSelector()">選擇相片</button>
+                </ng-template>
+            </ngx-file-drop>
+
+          </div>
+
+          <div >
+            <img src='{{Entity.ImgLink}}'   class="img-thumbnail" >
+          </div>
+
+        </mat-card>
+        <br>
+        <div>
+          <button mat-raised-button	color="warn"  class="btn-space" mat-button matStepperPrevious>上一步</button>
+          <button mat-raised-button	color="primary"    mat-button matStepperNext>下一步</button>
+        </div>
+
+      </mat-step>
+
+
+      <mat-step label= "確認上傳" >
+        <div>
+          <button mat-raised-button	color="warn"   mat-button matStepperPrevious class="btn-space">上一步</button>
+        </div>
+        <br>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>{{Entity.Name}}</mat-card-title>
+            <mat-card-subtitle>生日: {{Entity.Birthday}} </mat-card-subtitle>
+            <mat-card-subtitle>{{Entity.Gender}} 身高: {{Entity.Height}} 公分 體重: {{Entity.Weight}} 公斤</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="{{Entity.ImgLink}}" alt="Photo" style="width: 50%;">
+          <mat-card-content>
+            <p>
+             Hello~ LinePair 很高興認識您, 請確認以下資料是否正確 <b>
+
+             </b> 您的電話是 {{Entity.Phone}} , 電子郵件是 {{Entity.Email}} , 居住在 {{Entity.City}} , 職業是 {{Entity.Occuptation}} ,
+             目前狀態是 {{Entity.Married}} , 自我介紹是 <b></b> {{Entity.Intro}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+
+            <button mat-fab (click)="SaveEntity()"><mat-icon>favorite</mat-icon> 上傳</button>
+          </mat-card-actions>
+        </mat-card>
+
+      </mat-step>
+
+
+    </mat-vertical-stepper>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>
+
+
+

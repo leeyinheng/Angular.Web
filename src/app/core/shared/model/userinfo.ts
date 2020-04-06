@@ -19,6 +19,8 @@ export class HealthInfo {
   Note: string;
 }
 
+
+
 export class HealthHistory {
   BloodPressures: BloodPressure[];
   Meals: Meal[];

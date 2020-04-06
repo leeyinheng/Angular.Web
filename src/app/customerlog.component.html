@@ -4,14 +4,20 @@
 </div>
 
 <div class="row">
-    <label>搜尋:</label>
-    <input type="string"
-    [(ngModel)]='Search'
-    style="width: 6em;"
-    />
+    <mat-form-field>
+      <mat-label>搜尋:</mat-label>
+
+      <input matInput type="string"
+      [(ngModel)]='Search'
+      placeholder="顧客名"
+      />
+
+    </mat-form-field>
+
 </div>
 
 <div class="loader" id="loader"></div>
+
 
 <table class="table table-bordered table-striped">
     <tr>
@@ -75,9 +81,9 @@
 
             </td>
             <td>
-                <button class="btn btn-primary" (click) = 'addlog()'>
+                <button mat-raised-button color="primary" (click) = 'addlog()'>
                     新增
-                 </button>
+                </button>
 
             </td>
         </tr>
@@ -94,7 +100,7 @@
                 <td class="warning">{{ item.Comment}}</td>
                 <td>{{ item.RecordTime}}</td>
                 <td>
-                        <button class="btn btn-danger" (click) = 'DeleteLog(item.RowKey, item.Name)' >
+                        <button  class="btn btn-danger" (click) = 'DeleteLog(item.RowKey, item.Name)' >
                                 刪除
                         </button>
                         <button type="button" class="btn btn-info" (click)="openModal(item)">編輯</button>
@@ -106,5 +112,8 @@
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
 </table>
+
+
+
 
 {{modalMessage}}

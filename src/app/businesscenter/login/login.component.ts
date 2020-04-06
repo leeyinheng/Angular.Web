@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewChild , ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
+import { Component, OnInit, ViewChild , ElementRef , NgZone } from '@angular/core';
+import {BcserviceService} from '../service/bcservice.service';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {Router} from '@angular/router';
+import {AuthserviceService} from './../../core/shared/service/authservice.service';
+import { AppUser} from '../../core/shared/model/user';
 
 @Component({
   selector: 'app-login',
@@ -13,17 +16,20 @@ export class LoginComponent implements OnInit {
 
   auth2: any;
 
-  constructor() { }
+  constructor(private bcservice: BcserviceService, private spinner: NgxSpinnerService,
+    private router: Router, private ngzone: NgZone, public service: AuthserviceService) { }
 
   ngOnInit() {
+
     this.googleSDK();
+
   }
 
   prepareLoginButton() {
 
     this.auth2.attachClickHandler(this.loginElement.nativeElement, {},
       (googleUser) => {
-
+        this.ngzone.run(() => {  this.spinner.show(); });
         const profile = googleUser.getBasicProfile();
         console.log('Token || ' + googleUser.getAuthResponse().id_token);
         console.log('ID: ' + profile.getId());
@@ -31,7 +37,33 @@ export class LoginComponent implements OnInit {
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail());
         // YOUR CODE HERE
-        alert(profile.getEmail());
+        // alert(profile.getEmail());
+       // this.spinner.show();
+       const user = new AppUser();
+
+       const datestring = new Date().toLocaleString();
+       user.UserID = profile.getEmail();
+       user.Password = 'password';
+       user.Application = 'BcCenter';
+       user.LogInTime = datestring;
+
+       this.service.authUser(user).subscribe(res => {
+           alert('歡迎管理員:' + res.Name + ' 您上次登入時間:' + res.LastLogInTime );
+           sessionStorage.setItem('loginEmail', profile.getEmail());
+           sessionStorage.setItem('loginName', profile.getName());
+           this.bcservice.gettoken().subscribe(val => {
+            // alert(val.toString());
+             sessionStorage.setItem('token', val.toString());
+             this.spinner.hide();
+             this.ngzone.run(() => {
+               this.router.navigate(['bccenter']);
+             });
+           });
+        },
+        (error) => {
+          alert('帳戶不是管理員 拒絕登入 或聯絡 Henry Lee 加入');
+        }
+        );
 
       }, (error) => {
         alert(JSON.stringify(error, undefined, 2));
@@ -62,5 +94,9 @@ export class LoginComponent implements OnInit {
     }(document, 'script', 'google-jssdk'));
 
   }
+
+
+
+
 
 }

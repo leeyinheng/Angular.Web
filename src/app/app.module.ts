@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,33 +26,30 @@ import { CartComponent } from './cart.component';
 import { StoneweightComponent } from './stoneweight.component';
 import { CustomerlogComponent } from './customerlog.component';
 import { ModalContentComponent } from './customerlog.component';
-
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { EmailmodalComponent } from './emailmodal/emailmodal.component';
-
 import { NgxPaginationModule } from 'ngx-pagination';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { BusinesscenterModule } from './businesscenter/businesscenter.module';
 import { ArticleModule } from './article/article.module';
 import { ClientinventoryModule } from './clientinventory/clientinventory.module';
 import { HealthModule } from './health/health.module';
 import { IgxCarouselModule } from 'igniteui-angular';
-import { MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
-
+import { MaterialModule } from './material-module';
+import { LinepairModule} from './linepair/linepair.module';
 
 
 @NgModule({
   imports: [
     BrowserModule,
-    FormsModule,
+    FormsModule, ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
     NgxPaginationModule,
     BrowserAnimationsModule,
-    MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule, MatInputModule,
+    MaterialModule,
+    LinepairModule,
     NgbModule,
     SharedModule.forRoot(),
     ModalModule.forRoot(),
