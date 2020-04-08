@@ -37,6 +37,13 @@ export class LinepairserviceService {
     return this.http.post(url, entity);
   }
 
+  public updateEntity(entity: LinePairUser) {
+
+    const url =  this.site + this.url + '888';
+
+    return this.http.put(url, entity);
+  }
+
   public deleteEntity( id: string) {
 
     const url = this.site + this.url + '/' + id;

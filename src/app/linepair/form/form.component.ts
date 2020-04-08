@@ -5,6 +5,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {LinepairserviceService} from '../service/linepairservice.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PostFileService} from '../../../app/core/shared//service/postservice.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class FormComponent implements OnInit {
   forthFormGroup: FormGroup;
   showInput = false;
   showInputVal = '';
+  uploadImage = false;
 
   _entity: LinePairUser = new LinePairUser();
 
@@ -43,7 +45,8 @@ export class FormComponent implements OnInit {
   constructor(private service: LinepairserviceService,
     private spinner: NgxSpinnerService,
     private _formBuilder: FormBuilder,
-    private postservice: PostFileService
+    private postservice: PostFileService,
+    private router: Router
      ) { }
 
   ngOnInit() {
@@ -98,6 +101,11 @@ export class FormComponent implements OnInit {
 
   public  SaveEntity() {
 
+        if (this.uploadImage === false) {
+          alert('您還沒上傳照片,還不能上傳資料喔!');
+          return;
+        }
+
          this.spinner.show();
 
          if(this.showInput) {
@@ -108,7 +116,7 @@ export class FormComponent implements OnInit {
           res => {
              alert('上傳成功!');
              this.spinner.hide();
-             window.open('#/linepairlist');
+             this.router.navigate(['linepairlist']);
          },
           err => {
             alert(err);
@@ -143,6 +151,7 @@ export class FormComponent implements OnInit {
             (val) => {
                  this.spinner.hide();
                  this.Entity.ImgLink = val;
+                 this.uploadImage = true;
             },
             err => {
                 alert('upload image error');

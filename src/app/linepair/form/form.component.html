@@ -52,7 +52,7 @@
               [displayWith]="formatLabel"
               tickInterval="2"
               min="140"
-              max="210"></mat-slider>
+              max="200"></mat-slider>
 
               <br>
 
@@ -129,7 +129,7 @@
 
             <mat-form-field>
               <mat-label>手機號碼</mat-label>
-              <input matInput type="number"
+              <input matInput type="tel"
               [(ngModel)]='Entity.Phone' required formControlName="secondCtrl"
               />
             </mat-form-field>

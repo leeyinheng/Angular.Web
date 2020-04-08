@@ -1,0 +1,184 @@
+<h5 mat-dialog-title> ID:  {{Entity.Id}}</h5>
+
+<mat-dialog-content>
+
+  <div class="example-container">
+
+  <mat-card>
+    <mat-form-field>
+      <mat-label>姓名</mat-label>
+      <input matInput placeholder="Name" [(ngModel)] = "Entity.Name">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>性別</mat-label>
+      <select matNativeControl [(ngModel)]="Entity.Gender">
+        <option value="男性">男性</option>
+        <option value="女性">女性</option>
+      </select>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>生日 (選擇日期)</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="Entity.Birthday" >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
+
+    <br>
+
+    <mat-label>身高(cm)</mat-label>
+    {{Entity.Height}} 公分
+    <mat-slider [(ngModel)]="Entity.Height"
+    thumbLabel
+    [displayWith]="formatLabel"
+    tickInterval="2"
+    min="140"
+    max="200"></mat-slider>
+
+    <br>
+
+    <mat-label>體重(kg)</mat-label>
+    {{Entity.Weight}} 公斤
+    <mat-slider [(ngModel)]="Entity.Weight"
+    thumbLabel
+    [displayWith]="formatLabel"
+    tickInterval="2"
+    min="40"
+    max="160"></mat-slider>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>居住地</mat-label>
+      <input matInput placeholder="City" [(ngModel)] = "Entity.City">
+    </mat-form-field>
+    <br>
+
+    <mat-form-field>
+      <mat-label>手機號碼</mat-label>
+      <input matInput type="tel"
+      [(ngModel)]='Entity.Phone'
+      />
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>電子郵件</mat-label>
+      <input matInput type="email"
+      [(ngModel)]='Entity.Email' placeholder="Ex. pat@example.com"
+      />
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>Line ID</mat-label>
+      <input matInput type="string"
+      [(ngModel)]='Entity.LineId'
+      />
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>職業</mat-label>
+      <input matInput type="string"
+      [(ngModel)]='Entity.Occuptation'
+      />
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>學歷</mat-label>
+      <select matNativeControl [(ngModel)]="Entity.School"  >
+        <option value="高中職">高中職</option>
+        <option value="國內大學">國內大學</option>
+        <option value="國外大學">國外大學</option>
+        <option value="國內碩士">國內碩士</option>
+        <option value="國外碩士">國外碩士</option>
+        <option value="國內博士">國內博士</option>
+        <option value="國外博士">國外博士</option>
+      </select>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>薪水區間(月薪)</mat-label>
+      <select matNativeControl [(ngModel)]="Entity.SalaryRange"  >
+        <option value="1">三萬元台幣以下</option>
+        <option value="2">三萬到五萬台幣</option>
+        <option value="3">五萬到十萬台幣</option>
+        <option value="4">十萬台幣以上</option>
+      </select>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>婚姻狀況</mat-label>
+      <select matNativeControl [(ngModel)]="Entity.Married">
+        <option value="單身">單身</option>
+        <option value="二春">二春</option>
+      </select>
+    </mat-form-field>
+
+    <br>
+
+    <mat-checkbox  [(ngModel)]="Entity.HasCar">有車</mat-checkbox>
+
+
+    <br>
+
+    <mat-checkbox  [(ngModel)]="Entity.HasHouse">有房</mat-checkbox>
+
+
+    <br>
+
+    <mat-form-field style="width: 70%;">
+      <mat-label>自我簡介</mat-label>
+      <textarea matInput [(ngModel)]="Entity.Intro" placeholder="多告訴一點未來的對象關於您自己!"></textarea>
+    </mat-form-field>
+
+    <br>
+    <div class="center">
+      <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+      (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            拖曳或是選擇要上傳的圖片
+            <button type="button" (click)="openFileSelector()">選擇相片</button>
+          </ng-template>
+      </ngx-file-drop>
+
+    </div>
+
+    <div >
+      <img src='{{Entity.ImgLink}}'   class="img-thumbnail" >
+    </div>
+
+  </mat-card>
+
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button	color="primary" (click)="Save()"><mat-icon>save</mat-icon> 儲存</button>
+  <button mat-raised-button	color="primary" (click)="Cancel()"><mat-icon>cancel</mat-icon> 取消</button>
+</mat-dialog-actions>
+
+
+
+
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>

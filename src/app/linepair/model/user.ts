@@ -20,6 +20,7 @@ export class LinePairUser {
    Intro: string;
    Payments: LinePairPayment[];
    Arranges: LinePairArrange[];
+
 }
 
 export class LinePairPayment {
