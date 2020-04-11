@@ -3,8 +3,15 @@
     <div class="banner-image"></div>
   </div>
 </div>
-<br>
 
+<a mat-stroked-button routerLink="/linepair" class="btn-space">到LinePair表單</a>
+<mat-radio-group aria-label="分流" [(ngModel)]='Filter' (ngModelChange)="FilterChange()">
+  <mat-radio-button value="1">男姓</mat-radio-button>
+  <mat-radio-button value="2">女性</mat-radio-button>
+  <mat-radio-button value="0">全部</mat-radio-button>
+</mat-radio-group>
+<br>
+<br>
 <div class="example-container mat-elevation-z8" >
    <div class="example-header">
      <mat-form-field>
@@ -25,20 +32,24 @@
       <div class="example-element-detail"
            [@detailExpand]="LinePairUser == expandedElement ? 'expanded' : 'collapsed'">
 
-           <img src='{{LinePairUser.ImgLink}}'  style="width:10%;" >
+           <img src='{{LinePairUser.ImgLink}}' class="img" >
 
          <div class="example-element-diagram">
-          <div class="example-element-position">  {{LinePairUser.Height}} 公分 | {{LinePairUser.Weight}} 公斤 | {{LinePairUser.Email}}</div>
+          <div class="example-element-position">  {{LinePairUser.Height}} 公分 | {{LinePairUser.Weight}} 公斤 </div>
 
-          <div class="example-element-name"> {{LinePairUser.Married}} | {{LinePairUser.School}}| Line: {{LinePairUser.LineId}}</div>
-          <div class="example-element-weight">  </div>
+          <div class="example-element-name"> {{LinePairUser.Married}} | {{LinePairUser.School}}</div>
+          <div class="example-element-weight">  Line: {{LinePairUser.LineId}} </div>
         </div>
 
         <div class="example-element-description">
-          {{HasCar(LinePairUser.HasCar)}} |
+           {{LinePairUser.Email}} | {{HasCar(LinePairUser.HasCar)}} |
           {{HasHouse(LinePairUser.HasHouse)}} | 月薪: {{SalaryTerm(LinePairUser.SalaryRange)}} |
           {{LinePairUser.Intro}} |
           <button mat-raised-button	color="primary" class="btn-space" (click)="Edit(LinePairUser)"><mat-icon>edit</mat-icon> 編輯</button>
+
+          <button  *ngIf="LinePairUser.Gender === '男性'" mat-raised-button	color="accent" class="btn-space" (click)="EditPayment(LinePairUser)"><mat-icon>money</mat-icon> 付款</button>
+          <button  *ngIf="LinePairUser.Gender === '女性'" mat-raised-button	color="accent" class="btn-space" (click)="EditArrange(LinePairUser)"><mat-icon>favorite</mat-icon> 配對安排</button>
+
           <button mat-raised-button	color="warn" (click)="Delete(LinePairUser)"><mat-icon>delete</mat-icon> 刪除</button>
 
         </div>

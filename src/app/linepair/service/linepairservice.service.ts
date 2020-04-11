@@ -9,7 +9,9 @@ import {Router} from '@angular/router';
 })
 export class LinepairserviceService {
 
-  private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+    private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+
+ //  private site = 'https://localhost:44347/';
 
   private url = 'api/linepairapi/';
 

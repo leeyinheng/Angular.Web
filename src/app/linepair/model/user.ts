@@ -25,6 +25,8 @@ export class LinePairUser {
 
 export class LinePairPayment {
   Date: Date;
+  Type: string;   // 入會 配對
+  Method: string;  // 匯款 現金 其他
   Amount: number;
   TargetId: string;
   Note: string;

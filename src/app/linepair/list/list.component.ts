@@ -6,6 +6,8 @@ import { BsModalRef } from 'ngx-bootstrap';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import {EditDialogComponent} from '../edit-dialog/edit-dialog.component';
+import {PaymentdialogComponent} from '../paymentdialog/paymentdialog.component';
+import {ArrangedialogComponent} from '../arrangedialog/arrangedialog.component';
 
 @Component({
   selector: 'app-list',
@@ -22,11 +24,17 @@ export class ListComponent implements OnInit {
 
   bsModalRef: BsModalRef;
 
+  Filter = '0';
+
   displayedColumns = ['Name', 'Gender', 'City', 'Phone', 'Occuptation', 'Birthday'];
 
   expandedElement: LinePairUser | null;
 
   dataSource: MatTableDataSource<LinePairUser>;
+
+  FemaleGroup: LinePairUser[];
+
+  MaleGroup: LinePairUser[];
 
   _list: LinePairUser[];
 
@@ -64,6 +72,15 @@ export class ListComponent implements OnInit {
             this.dataSource = new MatTableDataSource<LinePairUser>(list);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+            const orginialItems = this.List;
+            this.MaleGroup = orginialItems.filter(x =>
+                x.Gender === '男性'
+            );
+
+            this.FemaleGroup = orginialItems.filter(x =>
+              x.Gender === '女性'
+            );
+
             this.spinner.hide();
         }
     );
@@ -75,6 +92,23 @@ export class ListComponent implements OnInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
+
+  FilterChange() {
+
+    if (this.Filter === '1') {
+      this.dataSource.filter = '男性';
+    }
+
+    if (this.Filter === '2') {
+      this.dataSource.filter = '女性';
+    }
+
+    if (this.Filter === '0') {
+      this.dataSource.filter = '';
+    }
+
+  }
+
 
   public HasCar(value: boolean) {
     if (value) {
@@ -104,6 +138,41 @@ export class ListComponent implements OnInit {
 
     this.dialog.open(EditDialogComponent, dialogConfig);
   }
+
+  public EditPayment(value: LinePairUser) {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '80%';
+
+    dialogConfig.data =  {
+      entity : value,
+      malegroup: this.MaleGroup,
+      femalegroup: this.FemaleGroup
+    };
+
+    this.dialog.open(PaymentdialogComponent, dialogConfig);
+  }
+
+
+  public EditArrange(value: LinePairUser) {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '80%';
+
+    dialogConfig.data =  {
+      entity : value,
+      malegroup: this.MaleGroup,
+    };
+
+    this.dialog.open(ArrangedialogComponent, dialogConfig);
+  }
+
 
  public Delete(value: LinePairUser) {
 

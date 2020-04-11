@@ -6,6 +6,7 @@ import {LinepairserviceService} from '../service/linepairservice.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PostFileService} from '../../../app/core/shared//service/postservice.service';
 import {Router} from '@angular/router';
+import {EmailService} from '../../Services/emailservice';
 
 
 @Component({
@@ -46,7 +47,8 @@ export class FormComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _formBuilder: FormBuilder,
     private postservice: PostFileService,
-    private router: Router
+    private router: Router,
+    private emailservice: EmailService
      ) { }
 
   ngOnInit() {
@@ -115,8 +117,9 @@ export class FormComponent implements OnInit {
         this.service.postEntity(this.Entity).subscribe(
           res => {
              alert('上傳成功!');
+             this.SendEmail();
              this.spinner.hide();
-             this.router.navigate(['linepairlist']);
+             this.router.navigate(['linepairlove']);
          },
           err => {
             alert(err);
@@ -125,6 +128,22 @@ export class FormComponent implements OnInit {
         );
 
       }
+
+  public SendEmail() {
+
+    const fromemail = 'Line Pair 服務 <ilovelinepair@gmail.com>';
+
+    const toemail = this.Entity.Email;
+
+    const subject = '歡迎 【Line Pair】 的新朋友! ' + this.Entity.Name;
+
+    const url = encodeURIComponent('"https://leecloud.blob.core.windows.net/image/linepair_thankyou.jpg"');
+
+    const message = '<div> <img src= ' + url + '> </div>';
+
+    this.emailservice.sendemail(fromemail, toemail, subject, message);
+
+  }
 
 
 

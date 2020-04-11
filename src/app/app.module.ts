@@ -13,7 +13,7 @@ import { SharedModule } from './core/shared/shared.module';
 //Services
 import { ProductService } from './Services/product.service';
 import { ShopCartService } from './Services/shop-cart.service';
-import { EmailService } from './Services/emailservice';
+
 import { ListEmailService } from './Services/list-email.service';
 import { CustomerlogService } from './Services/customerlog.service';
 import { InvserviceService } from './clientinventory/invservice.service';
@@ -96,7 +96,6 @@ import { LinepairModule} from './linepair/linepair.module';
   providers: [
     ProductService,
     ShopCartService,
-    EmailService,
     ListEmailService,
     CustomerlogService,
     BsModalService,
