@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { ListComponent } from './list/list.component';
 import { FormComponent } from './form/form.component';
 import { RouterModule } from '@angular/router';
-import {NgxSpinnerModule} from 'ngx-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { MaterialModule } from '../material-module';
-import { FormsModule , ReactiveFormsModule } from '@angular/forms';
-import { SharedModule} from './../../app/core/shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from './../../app/core/shared/shared.module';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { LoveComponent } from './love/love.component';
 import { PaymentdialogComponent } from './paymentdialog/paymentdialog.component';
 import { ArrangedialogComponent } from './arrangedialog/arrangedialog.component';
-import { ShowComponent } from './show/show.component';
+import { ShowdialogComponent } from './showdialog/showdialog.component';
 @NgModule({
-  declarations: [ListComponent, FormComponent, EditDialogComponent, LoveComponent, PaymentdialogComponent, ArrangedialogComponent, ShowComponent],
+  declarations: [ListComponent, FormComponent, EditDialogComponent, LoveComponent, PaymentdialogComponent, ArrangedialogComponent, ShowdialogComponent],
   imports: [
     CommonModule,
     FormsModule, ReactiveFormsModule,
@@ -22,7 +22,7 @@ import { ShowComponent } from './show/show.component';
     MaterialModule,
     SharedModule,
     NgxFileDropModule,
-     RouterModule.forChild([
+    RouterModule.forChild([
       {
         path: 'linepairlist', component: ListComponent
       },
@@ -37,7 +37,8 @@ import { ShowComponent } from './show/show.component';
   entryComponents: [
     EditDialogComponent,
     PaymentdialogComponent,
-    ArrangedialogComponent
+    ArrangedialogComponent,
+    ShowdialogComponent
   ]
 })
 export class LinepairModule { }

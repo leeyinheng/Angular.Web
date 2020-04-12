@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {LinePairUser, LinePairArrange} from './../model/user';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {LinepairserviceService} from '../service/linepairservice.service';
+import { LinePairUser, LinePairArrange } from './../model/user';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { LinepairserviceService } from '../service/linepairservice.service';
 import { BsModalRef } from 'ngx-bootstrap';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
-import {EditDialogComponent} from '../edit-dialog/edit-dialog.component';
-import {PaymentdialogComponent} from '../paymentdialog/paymentdialog.component';
-import {ArrangedialogComponent} from '../arrangedialog/arrangedialog.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
+import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { PaymentdialogComponent } from '../paymentdialog/paymentdialog.component';
+import { ArrangedialogComponent } from '../arrangedialog/arrangedialog.component';
+import { ShowdialogComponent } from '../showdialog/showdialog.component';
 
 @Component({
   selector: 'app-list',
@@ -15,8 +16,8 @@ import {ArrangedialogComponent} from '../arrangedialog/arrangedialog.component';
   styleUrls: ['./list.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
     ])]
 })
@@ -38,24 +39,24 @@ export class ListComponent implements OnInit {
 
   _list: LinePairUser[];
 
-    get List(): LinePairUser[] {
+  get List(): LinePairUser[] {
 
-        return this._list;
+    return this._list;
 
-    }
+  }
 
-    set List( value: LinePairUser[]) {
+  set List(value: LinePairUser[]) {
 
-        this._list = value;
+    this._list = value;
 
-    }
+  }
 
   constructor(private service: LinepairserviceService,
     private spinner: NgxSpinnerService,
     private dialog: MatDialog) { }
 
-    @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-    @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
 
   ngOnInit() {
@@ -67,22 +68,22 @@ export class ListComponent implements OnInit {
     this.spinner.show();
 
     this.service.getUserList().subscribe(
-        list => {
-            this.List = list;
-            this.dataSource = new MatTableDataSource<LinePairUser>(list);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            const orginialItems = this.List;
-            this.MaleGroup = orginialItems.filter(x =>
-                x.Gender === '男性'
-            );
+      list => {
+        this.List = list;
+        this.dataSource = new MatTableDataSource<LinePairUser>(list);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        const orginialItems = this.List;
+        this.MaleGroup = orginialItems.filter(x =>
+          x.Gender === '男性'
+        );
 
-            this.FemaleGroup = orginialItems.filter(x =>
-              x.Gender === '女性'
-            );
+        this.FemaleGroup = orginialItems.filter(x =>
+          x.Gender === '女性'
+        );
 
-            this.spinner.hide();
-        }
+        this.spinner.hide();
+      }
     );
 
   }
@@ -134,7 +135,7 @@ export class ListComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = '80%';
 
-    dialogConfig.data =  value;
+    dialogConfig.data = value;
 
     this.dialog.open(EditDialogComponent, dialogConfig);
   }
@@ -147,8 +148,8 @@ export class ListComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = '80%';
 
-    dialogConfig.data =  {
-      entity : value,
+    dialogConfig.data = {
+      entity: value,
       malegroup: this.MaleGroup,
       femalegroup: this.FemaleGroup
     };
@@ -165,8 +166,8 @@ export class ListComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = '80%';
 
-    dialogConfig.data =  {
-      entity : value,
+    dialogConfig.data = {
+      entity: value,
       malegroup: this.MaleGroup,
     };
 
@@ -174,38 +175,52 @@ export class ListComponent implements OnInit {
   }
 
 
- public Delete(value: LinePairUser) {
+  public Show(value: LinePairUser) {
+    const dialogConfig = new MatDialogConfig();
 
-  const name = value.Name;
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '80%';
 
-  if (confirm('確定要刪除' + name + '?')) {
+    dialogConfig.data = {
+      entity: value
+    };
 
-    this.spinner.show();
-
-    this.service.deleteEntity(value.Id).subscribe(
-      rep => {
-        alert('已刪除' + name);
-        this.List.forEach( (item, index) => {
-          if (item.Id === value.Id) {
-            this.List.splice(index, 1);
-            this.dataSource = new MatTableDataSource<LinePairUser>(this.List);
-          }
-        });
-
-        this.spinner.hide();
-      } ,
-      err => {
-        alert('發生錯誤' + err);
-        this.spinner.hide();
-      }
-    );
+    this.dialog.open(ShowdialogComponent, dialogConfig);
   }
 
- }
+  public Delete(value: LinePairUser) {
+
+    const name = value.Name;
+
+    if (confirm('確定要刪除' + name + '?')) {
+
+      this.spinner.show();
+
+      this.service.deleteEntity(value.Id).subscribe(
+        rep => {
+          alert('已刪除' + name);
+          this.List.forEach((item, index) => {
+            if (item.Id === value.Id) {
+              this.List.splice(index, 1);
+              this.dataSource = new MatTableDataSource<LinePairUser>(this.List);
+            }
+          });
+
+          this.spinner.hide();
+        },
+        err => {
+          alert('發生錯誤' + err);
+          this.spinner.hide();
+        }
+      );
+    }
+
+  }
 
   public SalaryTerm(range: number) {
     switch (range) {
-      case 1 : {
+      case 1: {
         return '三萬以下';
         break;
       }

@@ -1,0 +1,34 @@
+<div>
+  <button mat-raised-button color="primary" (click)="downloadImage()">
+    <mat-icon>save</mat-icon> 下載圖片
+  </button>
+</div>
+
+<div #screen class="linephoto" id='profile'>
+  <mat-card>
+    <mat-card-header>
+      <div *ngIf="Entity.Gender === '男性'" mat-card-avatar class="example-header-image"></div>
+      <div *ngIf="Entity.Gender === '女性'" mat-card-avatar class="girl-header-image"></div>
+      <mat-card-title> <b>{{Entity.Name}}</b></mat-card-title>
+      <mat-card-subtitle>{{Formatdate(Entity.Birthday)}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src='{{Entity.ImgLink}}' alt="Photo" class="img">
+    <mat-card-content>
+      <p>
+        <b>{{Entity.Intro}}</b>
+      </p>
+      <p>
+        職業: <b>{{Entity.Occuptation}}</b> , 居住在: <b>{{Entity.City}}</b> , 婚姻狀況: <b>{{Entity.Married}}</b> , 身高體重: <b>
+          {{Entity.Height}}/{{Entity.Weight}}</b> , 學歷: <b>{{Entity.School}}</b> , 目前月收入:
+        <b>{{SalaryTerm(Entity.SalaryRange)}}</b>
+      </p>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
+<div id="download">
+  <img #canvas>
+  <a #downloadLink></a>
+</div>
