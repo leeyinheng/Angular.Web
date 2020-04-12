@@ -12,8 +12,9 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { LoveComponent } from './love/love.component';
 import { PaymentdialogComponent } from './paymentdialog/paymentdialog.component';
 import { ArrangedialogComponent } from './arrangedialog/arrangedialog.component';
+import { ShowComponent } from './show/show.component';
 @NgModule({
-  declarations: [ListComponent, FormComponent, EditDialogComponent, LoveComponent, PaymentdialogComponent, ArrangedialogComponent],
+  declarations: [ListComponent, FormComponent, EditDialogComponent, LoveComponent, PaymentdialogComponent, ArrangedialogComponent, ShowComponent],
   imports: [
     CommonModule,
     FormsModule, ReactiveFormsModule,

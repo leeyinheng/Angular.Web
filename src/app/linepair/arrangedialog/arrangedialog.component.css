@@ -30,3 +30,8 @@
 .space {
   margin-right: 5px;
 }
+
+.border {
+  border: 3px solid pink;
+  border-radius: 8px;
+}

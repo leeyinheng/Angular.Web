@@ -6,9 +6,6 @@
   <div class="example-container">
 
   <mat-card>
-
-
-
     <br>
     <div >
       <img src='{{Entity.ImgLink}}'   class="img" >
@@ -17,54 +14,54 @@
   </mat-card>
 
   <mat-card *ngFor="let info of Entity.Payments ; let x = index">
+    <div class="border">
+      <mat-form-field>
+        <mat-label>付款類別</mat-label>
+        <select matNativeControl [(ngModel)]="info.Type" (ngModelChange)='SetPayment(info)'>
+          <option value="入會">入會</option>
+          <option value="配對">配對</option>
+        </select>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>付款類別</mat-label>
-      <select matNativeControl [(ngModel)]="info.Type" (ngModelChange)='SetPayment(info)'>
-        <option value="入會">入會</option>
-        <option value="配對">配對</option>
-      </select>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>付款型式</mat-label>
+        <select matNativeControl [(ngModel)]="info.Method">
+          <option value="匯款">匯款</option>
+          <option value="現金">現金</option>
+          <option value="刷卡">刷卡</option>
+          <option value="其他">其他</option>
+        </select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>付款日期</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="info.Date" >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>金額</mat-label>
+        <input matInput type="number"
+        [(ngModel)]='info.Amount'
+        />
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>付款型式</mat-label>
-      <select matNativeControl [(ngModel)]="info.Method">
-        <option value="匯款">匯款</option>
-        <option value="現金">現金</option>
-        <option value="刷卡">刷卡</option>
-        <option value="其他">其他</option>
-      </select>
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <mat-label>付款日期</mat-label>
-      <input matInput [matDatepicker]="picker" [(ngModel)]="info.Date" >
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker touchUi #picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>金額</mat-label>
-      <input matInput type="number"
-      [(ngModel)]='info.Amount'
-      />
-    </mat-form-field>
+      <mat-form-field *ngIf="info.Type === '配對'">
+        <mat-label>配對對象</mat-label>
+        <mat-select [(ngModel)]="info.TargetId">
+          <mat-option *ngFor="let f of FemaleGroup" [value]="f.Id">
+            {{f.Name}}  <img src='{{f.ImgLink}}'   class="smallimg" > {{Formatdate(f.Birthday)}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field *ngIf="info.Type === '配對'">
-      <mat-label>配對對象</mat-label>
-      <mat-select [(ngModel)]="info.TargetId">
-        <mat-option *ngFor="let f of FemaleGroup" [value]="f.Id">
-          {{f.Name}}  <img src='{{f.ImgLink}}'   class="smallimg" > {{Formatdate(f.Birthday)}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field style="width: 50%;margin-right: 5px;">
+        <mat-label>備註</mat-label>
+        <textarea matInput [(ngModel)]="info.Note" ></textarea>
+      </mat-form-field>
+      <button mat-raised-button	color="warn" (click)="RemovePayment(x)"><mat-icon>delete</mat-icon> 刪除</button>
 
-    <mat-form-field style="width: 50%;margin-right: 5px;">
-      <mat-label>備註</mat-label>
-      <textarea matInput [(ngModel)]="info.Note" ></textarea>
-    </mat-form-field>
+    </div>
 
-
-
-    <button mat-raised-button	color="warn" (click)="RemovePayment(x)"><mat-icon>delete</mat-icon> 刪除</button>
 
   </mat-card>
 
