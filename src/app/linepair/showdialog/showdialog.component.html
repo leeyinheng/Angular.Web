@@ -9,18 +9,24 @@
     <mat-card-header>
       <div *ngIf="Entity.Gender === '男性'" mat-card-avatar class="example-header-image"></div>
       <div *ngIf="Entity.Gender === '女性'" mat-card-avatar class="girl-header-image"></div>
-      <mat-card-title> <b>{{Entity.Name}}</b></mat-card-title>
-      <mat-card-subtitle>{{Formatdate(Entity.Birthday)}}</mat-card-subtitle>
+      <mat-card-title> <b> {{FormatName(Entity.Name)}}</b></mat-card-title>
+      <mat-card-subtitle> 西元 {{ Birthday}} 年生</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src='{{Entity.ImgLink}}' alt="Photo" class="img">
+    <img mat-card-image crossorigin="anonymous"  src='{{Entity.ImgLink}}' alt="Photo" class="img">
     <mat-card-content>
       <p>
         <b>{{Entity.Intro}}</b>
       </p>
       <p>
         職業: <b>{{Entity.Occuptation}}</b> , 居住在: <b>{{Entity.City}}</b> , 婚姻狀況: <b>{{Entity.Married}}</b> , 身高體重: <b>
-          {{Entity.Height}}/{{Entity.Weight}}</b> , 學歷: <b>{{Entity.School}}</b> , 目前月收入:
+          {{Entity.Height}}/{{Entity.Weight}}</b> , 學歷: <b>{{Entity.School}} <mat-icon>school</mat-icon></b> , 目前月收入:
         <b>{{SalaryTerm(Entity.SalaryRange)}}</b>
+        <mat-icon *ngIf="Entity.SalaryRange >= 1">attach_money</mat-icon>
+        <mat-icon *ngIf="Entity.SalaryRange >= 2">attach_money</mat-icon>
+        <mat-icon *ngIf="Entity.SalaryRange >= 3"> attach_money</mat-icon>
+        <mat-icon *ngIf="Entity.SalaryRange >= 4"> attach_money</mat-icon>
+        <mat-icon *ngIf="Entity.SalaryRange >= 5">attach_money</mat-icon>
+        <b *ngIf="Entity.HasCar"> , 有車 <mat-icon>directions_car</mat-icon></b>   <b *ngIf="Entity.HasHouse">, 有房 <mat-icon>home</mat-icon></b>
       </p>
 
     </mat-card-content>

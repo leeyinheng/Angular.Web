@@ -24,13 +24,12 @@ import {MatSelectModule} from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaymentlistComponent } from './paymentlist/paymentlist.component';
 import { ɵangular_packages_platform_browser_dynamic_testing_testing_b } from '@angular/platform-browser-dynamic/testing';
-
-
+import {SearchComponent} from './search/search.component';
 
 
 @NgModule({
   declarations: [InvuploadComponent, InvshowComponent, InvlistComponent, LoginComponent,
-     PortalComponent, AdimageComponent, PaymentformComponent, PaymentlistComponent],
+     PortalComponent, AdimageComponent, PaymentformComponent, PaymentlistComponent, SearchComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -71,6 +70,9 @@ import { ɵangular_packages_platform_browser_dynamic_testing_testing_b } from '@
       },
       {
         path: 'paymentlist', component: PaymentlistComponent
+      },
+      {
+        path: 'searchtea' , component: SearchComponent
       }
     ])
   ],

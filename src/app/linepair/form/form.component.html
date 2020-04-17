@@ -49,7 +49,7 @@
               {{Entity.Height}} 公分
               <mat-slider [(ngModel)]="Entity.Height" formControlName="otherCtrl"
               thumbLabel
-              [displayWith]="formatLabel"
+
               tickInterval="2"
               min="140"
               max="200"></mat-slider>
@@ -60,7 +60,7 @@
               {{Entity.Weight}} 公斤
               <mat-slider [(ngModel)]="Entity.Weight" formControlName="otherCtrl"
               thumbLabel
-              [displayWith]="formatLabel"
+
               tickInterval="2"
               min="40"
               max="160"></mat-slider>
@@ -202,7 +202,8 @@
                 <option value="1">三萬元台幣以下</option>
                 <option value="2">三萬到五萬台幣</option>
                 <option value="3">五萬到十萬台幣</option>
-                <option value="4">十萬台幣以上</option>
+                <option value="4">十萬台幣到二十萬台幣</option>
+                <option value="5">二十萬台幣以上</option>
               </select>
             </mat-form-field>
 

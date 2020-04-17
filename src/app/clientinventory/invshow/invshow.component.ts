@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
@@ -9,7 +9,7 @@ import {AuthserviceService} from './../../core/shared/service/authservice.servic
 import {Router} from '@angular/router';
 import {ImageLink} from './../../core/shared/model/ImageLink';
 import { UserInfo, PaymentInfo , PaymentHistory } from '../../core/shared/model/userinfo';
-
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-invshow',
@@ -70,6 +70,8 @@ export class InvshowComponent implements OnInit {
   set notreturn_sum(value: number) {
     this._notreturn_sum = value;
   }
+
+  @ViewChild('exceltable', { static: false }) exceltable: ElementRef;
 
   constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
     private service: InvserviceService, public cryptservice: CryptserviceService,
@@ -202,6 +204,20 @@ export class InvshowComponent implements OnInit {
       });
     }
 
+    public exportexcel() {
+
+      /* table id is passed over here */
+     // const element = document.getElementById('excel-table');
+
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.exceltable.nativeElement);
+
+      /* generate workbook and add the worksheet */
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+      /* save to file */
+      XLSX.writeFile(wb, this.Entity.ClientName + '.xlsx');
+    }
 
 
 }

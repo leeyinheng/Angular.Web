@@ -110,8 +110,13 @@
             </tr>
           </table>
         </div>
-        <div *ngIf="IsManager">
-            <table class="table table-bordered table-striped table-hover">
+
+        <div *ngIf="!IsManager">
+          <button type="button" class="btn btn-primary" (click)="exportexcel()" ><mat-icon> cloud_download</mat-icon> 下載Excel</button>
+        </div>
+        <br>
+        <div *ngIf="IsManager" >
+            <table class="table table-bordered table-striped table-hover"  >
                 <tr>
                     <th>
                         序號
@@ -191,7 +196,7 @@
             </table>
         </div>
         <div *ngIf="!IsManager">
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-striped table-hover" id = 'excel-table' #exceltable  >
                 <tr>
                         <th>
                                 序號
@@ -302,10 +307,10 @@
         <h2> <a [href]="item.Target_Url" target="_blank"> {{item.Name}}</a></h2>
       </li>
     </ul>
-    <div class="embed-responsive embed-responsive-16by9">
+    <!-- <div class="embed-responsive embed-responsive-16by9">
       <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/WynX1gM7JT4" frameborder="1"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+    </div> -->
 
 
   </div>

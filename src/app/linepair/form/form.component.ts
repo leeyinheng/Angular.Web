@@ -119,7 +119,7 @@ export class FormComponent implements OnInit {
              alert('上傳成功!');
              this.SendEmail();
              this.spinner.hide();
-             this.router.navigate(['linepairlove']);
+             this.router.navigate(['linepairlove'], { queryParams: { gender: this.Entity.Gender } });
          },
           err => {
             alert(err);
@@ -135,9 +135,16 @@ export class FormComponent implements OnInit {
 
     const toemail = this.Entity.Email;
 
-    const subject = '歡迎 【Line Pair】 的新朋友! ' + this.Entity.Name;
+    const subject = '歡迎 【Line Pair】 的新朋友! ' + this.Entity.Name + ' ID: ' + this.Entity.Id;
 
-    const url = encodeURIComponent('"https://leecloud.blob.core.windows.net/image/linepair_thankyou.jpg"');
+    let url = '';
+
+    if (this.Entity.Gender === '男生') {
+      url = encodeURIComponent('"https://leecloud.blob.core.windows.net/image/linepair_men_email.jpg"');
+    } else {
+      url = encodeURIComponent('"https://leecloud.blob.core.windows.net/image/linepair_ladies_email.jpg"');
+    }
+
 
     const message = '<div> <img src= ' + url + '> </div>';
 

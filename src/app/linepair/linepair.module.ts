@@ -13,6 +13,7 @@ import { LoveComponent } from './love/love.component';
 import { PaymentdialogComponent } from './paymentdialog/paymentdialog.component';
 import { ArrangedialogComponent } from './arrangedialog/arrangedialog.component';
 import { ShowdialogComponent } from './showdialog/showdialog.component';
+
 @NgModule({
   declarations: [ListComponent, FormComponent, EditDialogComponent, LoveComponent, PaymentdialogComponent, ArrangedialogComponent, ShowdialogComponent],
   imports: [

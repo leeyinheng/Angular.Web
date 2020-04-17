@@ -12,6 +12,8 @@ export class ShowdialogComponent implements OnInit {
 
   Entity: LinePairUser;
 
+  Birthday = '';
+
   @ViewChild('screen', { static: false }) screen: ElementRef;
   @ViewChild('canvas', { static: true }) canvas: ElementRef;
   @ViewChild('downloadLink', { static: true }) downloadLink: ElementRef;
@@ -20,14 +22,30 @@ export class ShowdialogComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<ShowdialogComponent>,
     @Inject(MAT_DIALOG_DATA) data) {
     this.Entity = data.entity;
+    this.Birthday = this.Formatdate(this.Entity.Birthday.toString());
 
   }
 
   ngOnInit() {
+
   }
 
   public Formatdate(val: string) {
-    return val.substring(0, 10);
+    return val.substring(0, 4);
+  }
+
+  public FormatName(val: string) {
+
+    const lastName = val.substr(0, 1);
+
+    if ( this.Entity.Gender === '男性') {
+        return lastName + '先生';
+    }
+
+    if ( this.Entity.Gender === '女性') {
+      return lastName + '小姐';
+  }
+
   }
 
   public SalaryTerm(range: number) {
@@ -45,7 +63,11 @@ export class ShowdialogComponent implements OnInit {
         break;
       }
       case 4: {
-        return '十萬以上';
+        return '十萬到二十萬';
+        break;
+      }
+      case 5: {
+        return '二十萬以上';
         break;
       }
       default: {
@@ -57,19 +79,21 @@ export class ShowdialogComponent implements OnInit {
 
   public Cancel() {
     this.dialogRef.close(null);
+
   }
 
   public downloadImage() {
 
     html2canvas(this.screen.nativeElement, {
-      useCORS: true
+         useCORS: true
     }).then(canvas => {
+
       this.canvas.nativeElement.src = canvas.toDataURL();
       this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
       this.downloadLink.nativeElement.download = this.Entity.Name + '.png';
       this.downloadLink.nativeElement.click();
 
-      this.dialogRef.close(null);
+       this.dialogRef.close(null);
     });
   }
 
