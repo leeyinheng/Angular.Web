@@ -20,7 +20,14 @@ export class LinePairUser {
    Intro: string;
    Payments: LinePairPayment[];
    Arranges: LinePairArrange[];
+   Pushlogs: LinePairPushLog[];
+   Membership: number; //  VIP 2 會員 1. 非會員 0
 
+}
+
+export interface ITableFilter {
+  column: string;
+  value: any;
 }
 
 export class LinePairPayment {
@@ -28,6 +35,12 @@ export class LinePairPayment {
   Type: string;   // 入會 配對
   Method: string;  // 匯款 現金 其他
   Amount: number;
+  TargetId: string;
+  Note: string;
+}
+
+export class LinePairPushLog {
+  Date: Date;
   TargetId: string;
   Note: string;
 }

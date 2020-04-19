@@ -3,7 +3,7 @@
   <p></p>
 </div>
 
-<h1>搜尋 客戶庫存</h1>
+<h3>搜尋 客戶庫存  <span style="color: gray;"> {{Search}}</span>  總項:{{showtotal}} 總庫存量: {{showtotalstock}}</h3>
 <div>
       <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
       <p></p>
@@ -36,7 +36,7 @@
 
 
       <tbody>
-          <tr *ngFor = 'let item of list' >
+          <tr *ngFor = 'let item of searchlist' >
               <td>
                   {{item.ClientId}}
               </td>
@@ -83,6 +83,16 @@
                       {{info.NotReturn}}
                     </td>
                   </tr>
+                  <tfoot>
+                    <tr>
+                      <td>小計</td>
+                      <td></td>
+                      <td> <b>{{ item.SubStock}}</b></td>
+                      <td></td>
+                      <td><b> {{ item.SubReturn}}</b> </td>
+                      <td><b>{{ item.SubTotal}}</b></td>
+                    </tr>
+                  </tfoot>
                 </table>
               </td>
 

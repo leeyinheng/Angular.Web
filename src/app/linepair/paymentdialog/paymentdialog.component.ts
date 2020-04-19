@@ -59,11 +59,26 @@ export class PaymentdialogComponent implements OnInit {
 
     this.spinner.show();
 
+    let changeMembership = false;
+
+    if (this.Entity.Membership === 0) {
+      this.Entity.Membership = 1;
+      changeMembership = true;
+     }
+
     this.service.updateEntity(this.Entity).subscribe(
       val => {
+
         alert('更新完成');
+
+        if (changeMembership) {
+          alert('自動調整為會員狀態');
+          window.location.reload();
+        }
+
         this.spinner.hide();
         this.dialogRef.close(null);
+
       },
       err => {
         alert('發生錯誤 ' + err);

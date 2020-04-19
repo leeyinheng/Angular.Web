@@ -11,6 +11,9 @@ export class ClientInventory {
     set Message(value) {
         this._message = value;
     }
+    SubTotal: number;
+    SubStock: number;
+    SubReturn: number;
 }
 
 export class Inventory {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LinePairUser, LinePairArrange } from './../model/user';
+import { LinePairUser, ITableFilter } from './../model/user';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LinepairserviceService } from '../service/linepairservice.service';
 import { BsModalRef } from 'ngx-bootstrap';
@@ -9,6 +9,7 @@ import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { PaymentdialogComponent } from '../paymentdialog/paymentdialog.component';
 import { ArrangedialogComponent } from '../arrangedialog/arrangedialog.component';
 import { ShowdialogComponent } from '../showdialog/showdialog.component';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -27,7 +28,7 @@ export class ListComponent implements OnInit {
 
   Filter = '0';
 
-  displayedColumns = ['Name', 'Gender', 'City', 'Phone', 'Occuptation', 'Birthday'];
+  displayedColumns = ['Name', 'Height', 'Weight', 'SalaryRange', 'City', 'Occuptation', 'Birthday'];
 
   expandedElement: LinePairUser | null;
 
@@ -36,6 +37,8 @@ export class ListComponent implements OnInit {
   FemaleGroup: LinePairUser[];
 
   MaleGroup: LinePairUser[];
+
+  MaleNoneMemberGroup: LinePairUser[];
 
   _list: LinePairUser[];
 
@@ -53,7 +56,8 @@ export class ListComponent implements OnInit {
 
   constructor(private service: LinepairserviceService,
     private spinner: NgxSpinnerService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+    ) { }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -75,11 +79,15 @@ export class ListComponent implements OnInit {
         this.dataSource.sort = this.sort;
         const orginialItems = this.List;
         this.MaleGroup = orginialItems.filter(x =>
-          x.Gender === '男性'
+          x.Gender === '男性' && x.Membership > 0
         );
 
         this.FemaleGroup = orginialItems.filter(x =>
           x.Gender === '女性'
+        );
+
+        this.MaleNoneMemberGroup = orginialItems.filter(x =>
+          x.Gender === '男性' && x.Membership === 0
         );
 
         this.spinner.hide();
@@ -88,24 +96,55 @@ export class ListComponent implements OnInit {
 
   }
 
+  customFilterPredicate(data: any, filters: ITableFilter[]): boolean {
+    for (let i = 0; i < filters.length; i++) {
+      const fitsThisFilter = data[filters[i].column].includes(filters[i].value);
+      if (!fitsThisFilter) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
+  refreshpage () {
+    window.location.reload();
+  }
+
+
   FilterChange() {
 
     if (this.Filter === '1') {
-      this.dataSource.filter = '男性';
+     // this.dataSource.filter = '男性';
+      this.dataSource = new MatTableDataSource<LinePairUser>(this.MaleGroup);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     }
 
     if (this.Filter === '2') {
-      this.dataSource.filter = '女性';
+     //  this.dataSource.filter = '女性';
+     this.dataSource = new MatTableDataSource<LinePairUser>(this.FemaleGroup);
+     this.dataSource.sort = this.sort;
+     this.dataSource.paginator = this.paginator;
     }
 
+    if (this.Filter === '3') {
+      //  this.dataSource.filter = '非會員';
+      this.dataSource = new MatTableDataSource<LinePairUser>(this.MaleNoneMemberGroup);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+     }
+
     if (this.Filter === '0') {
-      this.dataSource.filter = '';
+     // this.dataSource.filter = '';
+     this.dataSource = new MatTableDataSource<LinePairUser>(this.List);
+     this.dataSource.sort = this.sort;
+     this.dataSource.paginator = this.paginator;
     }
 
   }
@@ -233,7 +272,11 @@ export class ListComponent implements OnInit {
         break;
       }
       case 4: {
-        return '十萬以上';
+        return '十萬到二十萬';
+        break;
+      }
+      case 5: {
+        return '二十萬以上';
         break;
       }
       default: {

@@ -15,7 +15,17 @@ import {Router} from '@angular/router';
 })
 export class SearchComponent implements OnInit {
 
-  list: ClientInventory[];
+  searchlist: ClientInventory[];
+
+  showtotal = 0;
+
+  showtotalstock = 0;
+
+  showsubtotal = 0;
+
+  showstock = 0;
+
+  showreturn = 0;
 
   _search: string;
 
@@ -32,6 +42,8 @@ export class SearchComponent implements OnInit {
    }
 
 templist: ClientInventory[];
+
+orginiallist: ClientInventory[];
 
 templist2: ClientInventory[];
 
@@ -54,12 +66,16 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
 
   public FilterList(filter: string) {
 
+    this.showtotal = 0;
+    this.showtotalstock = 0;
 
     if (filter === '' || filter === undefined) {
-        this.list = null;
+        this.searchlist = [];
     } else {
 
-      this.templist2 = this.templist.filter( x => {
+      this.templist = [];
+
+      this.templist2 = this.orginiallist.filter( x => {
         if ( x.Inventories.filter( i => {
           if ((i.ProductId.includes(filter) || i.ProductName.includes(filter)) && i.NotReturn > 0) {
             return i;
@@ -67,11 +83,30 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
         }).length > 0) { return x; }
       });
 
-       this.templist2.forEach( x => {
-         x.Inventories = x.Inventories.filter( i => (i.ProductId.includes(filter) || i.ProductName.includes(filter)) && i.NotReturn > 0);
-      });
+        this.templist2.forEach( x => {
+          const info = new ClientInventory();
+          info.ClientId = x.ClientId;
+          info.ClientName = x.ClientName;
+          info.Inventories = x.Inventories.filter( i => (i.ProductId.includes(filter)
+          || i.ProductName.includes(filter)) && i.NotReturn > 0);
+          this.showtotal += info.Inventories.length;
+          info.Inventories.forEach( s => {
+              this.showtotalstock += s.NotReturn;
+              this.showsubtotal += s.NotReturn;
+              this.showstock += s.Stock;
+              this.showreturn += s.Return;
+          });
+          info.SubTotal = this.showsubtotal;
+          info.SubStock = this.showstock;
+          info.SubReturn = this.showreturn;
+          this.templist.push(info);
+          this.showsubtotal = 0;
+          this.showstock = 0;
+          this.showreturn = 0;
+        });
 
-      this.list = this.templist2;
+
+      this.searchlist = this.templist;
 
     }
   }
@@ -79,24 +114,14 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
   public GetList() {
     this.spinner.show();
 
-    this.service.currentMessage.subscribe( val => {
-      if ( val.length === 0) {
         this.service.getList().subscribe(vals => {
-         // this.list = vals;
-          this.service.changeMessage(vals);
-          this.templist = vals;
+          this.orginiallist = vals;
           this.spinner.hide();
         },
         err => {
           alert('Not Found or Error');
           this.spinner.hide();
         });
-      } else {
-        // this.list = val;
-        this.templist = val;
-       this.spinner.hide();
-      }
-    });
 
     }
 

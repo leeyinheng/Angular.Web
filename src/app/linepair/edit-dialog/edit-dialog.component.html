@@ -18,6 +18,15 @@
       </select>
     </mat-form-field>
     <br>
+    <mat-form-field>
+      <mat-label>會員</mat-label>
+      <select matNativeControl [(ngModel)]="Entity.Membership" (click) = 'changeMember()'>
+        <option value="0">非會員</option>
+        <option value="1">會員</option>
+        <option value="2">VIP</option>
+      </select>
+    </mat-form-field>
+    <br>
 
     <mat-form-field class="example-full-width">
       <mat-label>生日 (選擇日期)</mat-label>
@@ -113,7 +122,8 @@
         <option value="1">三萬元台幣以下</option>
         <option value="2">三萬到五萬台幣</option>
         <option value="3">五萬到十萬台幣</option>
-        <option value="4">十萬台幣以上</option>
+        <option value="4">十萬台幣到二十萬</option>
+        <option value="5">二十萬台幣以上</option>
       </select>
     </mat-form-field>
 

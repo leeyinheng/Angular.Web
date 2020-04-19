@@ -16,6 +16,8 @@ export class EditDialogComponent implements OnInit {
 
   Entity: LinePairUser;
 
+  MemberChange = false;
+
 
   constructor(private dialogRef: MatDialogRef<EditDialogComponent>,
     private service: LinepairserviceService,
@@ -29,6 +31,14 @@ export class EditDialogComponent implements OnInit {
 
   }
 
+  refreshpage () {
+    window.location.reload();
+  }
+
+  changeMember() {
+    this.MemberChange = true;
+  }
+
   public Save() {
 
     this.spinner.show();
@@ -36,6 +46,11 @@ export class EditDialogComponent implements OnInit {
     this.service.updateEntity(this.Entity).subscribe(
       val => {
         alert('更新完成');
+
+        if (this.MemberChange) {
+            this.refreshpage();
+        }
+
         this.spinner.hide();
         this.dialogRef.close(null);
       },
