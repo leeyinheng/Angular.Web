@@ -115,7 +115,7 @@ export class FormComponent implements OnInit {
          }
 
          if (this.Entity.Gender === '女性') {
-           this.Entity.Membership = 2; // 會員
+           this.Entity.Membership = 1; // 會員
          }
 
         this.service.postEntity(this.Entity).subscribe(

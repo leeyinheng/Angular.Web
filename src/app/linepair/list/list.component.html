@@ -46,9 +46,12 @@
             {{LinePairUser.Email}} | {{HasCar(LinePairUser.HasCar)}} |
             {{HasHouse(LinePairUser.HasHouse)}} | 月薪: {{SalaryTerm(LinePairUser.SalaryRange)}} |
             {{LinePairUser.Intro}} |
-            <button mat-raised-button color="primary" class="btn-space" (click)="Edit(LinePairUser)">
-              <mat-icon>edit</mat-icon> 編輯
-            </button>
+
+
+            <button  mat-raised-button color="primary" class="btn-space"
+            (click)="EditPushLog(LinePairUser)">
+            <mat-icon>record_voice_over</mat-icon> 推廣紀錄
+          </button>
 
             <button *ngIf="LinePairUser.Gender === '男性'" mat-raised-button color="accent" class="btn-space"
               (click)="EditPayment(LinePairUser)">
@@ -57,6 +60,10 @@
             <button *ngIf="LinePairUser.Gender === '女性'" mat-raised-button color="accent" class="btn-space"
               (click)="EditArrange(LinePairUser)">
               <mat-icon>favorite</mat-icon> 配對安排
+            </button>
+
+            <button mat-raised-button color="primary" class="btn-space" (click)="Edit(LinePairUser)">
+              <mat-icon>edit</mat-icon> 編輯
             </button>
 
             <button mat-raised-button color="warn" (click)="Delete(LinePairUser)">

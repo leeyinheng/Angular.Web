@@ -10,6 +10,9 @@ import { PaymentdialogComponent } from '../paymentdialog/paymentdialog.component
 import { ArrangedialogComponent } from '../arrangedialog/arrangedialog.component';
 import { ShowdialogComponent } from '../showdialog/showdialog.component';
 import {ActivatedRoute} from '@angular/router';
+import { PushlogdialogComponent } from '../pushlogdialog/pushlogdialog.component';
+import {AuthserviceService} from './../../core/shared/service/authservice.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -56,7 +59,9 @@ export class ListComponent implements OnInit {
 
   constructor(private service: LinepairserviceService,
     private spinner: NgxSpinnerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authservice: AuthserviceService,
+    private router: Router
     ) { }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -64,6 +69,16 @@ export class ListComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.authservice.checktoken().subscribe( val => {
+      if (val === 'OK') {
+        this.GetList();
+      } else {
+        alert('權限不足或失效 請重新登入');
+        this.router.navigate(['linepairlogin']);
+      }
+    } );
+
     this.GetList();
   }
 
@@ -211,6 +226,23 @@ export class ListComponent implements OnInit {
     };
 
     this.dialog.open(ArrangedialogComponent, dialogConfig);
+  }
+
+  public EditPushLog(value: LinePairUser) {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '80%';
+
+    dialogConfig.data = {
+      entity: value,
+      malegroup: this.MaleGroup,
+      femalegroup: this.FemaleGroup
+    };
+
+    this.dialog.open(PushlogdialogComponent, dialogConfig);
   }
 
 

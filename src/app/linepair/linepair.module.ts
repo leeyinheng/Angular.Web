@@ -13,9 +13,12 @@ import { LoveComponent } from './love/love.component';
 import { PaymentdialogComponent } from './paymentdialog/paymentdialog.component';
 import { ArrangedialogComponent } from './arrangedialog/arrangedialog.component';
 import { ShowdialogComponent } from './showdialog/showdialog.component';
+import { PushlogdialogComponent } from './pushlogdialog/pushlogdialog.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [ListComponent, FormComponent, EditDialogComponent, LoveComponent, PaymentdialogComponent, ArrangedialogComponent, ShowdialogComponent],
+  declarations: [ListComponent, FormComponent, EditDialogComponent, LoveComponent, PaymentdialogComponent, ArrangedialogComponent,
+    ShowdialogComponent, PushlogdialogComponent, LoginComponent],
   imports: [
     CommonModule,
     FormsModule, ReactiveFormsModule,
@@ -32,6 +35,9 @@ import { ShowdialogComponent } from './showdialog/showdialog.component';
       },
       {
         path: 'linepairlove', component: LoveComponent
+      },
+      {
+        path: 'linepairlogin', component: LoginComponent
       }
     ])
   ],
@@ -39,7 +45,8 @@ import { ShowdialogComponent } from './showdialog/showdialog.component';
     EditDialogComponent,
     PaymentdialogComponent,
     ArrangedialogComponent,
-    ShowdialogComponent
+    ShowdialogComponent,
+    PushlogdialogComponent
   ]
 })
 export class LinepairModule { }

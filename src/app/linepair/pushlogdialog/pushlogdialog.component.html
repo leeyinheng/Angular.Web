@@ -1,0 +1,85 @@
+<h6 mat-dialog-title>   {{Entity.Name}} <button mat-raised-button	color="primary" class="btn-space" (click)="Add()"><mat-icon>add</mat-icon> 新增推廣紀錄 </button>
+</h6>
+
+<mat-dialog-content>
+
+  <div class="example-container">
+
+  <mat-card>
+    <br>
+    <div >
+      <img src='{{Entity.ImgLink}}'   class="img" >
+    </div>
+
+  </mat-card>
+
+  <mat-card *ngFor="let info of Entity.Pushlogs ; let x = index">
+    <div class="border">
+
+      <mat-form-field class="example-full-width">
+        <mat-label>日期</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="info.Date" >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+      </mat-form-field>
+
+
+      <span *ngIf="Entity.Gender === '男性'">
+        <mat-form-field >
+          <mat-label>推廣對象</mat-label>
+          <mat-select [(ngModel)]="info.TargetId">
+
+        <mat-option *ngFor="let f of FemaleGroup" [value]="f.Id">
+          {{f.Name}}  <img src='{{f.ImgLink}}'   class="smallimg" > {{Formatdate(f.Birthday)}}
+        </mat-option>
+
+      </mat-select>
+    </mat-form-field>
+
+      </span>
+
+      <span *ngIf="Entity.Gender === '女性'">
+        <mat-form-field >
+          <mat-label>推廣對象</mat-label>
+          <mat-select [(ngModel)]="info.TargetId">
+
+        <mat-option  *ngFor="let f of MaleGroup" [value]="f.Id">
+          {{f.Name}}  <img src='{{f.ImgLink}}'   class="smallimg" > {{Formatdate(f.Birthday)}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+      </span>
+
+
+      <mat-form-field style="width: 50%;margin-right: 5px;">
+        <mat-label>備註</mat-label>
+        <textarea matInput [(ngModel)]="info.Note" ></textarea>
+      </mat-form-field>
+      <button mat-raised-button	color="warn" (click)="Removelog(x)"><mat-icon>delete</mat-icon> 刪除</button>
+
+    </div>
+
+
+  </mat-card>
+
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button	color="primary" (click)="Save()"><mat-icon>save</mat-icon> 儲存</button>
+  <button mat-raised-button	color="primary" (click)="Cancel()"><mat-icon>cancel</mat-icon> 取消</button>
+</mat-dialog-actions>
+
+
+
+
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>
