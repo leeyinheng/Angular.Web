@@ -1,8 +1,13 @@
 <span><img src='../assets/Photos/NHCC.jpg' width=100% height=40% /></span>
 
+<div>
+  <button mat-raised-button color="primary" (click)="downloadImage()">
+    <mat-icon>save</mat-icon> 下載圖片
+  </button>
+</div>
 
-
-<table class="table table-bordered table-striped">
+<div #screen >
+  <table class="table table-bordered table-striped">
     <tr>
         <th>
             編號
@@ -15,6 +20,12 @@
         </th>
         <th>
             物體比重
+        </th>
+        <th>
+          總類
+        </th>
+        <th>
+          備註
         </th>
     </tr>
 
@@ -38,6 +49,24 @@
                 {{caculateweightrate()}}
             </td>
             <td>
+              <select matNativeControl [(ngModel)]="type" >
+                <option value=""></option>
+                <option value="翡翠鐲">翡翠鐲</option>
+                <option value="玉鐲">玉鐲</option>
+                <option value="翡翠配件">翡翠配件</option>
+                <option value="玉把玩件">玉把玩件</option>
+                <option value="玉雕">玉把玩件</option>
+                <option value="壽山石">壽山石</option>
+                <option value="其他">其他</option>
+              </select>
+          </td>
+          <td>
+            <input type="note"
+            [(ngModel)]='note'
+            style="width: 6em;"
+            />
+        </td>
+            <td>
                 <button mat-raised-button class="btn btn-primary" (click) = 'addintolist()'>
                   <mat-icon>add</mat-icon>
                     新增
@@ -52,35 +81,24 @@
             <td>{{ item.airweight }}</td>
             <td>{{ item.waterweight}}</td>
             <td>{{ item.ratioweight}}</td>
-
+            <td>{{ item.type}}</td>
+            <td>{{ item.note}}</td>
         </tr>
     </tbody>
 
 
 
 </table>
+</div>
 
-<table *ngIf="weightList?.length > 0">
-    <tr>
-        <td>
-            Email:
-        </td>
-        <td>
-            <input type="string"
-            [(ngModel)]='emailaddress'
-            style="width: 15em;"
-            />
-        </td>
-        <td>
-            <span></span>
-        </td>
-        <td>
-            <button class="btn btn-info" (click) = 'emailout()'>
-                寄出
-             </button>
-        </td>
-    </tr>
-</table>
+
+
+
+<div id="download" style="visibility: hidden;">
+  <img #canvas>
+  <a #downloadLink></a>
+</div>
+
 
 
 
