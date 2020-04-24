@@ -19,9 +19,9 @@ import { UserInfo, PaymentInfo , PaymentHistory } from '../core/shared/model/use
 
 export class InvserviceService {
 
-  private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+  //  private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
-  // private site = 'https://localhost:44347/';
+  private site = 'https://localhost:44347/';
 
   private url = 'api/articleapi/';
 
@@ -30,6 +30,8 @@ export class InvserviceService {
   private postPartialFileUrl = 'api/UploadPartialExcelApi/';
 
   private postUpdateTimeUrl = 'api/ClientInventoryApi/';
+
+  private postCategoryFileurl = 'api/UploadCategoryExcelApi/';
 
   private postTempImageUrl = 'api/UploadTempApi/';
 
@@ -123,6 +125,16 @@ export class InvserviceService {
 
   public postPartialFile(file: FormData) {
     const url = this.site + this.postPartialFileUrl;
+    const headers = new HttpHeaders ({
+      ContentType: 'multipart/form-data'
+    });
+    return this.http.post<string>(
+      url, file , {headers, responseType: 'text' as 'json'}
+    );
+  }
+
+  public postCategorylFile(file: FormData) {
+    const url = this.site + this.postCategoryFileurl;
     const headers = new HttpHeaders ({
       ContentType: 'multipart/form-data'
     });
