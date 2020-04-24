@@ -28,8 +28,6 @@ import { ClientinventoryModule } from './clientinventory/clientinventory.module'
 import { HealthModule } from './health/health.module';
 import { IgxCarouselModule } from 'igniteui-angular';
 import { MaterialModule } from './material-module';
-import { LinepairModule} from './linepair/linepair.module';
-
 
 @NgModule({
   imports: [
@@ -40,7 +38,6 @@ import { LinepairModule} from './linepair/linepair.module';
     NgxPaginationModule,
     BrowserAnimationsModule,
     MaterialModule,
-    LinepairModule,
     NgbModule,
     SharedModule.forRoot(),
     ModalModule.forRoot(),
