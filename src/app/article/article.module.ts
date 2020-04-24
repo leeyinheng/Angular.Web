@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArticleformComponent } from './articleform/articleform.component';
 import { ArticlelistComponent } from './articlelist/articlelist.component';
-import { BrowserModule } from '@angular/platform-browser';
+
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule} from '@angular/common/http';
@@ -21,10 +21,13 @@ import { IgxCarouselModule } from 'igniteui-angular';
 
 @NgModule({
   declarations: [ArticleformComponent, ArticlelistComponent, ArticleshowComponent, AuctionComponent],
+  providers: [
+
+  ],
   imports: [
     CommonModule,
     FormsModule,
-    BrowserModule,
+
     HttpClientModule,
     NgxFileDropModule,
     NgxSpinnerModule,

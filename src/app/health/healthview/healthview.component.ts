@@ -7,6 +7,7 @@ import { HealthserviceService } from './../service/healthservice.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { HealthviewmodalComponent } from '../healthviewmodal/healthviewmodal.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-healthview',
@@ -56,9 +57,11 @@ export class HealthviewComponent implements OnInit {
 
 
   constructor(private service: HealthserviceService, private spinner: NgxSpinnerService,
-    private route: ActivatedRoute, private modalService: BsModalService) { }
+    private route: ActivatedRoute, private modalService: BsModalService, private title: Title) { }
 
   ngOnInit() {
+
+    this.title.setTitle('健康管理');
 
     this.GetList();
 

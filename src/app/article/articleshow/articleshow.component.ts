@@ -4,6 +4,7 @@ import { ArticleService} from '../service/service.service';
  import {NgxSpinnerService} from 'ngx-spinner';
 import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -43,9 +44,11 @@ export class ArticleshowComponent implements OnInit {
 
     }
 
-  constructor(private service: ArticleService, private spinner: NgxSpinnerService, private route: ActivatedRoute) { }
+  constructor(private service: ArticleService, private spinner: NgxSpinnerService, private route: ActivatedRoute , private title: Title) { }
 
   ngOnInit() {
+
+    this.title.setTitle('普洱茶交流協會');
 
     const ID: string = this.route.snapshot.paramMap.get('id');
 

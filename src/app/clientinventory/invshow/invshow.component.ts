@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 import {ImageLink} from './../../core/shared/model/ImageLink';
 import { UserInfo, PaymentInfo , PaymentHistory } from '../../core/shared/model/userinfo';
 import * as XLSX from 'xlsx';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-invshow',
@@ -75,9 +76,11 @@ export class InvshowComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
     private service: InvserviceService, public cryptservice: CryptserviceService,
-     public authservice: AuthserviceService, private router: Router) { }
+     public authservice: AuthserviceService, private router: Router, private title: Title) { }
 
   ngOnInit() {
+
+    this.title.setTitle('普洱茶交流協會');
 
     const EncryptID: string = this.route.snapshot.queryParamMap.get('key');
 

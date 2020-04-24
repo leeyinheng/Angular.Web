@@ -6,6 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {Router} from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-articlelist',
@@ -30,10 +31,13 @@ export class ArticlelistComponent implements OnInit {
   }
 
 
-  constructor(private service: ArticleService, private spinner: NgxSpinnerService, private route: ActivatedRoute, 
-    public authservice: AuthserviceService, private router: Router) { }
+  constructor(private service: ArticleService, private spinner: NgxSpinnerService, private route: ActivatedRoute,
+    public authservice: AuthserviceService, private router: Router, private title: Title) { }
 
   ngOnInit() {
+
+    this.title.setTitle('普洱茶交流協會');
+
     this.authservice.checktoken().subscribe( val =>{
       if (val === 'OK') {
         this.GetList();

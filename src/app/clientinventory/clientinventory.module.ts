@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { InvuploadComponent } from './invupload/invupload.component';
 import { FormsModule } from '@angular/forms';
@@ -32,7 +31,6 @@ import {SearchComponent} from './search/search.component';
      PortalComponent, AdimageComponent, PaymentformComponent, PaymentlistComponent, SearchComponent],
   imports: [
     CommonModule,
-    BrowserModule,
     HttpClientModule,
     NgxFileDropModule,
     NgxSpinnerModule,

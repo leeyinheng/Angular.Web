@@ -5,6 +5,7 @@ import {weight} from "./weight";
 import {ListEmailService} from './Services/list-email.service';
 
 import html2canvas from 'html2canvas';
+import { Title } from "@angular/platform-browser";
 
 
 @Component({
@@ -20,11 +21,17 @@ export class StoneweightComponent implements OnInit{
   @ViewChild('canvas', { static: true }) canvas: ElementRef;
   @ViewChild('downloadLink', { static: true }) downloadLink: ElementRef;
 
+
+    constructor(private emailservice: ListEmailService, private title: Title) {
+    }
+
     ngOnInit(): void {
-        console.log('stoneweight oninit');
-    }
-    constructor(private emailservice: ListEmailService) {
-    }
+
+      this.title.setTitle('內湖社大玉石班');
+
+
+      console.log('stoneweight oninit');
+  }
 
     note: string;
 

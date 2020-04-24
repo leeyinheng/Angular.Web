@@ -4,6 +4,7 @@ import {MatDialog} from '@angular/material';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {LogInUser, AppUser} from '../../core/shared/model/user';
 import {NgxSpinnerService} from 'ngx-spinner';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +16,10 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor(private router: Router, public service: AuthserviceService, private spinner: NgxSpinnerService) { }
+  constructor(private router: Router, public service: AuthserviceService, private spinner: NgxSpinnerService, private title: Title) { }
 
   ngOnInit() {
+    this.title.setTitle('普洱茶交流協會');
   }
 
   login(): void {

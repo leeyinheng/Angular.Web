@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PostFileService} from '../../../app/core/shared//service/postservice.service';
 import {Router} from '@angular/router';
 import {EmailService} from '../../Services/emailservice';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -48,10 +49,13 @@ export class FormComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private postservice: PostFileService,
     private router: Router,
-    private emailservice: EmailService
+    private emailservice: EmailService,
+    private title: Title
      ) { }
 
   ngOnInit() {
+
+    this.title.setTitle('Line Pair');
 
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required],

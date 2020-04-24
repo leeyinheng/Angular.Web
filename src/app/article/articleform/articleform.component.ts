@@ -7,6 +7,7 @@ import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {Router} from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -35,10 +36,12 @@ export class ArticleformComponent implements OnInit {
 
 
   constructor(private service: ArticleService, private spinner: NgxSpinnerService,
-    private route: ActivatedRoute, public authservice: AuthserviceService, private router: Router) {
+    private route: ActivatedRoute, public authservice: AuthserviceService, private router: Router, private title: Title) {
      console.log(this.route.snapshot.paramMap.get('id')); }
 
   ngOnInit() {
+
+    this.title.setTitle('普洱茶交流協會');
 
     this.authservice.checktoken().subscribe( val => {
       if (val !== 'OK') {
@@ -90,7 +93,7 @@ public  SaveEntity() {
      return;
    }
 
- 
+
     this.spinner.show();
 
    this.service.postEntity(this.Entity).subscribe(
@@ -129,7 +132,7 @@ public dropped(files: NgxFileDropEntry[]) {
 
         if (file.size > 4194304)
         {
-          alert(file.name + ' 已經大於4mb,請縮小後再上傳'); 
+          alert(file.name + ' 已經大於4mb,請縮小後再上傳');
           return;
         }
 
@@ -168,7 +171,7 @@ public dropped(files: NgxFileDropEntry[]) {
 }
 
 public autopage(){
- 
+
   if (isNullOrUndefined(this.Entity.Pages.length) !== true)
   {
     const totalpages = this.Entity.Pages.length;
@@ -177,7 +180,7 @@ public autopage(){
 
     this.Entity.Pages.forEach(p=> {
       i++;
-      p.Name = i + '/' + totalpages;  
+      p.Name = i + '/' + totalpages;
     });
   }
 }

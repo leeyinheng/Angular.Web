@@ -1,28 +1,19 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule, BsModalService } from 'ngx-bootstrap';
 import { SharedModule } from './core/shared/shared.module';
-//import './rxjs-extensions';
 
-//import { InMemoryDataService }  from './in-memory-data.service';
-
-//Services
-import { ProductService } from './Services/product.service';
-import { ShopCartService } from './Services/shop-cart.service';
-
+// Services
 import { ListEmailService } from './Services/list-email.service';
 import { CustomerlogService } from './Services/customerlog.service';
 import { InvserviceService } from './clientinventory/invservice.service';
 
-//Components
+// Components
 import { AppComponent } from './app.component';
-import { ProductsComponent } from './products.component';
-import { MenuComponent } from './menu.component';
-import { CartComponent } from './cart.component';
 import { StoneweightComponent } from './stoneweight.component';
 import { CustomerlogComponent } from './customerlog.component';
 import { ModalContentComponent } from './customerlog.component';
@@ -60,14 +51,6 @@ import { LinepairModule} from './linepair/linepair.module';
         pathMatch: 'full'
       },
       {
-        path: 'products',
-        component: ProductsComponent
-      },
-      {
-        path: 'cart',
-        component: CartComponent
-      },
-      {
         path: 'stoneweight',
         component: StoneweightComponent
       },
@@ -84,9 +67,6 @@ import { LinepairModule} from './linepair/linepair.module';
   ],
   declarations: [
     AppComponent,
-    ProductsComponent,
-    MenuComponent,
-    CartComponent,
     StoneweightComponent,
     CustomerlogComponent,
     ModalContentComponent,
@@ -94,12 +74,11 @@ import { LinepairModule} from './linepair/linepair.module';
   ],
   entryComponents: [ModalContentComponent, EmailmodalComponent],
   providers: [
-    ProductService,
-    ShopCartService,
     ListEmailService,
     CustomerlogService,
     BsModalService,
     InvserviceService,
+    Title,
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]

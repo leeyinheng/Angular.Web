@@ -4,6 +4,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {Router} from '@angular/router';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import { AppUser} from '../../core/shared/model/user';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -17,9 +18,11 @@ export class LoginComponent implements OnInit {
   auth2: any;
 
   constructor(private bcservice: BcserviceService, private spinner: NgxSpinnerService,
-    private router: Router, private ngzone: NgZone, public service: AuthserviceService) { }
+    private router: Router, private ngzone: NgZone, public service: AuthserviceService, private title: Title) { }
 
   ngOnInit() {
+
+    this.title.setTitle('M.O.M 行動辦公室');
 
     this.googleSDK();
 
