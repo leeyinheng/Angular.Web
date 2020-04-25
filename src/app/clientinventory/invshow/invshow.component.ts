@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {ActivatedRoute} from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute } from '@angular/router';
 import { isNullOrUndefined } from 'util';
-import {InvserviceService} from '../invservice.service';
-import {Inventory, ClientInventory, ProjectImages} from '../model/projectinventory';
-import {CryptserviceService} from './../../core/shared/service/cryptservice.service';
-import {AuthserviceService} from './../../core/shared/service/authservice.service';
-import {Router} from '@angular/router';
-import {ImageLink} from './../../core/shared/model/ImageLink';
-import { UserInfo, PaymentInfo , PaymentHistory } from '../../core/shared/model/userinfo';
+import { InvserviceService } from '../invservice.service';
+import { Inventory, ClientInventory, ProjectImages, InventoryExtend } from '../model/projectinventory';
+import { CryptserviceService } from './../../core/shared/service/cryptservice.service';
+import { AuthserviceService } from './../../core/shared/service/authservice.service';
+import { Router } from '@angular/router';
+import { ImageLink } from './../../core/shared/model/ImageLink';
+import { UserInfo, PaymentInfo, PaymentHistory } from '../../core/shared/model/userinfo';
 import * as XLSX from 'xlsx';
 import { Title } from '@angular/platform-browser';
 
@@ -25,14 +25,14 @@ export class InvshowComponent implements OnInit {
 
   get Entity(): ClientInventory {
 
-      return this._entity;
+    return this._entity;
 
   }
 
-  set Entity( value: ClientInventory) {
+  set Entity(value: ClientInventory) {
 
 
-      this._entity = value;
+    this._entity = value;
 
   }
 
@@ -46,12 +46,14 @@ export class InvshowComponent implements OnInit {
 
   AdTextLinks: ImageLink[];
 
+  extendlist: InventoryExtend[];
+
 
   _stock_sum = 0;
   get stock_sum(): number {
     return this._stock_sum;
   }
-  set stock_sum(value: number){
+  set stock_sum(value: number) {
     this._stock_sum = value;
   }
 
@@ -60,7 +62,7 @@ export class InvshowComponent implements OnInit {
   get return_sum(): number {
     return this._return_sum;
   }
-  set return_sum(value: number){
+  set return_sum(value: number) {
     this._return_sum = value;
   }
 
@@ -76,7 +78,7 @@ export class InvshowComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
     private service: InvserviceService, public cryptservice: CryptserviceService,
-     public authservice: AuthserviceService, private router: Router, private title: Title) { }
+    public authservice: AuthserviceService, private router: Router, private title: Title) { }
 
   ngOnInit() {
 
@@ -91,22 +93,25 @@ export class InvshowComponent implements OnInit {
     const role = IDstring.split('|')[1];
 
     switch (role) {
-      case 'manager' : {
+      case 'manager': {
         this.IsManager = true;
-        this.authservice.checktoken().subscribe( val =>{
-          if (val !== 'OK'){
+        this.spinner.show();
+        this.authservice.checktoken().subscribe(val => {
+          if (val !== 'OK') {
             alert('權限不足或失效 請重新登入');
             this.router.navigate(['login']);
+          } else {
+            this.GetExtendList();
           }
         })
         break;
       }
-      case 'user' : {
+      case 'user': {
         this.IsManager = false;
         break;
       }
-      default : {
-        alert ('無權限進入');
+      default: {
+        alert('無權限進入');
         return;
       }
     }
@@ -125,102 +130,146 @@ export class InvshowComponent implements OnInit {
 
   public GetEntity(ID: string) {
 
-     this.spinner.show();
+    this.spinner.show();
 
-     this.service.currentMessage.subscribe( val => {
-       if ( val.length === 0) {
-            this.service.getEntityById(ID).subscribe(value => {
-            this.Entity = value;
-            this.FilterForUser();
+    this.service.currentMessage.subscribe(val => {
+      if (val.length === 0) {
+        this.service.getEntityById(ID).subscribe(value => {
+          this.Entity = value;
+          this.FilterForUser();
+          this.spinner.hide();
+        },
+          err => {
+            alert('無此客戶或發生錯誤');
             this.spinner.hide();
-            },
-            err => {
-              alert('無此客戶或發生錯誤');
-              this.spinner.hide();
-            });
-       } else {
-        this.Entity =  val.find(x => x.ClientId === ID);
+          });
+      } else {
+        this.Entity = val.find(x => x.ClientId === ID);
         this.FilterForUser();
         this.spinner.hide();
-       }
-     });
+      }
+    });
+  }
+
+  private GetExtendList() {
+    this.service.currentExtendList.subscribe(val => {
+      if (isNullOrUndefined(val)) {
+        this.spinner.show();
+        this.service.getExtendList().subscribe(lst => {
+          alert(lst.length);
+          this.extendlist = lst;
+          this.service.changeExtendList(lst);
+          this.spinner.hide();
+        },
+          err => {
+            alert('Extended List Error');
+            this.spinner.hide();
+          })
+
+      } else {
+        this.extendlist = val;
+        this.spinner.hide();
+      }
+    });
   }
 
   public GetPaymentInfo(ID: string) {
 
-    this.service.getPaymentEntity(ID).subscribe(val => {
-              this.paymentInfo = val;
-            },
-              err => {
-                alert('Payment Info Not Found');
-              });
+    this.service.getPaymentEntity(ID).subscribe(val => {
+      this.paymentInfo = val;
+    },
+      err => {
+        alert('Payment Info Not Found');
+      });
   }
 
-    public GetProjectImages() {
+  public GetProjectImages() {
 
-      this.service.getImages().subscribe(val => {
-        this.images = val;
-      },
+    this.service.getImages().subscribe(val => {
+      this.images = val;
+    },
       err => {
         alert('溫度圖error');
       });
+  }
+
+  public FilterForUser() {
+
+    if (this.IsManager === false) {
+      const templist: Inventory[] = [];
+      this.Entity.Inventories.forEach(i => {
+        if (i.NotReturn !== 0) {
+          templist.push(i);
+          this.stock_sum += i.Stock;
+          this.return_sum += i.Return;
+          this.notreturn_sum += i.NotReturn;
+        }
+      });
+      this.userInvertories = templist;
+    } else {
+      this.Entity.Inventories.forEach(i => {
+        if (i.NotReturn !== 0) {
+          this.stock_sum += i.Stock;
+          this.return_sum += i.Return;
+          this.notreturn_sum += i.NotReturn;
+        }
+      });
     }
 
-    public FilterForUser() {
+  }
 
-      if (this.IsManager === false) {
-        const templist: Inventory[] = [];
-        this.Entity.Inventories.forEach(i => {
-          if (i.NotReturn !== 0) {
-            templist.push(i);
-            this.stock_sum += i.Stock;
-            this.return_sum += i.Return;
-            this.notreturn_sum += i.NotReturn;
-          }
-        });
-        this.userInvertories = templist;
-      } else {
-        this.Entity.Inventories.forEach(i => {
-          if (i.NotReturn !== 0) {
-            this.stock_sum += i.Stock;
-            this.return_sum += i.Return;
-            this.notreturn_sum += i.NotReturn;
-          }
-        });
+  public GetAdImages() {
+    this.service.getAdImages().subscribe(res => {
+
+      this.AdImages = res;
+
+    });
+  }
+
+  public GetAdTextLinks() {
+    this.service.getAdTextLinks().subscribe(res => {
+
+      this.AdTextLinks = res;
+
+    });
+  }
+
+  public GetExtendedVal(id: string, type: string) {
+
+    const item = this.extendlist.filter(x => x.ProductId === id);
+
+    if (isNullOrUndefined(item)) {
+      return '';
+    } else {
+      switch (type) {
+        case 'GroupId': return item[0].GroupId;
+          break;
+        case 'BarCode': return item[0].BarCode;
+          break;
+        case 'LocationId': return item[0].LocationId;
+          break;
+        default:
+          return '';
       }
-
     }
 
-    public GetAdImages() {
-      this.service.getAdImages().subscribe (res => {
 
-         this.AdImages = res;
+  }
 
-      });
-    }
+  public exportexcel() {
 
-    public GetAdTextLinks() {
-      this.service.getAdTextLinks().subscribe (res => {
+    /* table id is passed over here */
+    // const element = document.getElementById('excel-table');
 
-         this.AdTextLinks = res;
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.exceltable.nativeElement);
 
-      });
-    }
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-    public exportexcel() {
-
-      /* table id is passed over here */
-     // const element = document.getElementById('excel-table');
-
-      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.exceltable.nativeElement);
-
-      /* generate workbook and add the worksheet */
-      const wb: XLSX.WorkBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-      /* save to file */
-      XLSX.writeFile(wb, this.Entity.ClientName + '.xlsx');
-    }
+    /* save to file */
+    XLSX.writeFile(wb, this.Entity.ClientName + '.xlsx');
+  }
 
 
 }

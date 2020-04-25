@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import {ProjectImages , ClientInventory, Inventory} from './model/projectinventory';
+import { ProjectImages, ClientInventory, Inventory, InventoryExtend } from './model/projectinventory';
 
 import { isNullOrUndefined } from 'util';
 
 import { BehaviorSubject } from 'rxjs';
 
-import {ImageLink} from './../core/shared/model/ImageLink';
+import { ImageLink } from './../core/shared/model/ImageLink';
 
-import { UserInfo, PaymentInfo , PaymentHistory } from '../core/shared/model/userinfo';
+import { UserInfo, PaymentInfo, PaymentHistory } from '../core/shared/model/userinfo';
 
 
 @Injectable({
@@ -33,6 +33,8 @@ export class InvserviceService {
 
   private postCategoryFileurl = 'api/UploadCategoryExcelApi/';
 
+  private postLocationFileurl = 'api/UploadLocationExcelApi/';
+
   private postTempImageUrl = 'api/UploadTempApi/';
 
   private getEntityUrl = 'api/ClientInventoryApi/client/';
@@ -40,6 +42,8 @@ export class InvserviceService {
   private getImagesUrl = 'api/ClientInventoryApi/temp/6';
 
   private getListUrl = 'api/ClientInventoryApi/';
+
+  private getExtendListUrl = 'api/ClientInventoryExtendApi/';
 
   private getLastUpdateUrl = 'api/ClientInventoryApi/LastUpdate/888';
 
@@ -62,19 +66,21 @@ export class InvserviceService {
 
   get list(): ClientInventory[] {
 
-      return this._list;
+    return this._list;
 
   }
 
-  set list( value: ClientInventory[]) {
+  set list(value: ClientInventory[]) {
 
-      this._list = value;
+    this._list = value;
 
   }
 
   paymentInfo: UserInfo<PaymentInfo, PaymentHistory>;
 
-  paymentInfoList:  UserInfo<PaymentInfo, PaymentHistory>[];
+  paymentInfoList: UserInfo<PaymentInfo, PaymentHistory>[];
+
+  extendList: InventoryExtend[];
 
 
   private messageSource = new BehaviorSubject<ClientInventory[]>(this.list);
@@ -88,6 +94,10 @@ export class InvserviceService {
   private paymentlistdataSource = new BehaviorSubject<UserInfo<PaymentInfo, PaymentHistory>[]>(this.paymentInfoList);
 
   currentPaymentList = this.paymentlistdataSource.asObservable();
+
+  private extendlistdataSource = new BehaviorSubject<InventoryExtend[]>(this.extendList);
+
+  currentExtendList = this.extendlistdataSource.asObservable();
 
   constructor(
     private http: HttpClient
@@ -105,192 +115,214 @@ export class InvserviceService {
     this.paymentlistdataSource.next(info);
   }
 
-   public postFile(file: FormData) {
+  changeExtendList(info: InventoryExtend[]) {
+    this.extendlistdataSource.next(info);
+  }
+
+  public postFile(file: FormData) {
 
     const url = this.site + this.postFileurl;
 
-     // Headers
-     const headers = new HttpHeaders ({
+    // Headers
+    const headers = new HttpHeaders({
       ContentType: 'multipart/form-data'
     });
     // return  this.http.post(url, file, {headers: headers});
 
     return this.http
-        .post<string>(
-            url,
-            file,
+      .post<string>(
+        url,
+        file,
         { headers, responseType: 'text' as 'json' }
-        );
+      );
   }
 
   public postPartialFile(file: FormData) {
     const url = this.site + this.postPartialFileUrl;
-    const headers = new HttpHeaders ({
+    const headers = new HttpHeaders({
       ContentType: 'multipart/form-data'
     });
     return this.http.post<string>(
-      url, file , {headers, responseType: 'text' as 'json'}
+      url, file, { headers, responseType: 'text' as 'json' }
     );
   }
 
   public postCategorylFile(file: FormData) {
     const url = this.site + this.postCategoryFileurl;
-    const headers = new HttpHeaders ({
+    const headers = new HttpHeaders({
       ContentType: 'multipart/form-data'
     });
     return this.http.post<string>(
-      url, file , {headers, responseType: 'text' as 'json'}
+      url, file, { headers, responseType: 'text' as 'json' }
     );
   }
 
- public postTempImage(file: FormData) {
+  public postLocationlFile(file: FormData) {
+    const url = this.site + this.postLocationFileurl;
+    const headers = new HttpHeaders({
+      ContentType: 'multipart/form-data'
+    });
+    return this.http.post<string>(
+      url, file, { headers, responseType: 'text' as 'json' }
+    );
+  }
 
-  const url = this.site + this.postTempImageUrl;
+  public postTempImage(file: FormData) {
 
-   // Headers
-   const headers = new HttpHeaders ({
-    ContentType: 'multipart/form-data'
-  });
+    const url = this.site + this.postTempImageUrl;
+
+    // Headers
+    const headers = new HttpHeaders({
+      ContentType: 'multipart/form-data'
+    });
 
 
-  // return  this.http.post(url, file, {headers: headers});
+    // return  this.http.post(url, file, {headers: headers});
 
-  return this.http
+    return this.http
       .post<string>(
-          url,
-          file,
-      { headers, responseType: 'text' as 'json' }
+        url,
+        file,
+        { headers, responseType: 'text' as 'json' }
       );
-}
+  }
 
-public getEntityById(id: string) {
+  public getEntityById(id: string) {
 
-    const url  = this.site + this.getEntityUrl + id;
+    const url = this.site + this.getEntityUrl + id;
 
     return this.http.get<ClientInventory>(url);
 
-}
+  }
 
 
-public getList() {
+  public getList() {
 
-  const url  = this.site + this.getListUrl;
+    const url = this.site + this.getListUrl;
 
-  return this.http.get<ClientInventory[]>(url);
+    return this.http.get<ClientInventory[]>(url);
 
-}
+  }
 
-public getImages() {
+  public getExtendList() {
 
-  const url  = this.site + this.getImagesUrl ;
+    const url = this.site + this.getExtendListUrl;
 
-  return this.http.get<ProjectImages[]>(url);
-}
+    return this.http.get<InventoryExtend[]>(url);
 
-public updateTime() {
+  }
 
-  const url = this.site + this.postUpdateTimeUrl;
+  public getImages() {
 
-  const datestring = new Date().toLocaleString();
+    const url = this.site + this.getImagesUrl;
 
-  return this.http.put<object>(url, {'date': datestring} );
-}
+    return this.http.get<ProjectImages[]>(url);
+  }
 
-public getLastUpdateTime() {
+  public updateTime() {
 
-  const url = this.site + this.getLastUpdateUrl;
+    const url = this.site + this.postUpdateTimeUrl;
 
-  return this.http.get(url);
+    const datestring = new Date().toLocaleString();
 
-}
+    return this.http.put<object>(url, { 'date': datestring });
+  }
 
-public getAdImages() {
+  public getLastUpdateTime() {
 
-  const url = this.site + this.adImagesUrl;
+    const url = this.site + this.getLastUpdateUrl;
 
-  return this.http.get<ImageLink[]>(url);
-}
+    return this.http.get(url);
 
-public postAdImages(adimages: ImageLink[]) {
+  }
 
-  const url = this.site + this.adImagesUrl;
+  public getAdImages() {
 
-   // Headers
-   const headers = new HttpHeaders ({
-    ContentType: 'multipart/form-data'
-  });
+    const url = this.site + this.adImagesUrl;
+
+    return this.http.get<ImageLink[]>(url);
+  }
+
+  public postAdImages(adimages: ImageLink[]) {
+
+    const url = this.site + this.adImagesUrl;
+
+    // Headers
+    const headers = new HttpHeaders({
+      ContentType: 'multipart/form-data'
+    });
 
 
-  // return  this.http.post(url, file, {headers: headers});
+    // return  this.http.post(url, file, {headers: headers});
 
-  return this.http
+    return this.http
       .post<string>(
-          url,
-          adimages,
-      { headers, responseType: 'text' as 'json' }
+        url,
+        adimages,
+        { headers, responseType: 'text' as 'json' }
       );
-}
+  }
 
-public getAdTextLinks() {
+  public getAdTextLinks() {
 
-  const url = this.site + this.adTextLinkUrl;
+    const url = this.site + this.adTextLinkUrl;
 
-  return this.http.get<ImageLink[]>(url);
-}
+    return this.http.get<ImageLink[]>(url);
+  }
 
-public getPaymentEntity(id: string) {
+  public getPaymentEntity(id: string) {
 
-  const url = this.site + this.paymentGetUrl + id;
+    const url = this.site + this.paymentGetUrl + id;
 
-  return this.http.get<UserInfo<PaymentInfo, PaymentHistory>>(url);
+    return this.http.get<UserInfo<PaymentInfo, PaymentHistory>>(url);
 
-}
+  }
 
-public updatePaymentUsers() {
+  public updatePaymentUsers() {
 
-  const url = this.site + this.paymentUpdateUsersUrl;
+    const url = this.site + this.paymentUpdateUsersUrl;
 
-  return this.http.get(url);
+    return this.http.get(url);
 
-}
+  }
 
-public postPaymentEntity(entity: UserInfo<PaymentInfo, PaymentHistory>) {
+  public postPaymentEntity(entity: UserInfo<PaymentInfo, PaymentHistory>) {
 
-   const url = this.site + this.paymentPostUrl;
+    const url = this.site + this.paymentPostUrl;
 
-   return this.http
-   .post<UserInfo<PaymentInfo, PaymentHistory>>(
-       url,
-       entity,
-    { responseType: 'text' as 'json' }
-   );
+    return this.http
+      .post<UserInfo<PaymentInfo, PaymentHistory>>(
+        url,
+        entity,
+        { responseType: 'text' as 'json' }
+      );
 
-}
+  }
 
-public getPaymentList() {
-  const url = this.site + this.paymentGetListUrl;
-  return this.http.get<UserInfo<PaymentInfo, PaymentHistory>[]>(url);
-}
+  public getPaymentList() {
+    const url = this.site + this.paymentGetListUrl;
+    return this.http.get<UserInfo<PaymentInfo, PaymentHistory>[]>(url);
+  }
 
-public postAdTextLinks(adimages: ImageLink[]) {
+  public postAdTextLinks(adimages: ImageLink[]) {
 
-  const url = this.site + this.adTextLinkUrl;
+    const url = this.site + this.adTextLinkUrl;
 
-   // Headers
-   const headers = new HttpHeaders ({
-    ContentType: 'multipart/form-data'
-  });
+    // Headers
+    const headers = new HttpHeaders({
+      ContentType: 'multipart/form-data'
+    });
 
 
-  // return  this.http.post(url, file, {headers: headers});
+    // return  this.http.post(url, file, {headers: headers});
 
-  return this.http
+    return this.http
       .post<string>(
-          url,
-          adimages,
-      { headers, responseType: 'text' as 'json' }
+        url,
+        adimages,
+        { headers, responseType: 'text' as 'json' }
       );
-}
+  }
 
 
 }

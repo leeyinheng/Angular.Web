@@ -1,85 +1,96 @@
-
 <div>
-        <span> <img src='../assets/Photos/tealogo.jpg' width=20% height=20% /></span>
-        <p></p>
+  <span> <img src='../assets/Photos/tealogo.jpg' width=20% height=20% /></span>
+  <p></p>
 </div>
 
 <div>
-      <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
-      <p></p>
+  <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
+  <p></p>
 </div>
 
 <h2>上傳普洱茶倉儲Excel檔案(.xlsx):(部分更新:適用於少部分藏家更新 其他藏家資料不更動)</h2>
 
 <div class="body-content">
-        <div class="center">
-                <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped3($event)" accept=".xlsx"
-                (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                      拖曳或是選擇要上傳的Excel檔案 => 部分更新 (請確定格式正確)
-                      <button type="button" (click)="openFileSelector()">Browse Files</button>
-                    </ng-template>
+  <div class="center">
+    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped3($event)" accept=".xlsx"
+      (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        拖曳或是選擇要上傳的Excel檔案 => 部分更新 (請確定格式正確)
+        <button type="button" (click)="openFileSelector()">Browse Files</button>
+      </ng-template>
 
-                </ngx-file-drop>
+    </ngx-file-drop>
 
-        </div>
+  </div>
 </div>
 <hr>
 
 <h2>上傳普洱茶倉儲Excel檔案(.xlsx):(全部更新:將會覆蓋掉之前紀錄 重新更新資料庫)</h2>
 
 <div class="body-content">
-        <div class="center">
-                <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" accept=".xlsx"
-                (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                      拖曳或是選擇要上傳的Excel檔案 => 全部更新 (請確定格式正確)
-                      <button type="button" (click)="openFileSelector()">Browse Files</button>
-                    </ng-template>
+  <div class="center">
+    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" accept=".xlsx"
+      (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        拖曳或是選擇要上傳的Excel檔案 => 全部更新 (請確定格式正確)
+        <button type="button" (click)="openFileSelector()">Browse Files</button>
+      </ng-template>
 
-                </ngx-file-drop>
+    </ngx-file-drop>
 
-        </div>
+  </div>
 </div>
 <hr>
 <h2>上傳普洱茶倉儲溫度紀錄照片(.jpg):</h2>
 <div class="body-content">
-        <div class="center">
-                <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped2($event)"
-                (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                      拖曳或是選擇要上傳的照片(請勿超過4MB)
-                      <button type="button" (click)="openFileSelector()">Browse Files</button>
-                    </ng-template>
+  <div class="center">
+    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped2($event)" (onFileOver)="fileOver($event)"
+      (onFileLeave)="fileLeave($event)">
+      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        拖曳或是選擇要上傳的照片(請勿超過4MB)
+        <button type="button" (click)="openFileSelector()">Browse Files</button>
+      </ng-template>
 
-                </ngx-file-drop>
+    </ngx-file-drop>
 
-        </div>
+  </div>
 </div>
 
 <h2 style="color:red;">上傳普洱茶產品大類查詢表Excel檔案 (.xlsx):(用於新增資料 非必要請勿操作)</h2>
 
 <div class="body-content">
-        <div class="center">
-                <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="droppedCategory($event)" accept=".xlsx"
-                (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                      拖曳或是選擇要上傳的Excel檔案 => 部分更新 (請確定格式正確)
-                      <button type="button" (click)="openFileSelector()">Browse Files</button>
-                    </ng-template>
+  <div class="center">
+    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="droppedCategory($event)" accept=".xlsx"
+      (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        拖曳或是選擇要上傳的Excel檔案 => 新增產品大類 (請確定格式正確)
+        <button type="button" (click)="openFileSelector()">Browse Files</button>
+      </ng-template>
 
-                </ngx-file-drop>
+    </ngx-file-drop>
 
-        </div>
+  </div>
+</div>
+<hr>
+
+<h2 style="color:red;">上傳普洱茶產品更新查詢表Excel檔案 (.xlsx):(用於更新倉架資料 非必要請勿操作)</h2>
+
+<div class="body-content">
+  <div class="center">
+    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="droppedLocation($event)" accept=".xlsx"
+      (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        拖曳或是選擇要上傳的Excel檔案 => 更新倉架資料 (請確定格式正確)
+        <button type="button" (click)="openFileSelector()">Browse Files</button>
+      </ng-template>
+
+    </ngx-file-drop>
+
+  </div>
 </div>
 <hr>
 
 
-<ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple"
->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
   <p style="font-size: 20px; color: white">處理中...</p>
 </ngx-spinner>

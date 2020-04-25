@@ -25,8 +25,15 @@ export class Inventory {
     NotReturn: number;
 }
 
+export class InventoryExtend {
+    ProductId: string;
+    GroupId: string; // 產品大類
+    BarCode: string; // 條碼
+    LocationId: string; // 倉架位置
+}
 
-export class ProjectImages  {
+
+export class ProjectImages {
     FileName: string;
     ImageUrl: string;
     Comment: string;
