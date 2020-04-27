@@ -3,7 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import { InvserviceService } from '../invservice.service';
-import { Inventory, ClientInventory, ProjectImages, InventoryExtend } from '../model/projectinventory';
+import {  ProjectImages, ClientInventoryFull, InventoryFull } from '../model/projectinventory';
 import { CryptserviceService } from './../../core/shared/service/cryptservice.service';
 import { AuthserviceService } from './../../core/shared/service/authservice.service';
 import { Router } from '@angular/router';
@@ -21,15 +21,15 @@ export class InvshowComponent implements OnInit {
 
   public IsManager = false;
 
-  _entity: ClientInventory = new ClientInventory();
+  _entity: ClientInventoryFull = new ClientInventoryFull();
 
-  get Entity(): ClientInventory {
+  get Entity(): ClientInventoryFull {
 
     return this._entity;
 
   }
 
-  set Entity(value: ClientInventory) {
+  set Entity(value: ClientInventoryFull) {
 
 
     this._entity = value;
@@ -38,7 +38,7 @@ export class InvshowComponent implements OnInit {
 
   paymentInfo: UserInfo<PaymentInfo, PaymentHistory>;
 
-  userInvertories: Inventory[];
+  userInvertories: InventoryFull[];
 
   images: ProjectImages[];
 
@@ -46,7 +46,6 @@ export class InvshowComponent implements OnInit {
 
   AdTextLinks: ImageLink[];
 
-  extendlist: InventoryExtend[];
 
 
   _stock_sum = 0;
@@ -101,9 +100,9 @@ export class InvshowComponent implements OnInit {
             alert('權限不足或失效 請重新登入');
             this.router.navigate(['login']);
           } else {
-            this.GetExtendList();
+
           }
-        })
+        });
         break;
       }
       case 'user': {
@@ -132,9 +131,9 @@ export class InvshowComponent implements OnInit {
 
     this.spinner.show();
 
-    this.service.currentMessage.subscribe(val => {
+    this.service.currentInventoryFullList.subscribe(val => {
       if (val.length === 0) {
-        this.service.getEntityById(ID).subscribe(value => {
+        this.service.getFullEntityById(ID).subscribe(value => {
           this.Entity = value;
           this.FilterForUser();
           this.spinner.hide();
@@ -151,27 +150,6 @@ export class InvshowComponent implements OnInit {
     });
   }
 
-  private GetExtendList() {
-    this.service.currentExtendList.subscribe(val => {
-      if (isNullOrUndefined(val)) {
-        this.spinner.show();
-        this.service.getExtendList().subscribe(lst => {
-          alert(lst.length);
-          this.extendlist = lst;
-          this.service.changeExtendList(lst);
-          this.spinner.hide();
-        },
-          err => {
-            alert('Extended List Error');
-            this.spinner.hide();
-          })
-
-      } else {
-        this.extendlist = val;
-        this.spinner.hide();
-      }
-    });
-  }
 
   public GetPaymentInfo(ID: string) {
 
@@ -196,7 +174,7 @@ export class InvshowComponent implements OnInit {
   public FilterForUser() {
 
     if (this.IsManager === false) {
-      const templist: Inventory[] = [];
+      const templist: InventoryFull[] = [];
       this.Entity.Inventories.forEach(i => {
         if (i.NotReturn !== 0) {
           templist.push(i);
@@ -234,27 +212,7 @@ export class InvshowComponent implements OnInit {
     });
   }
 
-  public GetExtendedVal(id: string, type: string) {
 
-    const item = this.extendlist.filter(x => x.ProductId === id);
-
-    if (isNullOrUndefined(item)) {
-      return '';
-    } else {
-      switch (type) {
-        case 'GroupId': return item[0].GroupId;
-          break;
-        case 'BarCode': return item[0].BarCode;
-          break;
-        case 'LocationId': return item[0].LocationId;
-          break;
-        default:
-          return '';
-      }
-    }
-
-
-  }
 
   public exportexcel() {
 

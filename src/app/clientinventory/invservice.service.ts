@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { ProjectImages, ClientInventory, Inventory, InventoryExtend } from './model/projectinventory';
+import { ProjectImages, ClientInventory, Inventory, InventoryExtend , ClientInventoryFull } from './model/projectinventory';
 
 import { isNullOrUndefined } from 'util';
 
@@ -19,9 +19,9 @@ import { UserInfo, PaymentInfo, PaymentHistory } from '../core/shared/model/user
 
 export class InvserviceService {
 
-  //  private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+  private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
-  private site = 'https://localhost:44347/';
+  // private site = 'https://localhost:44347/';
 
   private url = 'api/articleapi/';
 
@@ -44,6 +44,10 @@ export class InvserviceService {
   private getListUrl = 'api/ClientInventoryApi/';
 
   private getExtendListUrl = 'api/ClientInventoryExtendApi/';
+
+  private getFullInventoryListUrl = 'api/ClientInventoryExtendApi/GetFullList/888';
+
+  private getFullInventoryEntityUrl = 'api/ClientInventoryExtendApi/GetFullEntity/';
 
   private getLastUpdateUrl = 'api/ClientInventoryApi/LastUpdate/888';
 
@@ -82,6 +86,7 @@ export class InvserviceService {
 
   extendList: InventoryExtend[];
 
+  inventoryfullList: ClientInventoryFull[];
 
   private messageSource = new BehaviorSubject<ClientInventory[]>(this.list);
 
@@ -98,6 +103,10 @@ export class InvserviceService {
   private extendlistdataSource = new BehaviorSubject<InventoryExtend[]>(this.extendList);
 
   currentExtendList = this.extendlistdataSource.asObservable();
+
+  private inventoryfulllistdataSource = new BehaviorSubject<ClientInventoryFull[]>(this.inventoryfullList);
+
+  currentInventoryFullList = this.inventoryfulllistdataSource.asObservable();
 
   constructor(
     private http: HttpClient
@@ -117,6 +126,10 @@ export class InvserviceService {
 
   changeExtendList(info: InventoryExtend[]) {
     this.extendlistdataSource.next(info);
+  }
+
+  changeInventoryFullList(info: ClientInventoryFull[]){
+    this.inventoryfulllistdataSource.next(info);
   }
 
   public postFile(file: FormData) {
@@ -195,6 +208,12 @@ export class InvserviceService {
 
   }
 
+  public getFullEntityById(id: string) {
+    const url = this.site + this.getFullInventoryEntityUrl + id;
+
+    return this.http.get<ClientInventoryFull>(url);
+  }
+
 
   public getList() {
 
@@ -209,6 +228,14 @@ export class InvserviceService {
     const url = this.site + this.getExtendListUrl;
 
     return this.http.get<InventoryExtend[]>(url);
+
+  }
+
+  public getClientFullInvList() {
+
+    const url = this.site + this.getFullInventoryListUrl;
+
+    return this.http.get<ClientInventoryFull[]>(url);
 
   }
 

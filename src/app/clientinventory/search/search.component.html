@@ -14,7 +14,14 @@
   [(ngModel)]='Search'
   style="width: 8em;"
   />
+
+  <label> 或是   </label>
+  <input type="string" placeholder="產品大類" class="form form-control"
+  [(ngModel)]='Search2'
+  style="width: 8em;"
+  />
 </div>
+
 <p></p>
 
 
@@ -63,6 +70,15 @@
                  <th>
                      庫存量
                  </th>
+                 <th>
+                  產品大類
+                </th>
+                <th>
+                  產品條碼
+                </th>
+                <th>
+                  倉架位置
+                </th>
                   <tr *ngFor = 'let info of item.Inventories'>
                    <td>
                       {{info.ProductId}}
@@ -81,6 +97,15 @@
                     </td>
                     <td>
                       {{info.NotReturn}}
+                    </td>
+                    <td>
+                      {{info.GroupId}}
+                    </td>
+                    <td>
+                      {{info.BarCode}}
+                    </td>
+                    <td>
+                      {{info.LocationId}}
                     </td>
                   </tr>
                   <tfoot>

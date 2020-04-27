@@ -1,9 +1,8 @@
-export class ClientInventory {
-    ClientId: string;
+abstract class ClientInventorybase {
+  ClientId: string;
     ClientName: string;
     Address: string;
     Phone: string;
-    Inventories: Inventory[];
     private _message: string;
     get Message() {
         return this._message;
@@ -14,6 +13,15 @@ export class ClientInventory {
     SubTotal: number;
     SubStock: number;
     SubReturn: number;
+
+}
+
+export class ClientInventory extends ClientInventorybase {
+  Inventories: Inventory[];
+}
+
+export class ClientInventoryFull extends ClientInventorybase {
+  Inventories: InventoryFull[];
 }
 
 export class Inventory {
@@ -23,6 +31,12 @@ export class Inventory {
     Unit: string;
     Return: number;
     NotReturn: number;
+}
+
+export class InventoryFull extends Inventory {
+  GroupId: string; // 產品大類
+  BarCode: string; // 條碼
+  LocationId: string; // 倉架位置
 }
 
 export class InventoryExtend {

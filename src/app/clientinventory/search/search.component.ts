@@ -3,7 +3,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import {InvserviceService} from '../invservice.service';
-import {Inventory, ClientInventory, ProjectImages} from '../model/projectinventory';
+import {  ClientInventoryFull} from '../model/projectinventory';
 import {CryptserviceService} from './../../core/shared/service/cryptservice.service';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {Router} from '@angular/router';
@@ -15,7 +15,7 @@ import {Router} from '@angular/router';
 })
 export class SearchComponent implements OnInit {
 
-  searchlist: ClientInventory[];
+  searchlist: ClientInventoryFull[];
 
   showtotal = 0;
 
@@ -41,11 +41,25 @@ export class SearchComponent implements OnInit {
        this.FilterList(value);
    }
 
-templist: ClientInventory[];
+   _search2: string;
 
-orginiallist: ClientInventory[];
+   get Search2(): string {
 
-templist2: ClientInventory[];
+       return this._search2;
+   }
+
+   set Search2(value: string) {
+
+       this._search2 = value;
+
+       this.FilterList2(value);
+   }
+
+templist: ClientInventoryFull[];
+
+orginiallist: ClientInventoryFull[];
+
+templist2: ClientInventoryFull[];
 
 
 constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
@@ -84,7 +98,54 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
       });
 
         this.templist2.forEach( x => {
-          const info = new ClientInventory();
+          const info = new ClientInventoryFull();
+          info.ClientId = x.ClientId;
+          info.ClientName = x.ClientName;
+          info.Inventories = x.Inventories.filter( i => (i.ProductId.includes(filter)
+          || i.ProductName.includes(filter)) && i.NotReturn > 0);
+          this.showtotal += info.Inventories.length;
+          info.Inventories.forEach( s => {
+              this.showtotalstock += s.NotReturn;
+              this.showsubtotal += s.NotReturn;
+              this.showstock += s.Stock;
+              this.showreturn += s.Return;
+          });
+          info.SubTotal = this.showsubtotal;
+          info.SubStock = this.showstock;
+          info.SubReturn = this.showreturn;
+          this.templist.push(info);
+          this.showsubtotal = 0;
+          this.showstock = 0;
+          this.showreturn = 0;
+        });
+
+
+      this.searchlist = this.templist;
+
+    }
+  }
+
+  public FilterList2(filter: string) {   // 產品大類
+
+    this.showtotal = 0;
+    this.showtotalstock = 0;
+
+    if (filter === '' || filter === undefined) {
+        this.searchlist = [];
+    } else {
+
+      this.templist = [];
+
+      this.templist2 = this.orginiallist.filter( x => {
+        if ( x.Inventories.filter( i => {
+          if ((i.GroupId.includes(filter) || i.LocationId.includes(filter)) && i.NotReturn > 0) {
+            return i;
+          }
+        }).length > 0) { return x; }
+      });
+
+        this.templist2.forEach( x => {
+          const info = new ClientInventoryFull();
           info.ClientId = x.ClientId;
           info.ClientName = x.ClientName;
           info.Inventories = x.Inventories.filter( i => (i.ProductId.includes(filter)
@@ -114,7 +175,7 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
   public GetList() {
     this.spinner.show();
 
-        this.service.getList().subscribe(vals => {
+        this.service.getClientFullInvList().subscribe(vals => {
           this.orginiallist = vals;
           this.spinner.hide();
         },
