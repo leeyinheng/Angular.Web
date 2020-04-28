@@ -100,9 +100,6 @@ export class PaymentlistComponent implements OnInit {
 
     this.service.changePaymentInfo(this.List.filter(x => x.ClientId === id)[0]);
 
-   // window.open('#/payment/' + id  , '_self');
-
-
     this.router.navigate(['payment', id]);
   }
 

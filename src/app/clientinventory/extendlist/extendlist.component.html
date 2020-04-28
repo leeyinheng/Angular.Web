@@ -1,0 +1,84 @@
+<div>
+  <span> <img src='../assets/Photos/tealogo.jpg' width=20% height=20% /></span>
+  <p></p>
+</div>
+
+<h3>產品資訊編輯</h3>
+
+<div class="row">
+  <div class="col-sm-4">
+    <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
+  </div>
+  <div class="col-sm-4">
+
+</div>
+
+<p></p>
+<div>
+  <label>搜尋:</label>
+  <input type="string" placeholder="產品編號" class="form form-control"
+  [(ngModel)]='Search'
+  style="width: 8em;"
+  />
+</div>
+<p></p>
+<table class="table table-bordered table-striped table-hover">
+  <tr>
+      <th>
+            產品編號
+            <button mat-raised-button color="primary" class="btn-space" (click)="AddNew()">
+              <mat-icon>add</mat-icon> 新增
+            </button>
+
+      </th>
+      <th>
+        產品大類
+      </th>
+      <th>
+        產品條碼
+      </th>
+      <th>
+        倉架位置
+      </th>
+        <th>
+
+      </th>
+  </tr>
+
+
+      <tbody>
+          <tr *ngFor = 'let item of List | paginate: { itemsPerPage: 20, currentPage: p} ; let x = index'  >
+              <td>
+                  {{item.ProductId}}
+              </td>
+              <td>{{item.GroupId}}
+
+              </td>
+              <td>{{ item.BarCode}}</td>
+              <td>{{ item.LocationId}}</td>
+              <td>
+                <button mat-raised-button color="primary" class="btn-space" (click)="Edit(item)">
+                  <mat-icon>edit</mat-icon> 編輯
+                </button>
+                <button mat-raised-button color="warn" class="btn-space" (click)="delete(x)">
+                  <mat-icon>delete</mat-icon> 刪除
+                </button>
+              </td>
+          </tr>
+      </tbody>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</table>
+
+<div>
+      <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
+      <p></p>
+</div>
+
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>

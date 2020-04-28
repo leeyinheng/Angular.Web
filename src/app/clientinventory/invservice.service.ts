@@ -231,6 +231,29 @@ export class InvserviceService {
 
   }
 
+  public deleteExtendEntity(id: string) {
+
+    const url = this.site + this.getExtendListUrl + id;
+
+    return this.http.delete(url);
+
+  }
+
+  public addExtendEntity(entity: InventoryExtend) {
+
+    const url = this.site + this.getExtendListUrl;
+
+    return this.http.post(url, entity);
+
+  }
+
+  public editExtendEntity(entity: InventoryExtend) {
+
+    const url = this.site + this.getExtendListUrl + entity.ProductId;
+
+    return this.http.put(url, entity);
+  }
+
   public getClientFullInvList() {
 
     const url = this.site + this.getFullInventoryListUrl;

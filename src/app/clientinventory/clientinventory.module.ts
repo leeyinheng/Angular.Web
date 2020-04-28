@@ -24,11 +24,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaymentlistComponent } from './paymentlist/paymentlist.component';
 import { ɵangular_packages_platform_browser_dynamic_testing_testing_b } from '@angular/platform-browser-dynamic/testing';
 import {SearchComponent} from './search/search.component';
+import { ExtendlistComponent } from './extendlist/extendlist.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ExtenddialogComponent } from './extenddialog/extenddialog.component';
 
 
 @NgModule({
   declarations: [InvuploadComponent, InvshowComponent, InvlistComponent, LoginComponent,
-     PortalComponent, AdimageComponent, PaymentformComponent, PaymentlistComponent, SearchComponent],
+     PortalComponent, AdimageComponent, PaymentformComponent, PaymentlistComponent, SearchComponent,
+      ExtendlistComponent, ExtenddialogComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -41,6 +45,7 @@ import {SearchComponent} from './search/search.component';
     NgbModule,
     MatSelectModule,
     BrowserAnimationsModule,
+    NgxPaginationModule,
     SharedModule.forRoot(),
     CarouselModule.forRoot(),
     SortableModule.forRoot(),
@@ -71,9 +76,15 @@ import {SearchComponent} from './search/search.component';
       },
       {
         path: 'searchtea' , component: SearchComponent
+      },
+      {
+        path: 'extendlist', component: ExtendlistComponent
       }
     ])
   ],
-  providers: []
+  providers: [],
+  entryComponents: [
+    ExtenddialogComponent
+  ]
 })
 export class ClientinventoryModule { }

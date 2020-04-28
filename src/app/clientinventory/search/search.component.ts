@@ -138,7 +138,7 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
 
       this.templist2 = this.orginiallist.filter( x => {
         if ( x.Inventories.filter( i => {
-          if ((i.GroupId.includes(filter) || i.LocationId.includes(filter)) && i.NotReturn > 0) {
+          if ((i.GroupId === filter) && i.NotReturn > 0) {
             return i;
           }
         }).length > 0) { return x; }
@@ -148,8 +148,8 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
           const info = new ClientInventoryFull();
           info.ClientId = x.ClientId;
           info.ClientName = x.ClientName;
-          info.Inventories = x.Inventories.filter( i => (i.ProductId.includes(filter)
-          || i.ProductName.includes(filter)) && i.NotReturn > 0);
+          info.Inventories = x.Inventories.filter( i => (i.GroupId === filter
+          ) && i.NotReturn > 0);
           this.showtotal += info.Inventories.length;
           info.Inventories.forEach( s => {
               this.showtotalstock += s.NotReturn;
@@ -175,13 +175,22 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
   public GetList() {
     this.spinner.show();
 
-        this.service.getClientFullInvList().subscribe(vals => {
-          this.orginiallist = vals;
-          this.spinner.hide();
-        },
-        err => {
-          alert('Not Found or Error');
-          this.spinner.hide();
+        this.service.currentInventoryFullList.subscribe( val => {
+
+          if ( isNullOrUndefined(val)) {
+            this.service.getClientFullInvList().subscribe(vals => {
+              this.orginiallist = vals;
+              this.service.changeInventoryFullList(vals);
+              this.spinner.hide();
+            },
+            err => {
+              alert('Not Found or Error');
+              this.spinner.hide();
+            });
+          } else {
+            this.orginiallist = val;
+            this.spinner.hide();
+          }
         });
 
     }
