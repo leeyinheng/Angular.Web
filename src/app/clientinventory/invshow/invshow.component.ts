@@ -115,7 +115,12 @@ export class InvshowComponent implements OnInit {
       }
     }
 
-    this.GetEntity(ID);
+    if (this.IsManager) {
+      this.GetEntity(ID);
+    } else {
+      this.GetUserEntity(ID);
+    }
+
 
     this.GetPaymentInfo(ID);
 
@@ -133,7 +138,7 @@ export class InvshowComponent implements OnInit {
 
     this.service.currentInventoryFullList.subscribe(val => {
       if (val.length === 0) {
-        this.service.getFullEntityById(ID).subscribe(value => {
+        this.service.getFullEntityById(ID, 'admin').subscribe(value => {
           this.Entity = value;
           this.FilterForUser();
           this.spinner.hide();
@@ -150,6 +155,20 @@ export class InvshowComponent implements OnInit {
     });
   }
 
+  public GetUserEntity(Id: string) {
+
+    this.spinner.show();
+
+    this.service.getFullEntityById(Id, 'user').subscribe(val => {
+      this.Entity = val;
+      this.FilterForUser();
+      this.spinner.hide();
+    },
+    err => {
+      alert('Get User Client Error');
+      this.spinner.hide();
+    });
+  }
 
   public GetPaymentInfo(ID: string) {
 

@@ -19,9 +19,9 @@ import { UserInfo, PaymentInfo, PaymentHistory } from '../core/shared/model/user
 
 export class InvserviceService {
 
-  private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+  // private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
-  // private site = 'https://localhost:44347/';
+    private site = 'https://localhost:44347/';
 
   private url = 'api/articleapi/';
 
@@ -208,8 +208,8 @@ export class InvserviceService {
 
   }
 
-  public getFullEntityById(id: string) {
-    const url = this.site + this.getFullInventoryEntityUrl + id;
+  public getFullEntityById(id: string, role: string) {
+    const url = this.site + this.getFullInventoryEntityUrl + id + '?role=' + role;
 
     return this.http.get<ClientInventoryFull>(url);
   }
@@ -257,6 +257,8 @@ export class InvserviceService {
   public getClientFullInvList() {
 
     const url = this.site + this.getFullInventoryListUrl;
+
+    // const url = 'https://leecloud.azure-api.net/api/ClientInventoryApi/';
 
     return this.http.get<ClientInventoryFull[]>(url);
 
