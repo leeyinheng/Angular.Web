@@ -19,9 +19,9 @@ import { UserInfo, PaymentInfo, PaymentHistory } from '../core/shared/model/user
 
 export class InvserviceService {
 
-  // private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+   private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
-    private site = 'https://localhost:44347/';
+  //  private site = 'https://localhost:44347/';
 
   private url = 'api/articleapi/';
 
