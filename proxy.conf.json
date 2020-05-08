@@ -1,0 +1,7 @@
+{
+  "/api" : {
+    "target": "https://leecloud.azure-api.net",
+    "secure": true,
+    "changeOrigin": true
+  }
+}

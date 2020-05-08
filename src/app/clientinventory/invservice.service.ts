@@ -63,6 +63,8 @@ export class InvserviceService {
 
   private paymentUpdateUsersUrl = 'api/PaymentApi/UpdateUsers/888';
 
+  private APIM_Key = 'a63b428d457343ba80c4598119dfedc1';
+
 
 
 
@@ -209,7 +211,9 @@ export class InvserviceService {
   }
 
   public getFullEntityById(id: string, role: string) {
-    const url = this.site + this.getFullInventoryEntityUrl + id + '?role=' + role;
+   // const url = this.site + this.getFullInventoryEntityUrl + id + '?role=' + role;
+
+   const url = this.getFullInventoryEntityUrl + id + '?role=' + role; // using proxy APIM for Caching
 
     return this.http.get<ClientInventoryFull>(url);
   }
@@ -256,11 +260,15 @@ export class InvserviceService {
 
   public getClientFullInvList() {
 
-    const url = this.site + this.getFullInventoryListUrl;
+    // const url = this.site + this.getFullInventoryListUrl;
 
-    // const url = 'https://leecloud.azure-api.net/api/ClientInventoryApi/';
+    const url = this.getFullInventoryListUrl;
 
-    return this.http.get<ClientInventoryFull[]>(url);
+    let headers = new HttpHeaders();
+
+    headers = headers.set('Ocp-Apim-Subscription-Key', this.APIM_Key);
+
+    return this.http.get<ClientInventoryFull[]>(url, {headers});
 
   }
 
