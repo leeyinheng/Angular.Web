@@ -30,7 +30,6 @@ export class Q1Component implements OnInit {
 
   private addSurvey() {
     this.service.addSurvey(this.Entity);
-
     this.router.navigate(['/q2']);
   }
 

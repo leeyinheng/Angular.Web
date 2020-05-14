@@ -60,7 +60,6 @@ export class TeagradeserviceService {
   public refreshSurvy() {
     sessionStorage.clear();
     this.suveryList = [];
-    alert(this.suveryList.length);
   }
 
   public showSurvey() {
