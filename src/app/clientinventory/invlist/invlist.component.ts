@@ -3,11 +3,13 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import {InvserviceService} from '../invservice.service';
-import {Inventory, ClientInventory, ClientInventoryFull} from '../model/projectinventory';
+import {Inventory, ClientInventory, ClientInventoryFull, ClinetInfo} from '../model/projectinventory';
 import {CryptserviceService} from './../../core/shared/service/cryptservice.service';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {Router} from '@angular/router';
 import { ClipboardService} from 'ngx-clipboard';
+import {  MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {ClientInfodialogComponent} from './../clientinfodialog/clientinfodialog.component';
 
 
 @Component({
@@ -36,7 +38,8 @@ export class InvlistComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
     private service: InvserviceService, public cryptservice: CryptserviceService,
-    public authservice: AuthserviceService , private router: Router, private clipboardservice: ClipboardService) { }
+    public authservice: AuthserviceService , private router: Router, private clipboardservice: ClipboardService
+    , private dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -109,6 +112,30 @@ export class InvlistComponent implements OnInit {
     this.resetMessages();
     item.Message = '(已複製)';
   }
+
+    public  EditClientInfo(value: ClientInventory) {
+
+    const clientinfo = new ClinetInfo();
+    clientinfo.ClientId = value.ClientId;
+    clientinfo.ClientName = value.ClientName;
+    clientinfo.Address = value.Address;
+    clientinfo.Phone = value.Phone;
+
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.data = {
+      entity: clientinfo,
+      orgin: value,
+      isnew: false
+    };
+
+     this.dialog.open(ClientInfodialogComponent, dialogConfig);
+  }
+
 
   private resetMessages() {
     this.list.forEach (item => item.Message = '');

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { ProjectImages, ClientInventory, Inventory, InventoryExtend , ClientInventoryFull } from './model/projectinventory';
+import { ProjectImages, ClientInventory, Inventory, InventoryExtend , ClientInventoryFull, ClinetInfo } from './model/projectinventory';
 
 import { isNullOrUndefined } from 'util';
 
@@ -21,7 +21,9 @@ export class InvserviceService {
 
    private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
-  //  private site = 'https://localhost:44347/';
+  // private site = 'https://localhost:44347/';
+
+  // private apim_site = 'https://leecloud.azure-api.net/';
 
   private url = 'api/articleapi/';
 
@@ -62,6 +64,8 @@ export class InvserviceService {
   private paymentGetListUrl = 'api/PaymentApi/';
 
   private paymentUpdateUsersUrl = 'api/PaymentApi/UpdateUsers/888';
+
+  private getClientInfoUrl = 'api/ClientInfoApi/';
 
   private APIM_Key = 'a63b428d457343ba80c4598119dfedc1';
 
@@ -211,11 +215,16 @@ export class InvserviceService {
   }
 
   public getFullEntityById(id: string, role: string) {
-   // const url = this.site + this.getFullInventoryEntityUrl + id + '?role=' + role;
+    const url = this.site + this.getFullInventoryEntityUrl + id + '?role=' + role;
 
-   const url = this.getFullInventoryEntityUrl + id + '?role=' + role; // using proxy APIM for Caching
+   // const url =  this.apim_site + this.getFullInventoryEntityUrl + id + '?role=' + role; // using proxy APIM for Caching
 
-    return this.http.get<ClientInventoryFull>(url);
+   let headers = new HttpHeaders();
+
+    headers = headers.set('Ocp-Apim-Subscription-Key', this.APIM_Key);
+
+
+    return this.http.get<ClientInventoryFull>(url, {headers});
   }
 
 
@@ -232,6 +241,28 @@ export class InvserviceService {
     const url = this.site + this.getExtendListUrl;
 
     return this.http.get<InventoryExtend[]>(url);
+
+  }
+
+  public getClientInfo(id: string) {
+
+    const url = this.site + this.getClientInfoUrl + id;
+
+    return this.http.get(url);
+  }
+
+  public addClientInfo(entity: ClinetInfo) {
+
+    const url = this.site + this.getClientInfoUrl;
+
+    return this.http.post(url, entity);
+  }
+
+  public editClientInfo(entity: ClinetInfo) {
+
+    const url = this.site + this.getClientInfoUrl ;
+
+    return this.http.put(url, entity);
 
   }
 
@@ -253,16 +284,16 @@ export class InvserviceService {
 
   public editExtendEntity(entity: InventoryExtend) {
 
-    const url = this.site + this.getExtendListUrl + entity.ProductId;
+    const url = this.site + this.getExtendListUrl;
 
     return this.http.put(url, entity);
   }
 
   public getClientFullInvList() {
 
-    // const url = this.site + this.getFullInventoryListUrl;
+     const url = this.site + this.getFullInventoryListUrl;
 
-    const url = this.getFullInventoryListUrl;
+    // const url = this.apim_site + this.getFullInventoryListUrl;
 
     let headers = new HttpHeaders();
 

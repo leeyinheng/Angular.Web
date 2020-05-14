@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule, BsModalService } from 'ngx-bootstrap';
 import { SharedModule } from './core/shared/shared.module';
+import { TeagradeModule} from './teagrade/teagrade.module';
 
 // Services
 import { ListEmailService } from './Services/list-email.service';
@@ -60,6 +61,7 @@ import { MaterialModule } from './material-module';
     ArticleModule,
     ClientinventoryModule,
     HealthModule,
+    TeagradeModule,
     IgxCarouselModule
   ],
   declarations: [

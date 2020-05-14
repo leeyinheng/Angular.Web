@@ -1,0 +1,50 @@
+<div class="background">
+
+<div class="container">
+
+       <div class="question">您的茶評量分數: {{TotalScore}}</div>
+      <p></p>
+      <br>
+
+  <table id = "customers">
+    <tr>
+        <th>
+            評量問題
+        </th>
+        <th>
+            評量答案
+        </th>
+        <th>
+            分數
+        </th>
+
+    </tr>
+
+
+        <tbody>
+            <tr *ngFor = 'let item of List' >
+                <td>
+                    {{item.Question}}
+
+
+                </td>
+                <td>{{ item.Answer}}
+
+                </td>
+                <td>
+                  {{ item.Score}}
+                </td>
+            </tr>
+        </tbody>
+
+</table>
+
+ </div>
+
+</div>
+
+
+
+
+
+

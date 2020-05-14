@@ -16,6 +16,10 @@ abstract class ClientInventorybase {
 
 }
 
+export class ClinetInfo extends ClientInventorybase {
+  Comment: string;
+}
+
 export class ClientInventory extends ClientInventorybase {
   Inventories: Inventory[];
 }

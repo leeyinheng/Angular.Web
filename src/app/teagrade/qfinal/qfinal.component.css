@@ -1,0 +1,92 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 70px 0;
+
+}
+
+.question {
+  font-size: 40px;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 26pt;
+  background: rgb(0, 0, 0);/* Fallback color */
+  background: rgba(0, 0, 0, 0.5);/* Black background with 0.5 opacity */
+  color: #a2a2be;
+  width: 100%;
+  padding: 20px;
+}
+
+.answer{
+  font-size: 36px;
+  line-height: 26pt;
+  background: rgb(0, 0, 0);/* Fallback color */
+  background: rgba(0, 0, 0, 0.5);/* Black background with 0.5 opacity */
+  color: #fdfafa;
+  width: 100%;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.scorecontainer {
+
+  text-align: center;
+  padding: 70px 0;
+
+}
+
+.score{
+  font-size: 16px;
+  line-height: 26pt;
+  background: rgb(191, 231, 183);/* Fallback color */
+  background: rgba(213, 247, 159, 0.5);/* Black background with 0.5 opacity */
+  color: #221c1c;
+  width: 100%;
+  padding: 20px;
+
+}
+
+.background {
+
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  background-image: url('./../../../assets/Photos/b1.jpg');
+  opacity: 0.5;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  background-color: #f2f2f2;
+}
+
+/* #customers tr:nth-child(even){background-color: #f2f2f2;} */
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
