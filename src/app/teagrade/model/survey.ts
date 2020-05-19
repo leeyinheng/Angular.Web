@@ -5,3 +5,12 @@ export class Survey {
   Answer: string;
   Score: number;
 }
+
+export class WebSurvey {
+   Age: number;
+   Name: string;
+   Email: string;
+   Phone: string;
+   Note: string;
+   Survey: Survey[];
+}

@@ -1,0 +1,39 @@
+<div class="background">
+
+  <div class="container">
+
+
+      <div class="question">請留下您的基本資料以獲取關於普洱茶的最新資訊</div>
+      <p></p>
+      <br>
+      <div class="answer" >
+        <mat-form-field>
+          <mat-label>年齡</mat-label>
+          <select matNativeControl [(ngModel)]="Entity.Age">
+            <option value="15-25歲">15-25歲</option>
+            <option value="26-35歲">26-35歲</option>
+            <option value="35-45歲">35-45歲</option>
+            <option value="45-55歲">45-55歲</option>
+            <option value="55-65歲">55-65歲</option>
+            <option value="65歲以上">65歲以上</option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <p></p>
+        <br>
+
+      <div class="answer" mat-button	 color="primary" (click)="click2()"><i class="fas fa-leaf"></i>  {{A2}}</div>
+
+      <p></p>
+      <br>
+
+      <div class="answer" mat-button	 color="primary"	(click)="click3()"> <i class="fas fa-leaf"></i>  {{A3}}</div>
+
+
+
+  </div>
+
+</div>
+
+

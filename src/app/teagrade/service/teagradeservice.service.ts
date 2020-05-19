@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Survey} from '../model/survey';
+import { Survey, WebSurvey} from '../model/survey';
 import { isNullOrUndefined } from 'util';
 import {Router} from '@angular/router';
 
@@ -14,7 +14,7 @@ export class TeagradeserviceService {
 
   //  private site = 'https://localhost:44347/';
 
-   private url = 'api/linepairapi/';
+   private url = 'api/websurveyapi/';
 
    suveryList: Survey[] = [];
 
@@ -69,6 +69,14 @@ export class TeagradeserviceService {
       popstring += x.Answer + '\n';
     });
     alert(popstring);
+  }
+
+  public save(entity: WebSurvey) {
+
+    const url = this.site + this.url;
+
+    return this.http.post(url, entity);
+
   }
 
 }

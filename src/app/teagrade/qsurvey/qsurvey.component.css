@@ -1,0 +1,50 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 70px 0;
+
+}
+
+.question {
+  font-size: 40px;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 26pt;
+  background: rgb(0, 0, 0);/* Fallback color */
+  background: rgba(0, 0, 0, 0.5);/* Black background with 0.5 opacity */
+  color: #a2a2be;
+  width: 100%;
+  padding: 20px;
+}
+
+.answer{
+  font-size: 36px;
+  line-height: 26pt;
+  background: rgb(0, 0, 0);/* Fallback color */
+  background: rgba(0, 0, 0, 0.5);/* Black background with 0.5 opacity */
+  color: #fdfafa;
+  width: 100%;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.background {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  height: 100%;
+  width: 100%;
+  background-image: url('./../../../assets/Photos/b1.jpg');
+  opacity: 0.5;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
