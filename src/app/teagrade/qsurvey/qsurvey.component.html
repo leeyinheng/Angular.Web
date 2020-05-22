@@ -23,17 +23,59 @@
       <p></p>
         <br>
 
-      <div class="answer" mat-button	 color="primary" (click)="click2()"><i class="fas fa-leaf"></i>  {{A2}}</div>
+        <div class="answer" >
+          <mat-form-field style="width: 60%;">
+            <mat-label>稱呼</mat-label>
+            <input matInput type="string"
+            [(ngModel)]='Entity.Name'
+            placeholder = '李先生 陳太太..'
+            />
+          </mat-form-field>
+
+        </div>
+      <p></p>
+      <br>
+
+      <div class="answer" >
+        <mat-form-field  style="width: 60%;">
+          <mat-label>電話</mat-label>
+          <input matInput type="string"
+          [(ngModel)]='Entity.Phone'
+          />
+        </mat-form-field>
+
+      </div>
 
       <p></p>
       <br>
 
-      <div class="answer" mat-button	 color="primary"	(click)="click3()"> <i class="fas fa-leaf"></i>  {{A3}}</div>
+      <div class="answer" >
+        <mat-form-field style="width: 60%;">
+          <mat-label>Email</mat-label>
+          <input matInput type="string"
+          [(ngModel)]='Entity.Email'
+          />
+        </mat-form-field>
 
+      </div>
+      <p></p>
+      <br>
+      <div class="answer" >
+        <mat-form-field style="width: 70%;">
+          <mat-label>意見</mat-label>
+          <textarea matInput [(ngModel)]="Entity.Note" placeholder="請多給我們一點意見吧"></textarea>
+        </mat-form-field>
+      </div>
+      <p></p>
+      <br>
 
+      <button class="question"  (click)="SaveEntity()"> 上傳</button>
 
   </div>
 
 </div>
 
 
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>

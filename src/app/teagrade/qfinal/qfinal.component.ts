@@ -27,6 +27,8 @@ export class QfinalComponent implements OnInit {
   }
 
 
-
+  public click1() {
+    this.router.navigate(['/qsurvey']);
+  }
 
 }

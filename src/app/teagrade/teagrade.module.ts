@@ -12,17 +12,23 @@ import {Q6Component} from './q6/q6.component';
 import {Q7Component} from './q7/q7.component';
 import {Q8Component} from './q8/q8.component';
 import {QfinalComponent} from './qfinal/qfinal.component';
+import {QsurveyComponent} from './qsurvey/qsurvey.component';
 import { CustomMaterialModule} from './../core/material.module';
-
+import { SharedModule } from './../../app/core/shared/shared.module';
+import { FormsModule } from '@angular/forms';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 @NgModule({
   declarations: [Q1Component, Q2Component, Q3Component, Q4Component,
-     Q5Component, Q6Component, Q7Component, Q8Component, QfinalComponent],
+     Q5Component, Q6Component, Q7Component, Q8Component, QfinalComponent, QsurveyComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
     CustomMaterialModule,
+    FormsModule,
     NgbModule,
+    SharedModule,
+    NgxSpinnerModule,
     RouterModule.forChild([
       {
         path: 'teagrade', component: Q1Component
@@ -53,6 +59,9 @@ import { CustomMaterialModule} from './../core/material.module';
       },
       {
         path: 'qfinal', component: QfinalComponent
+      },
+      {
+        path: 'qsurvey', component: QsurveyComponent
       }
     ])
   ]

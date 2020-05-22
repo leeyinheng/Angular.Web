@@ -7,7 +7,7 @@ export class Survey {
 }
 
 export class WebSurvey {
-   Age: number;
+   Age: string;
    Name: string;
    Email: string;
    Phone: string;

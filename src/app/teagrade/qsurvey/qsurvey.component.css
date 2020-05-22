@@ -15,10 +15,10 @@ body, html {
   font-size: 40px;
   font-weight: bold;
   font-style: normal;
-  line-height: 26pt;
-  background: rgb(0, 0, 0);/* Fallback color */
-  background: rgba(0, 0, 0, 0.5);/* Black background with 0.5 opacity */
-  color: #a2a2be;
+  line-height: 30pt;
+  background: rgb(212, 116, 6);/* Fallback color */
+  background: rgb(235, 107, 3);/* Black background with 0.5 opacity */
+  color:white;
   width: 100%;
   padding: 20px;
 }
@@ -26,12 +26,11 @@ body, html {
 .answer{
   font-size: 36px;
   line-height: 26pt;
-  background: rgb(0, 0, 0);/* Fallback color */
-  background: rgba(0, 0, 0, 0.5);/* Black background with 0.5 opacity */
-  color: #fdfafa;
+  background: rgb(241, 240, 238);/* Fallback color */
+  background: rgba(248, 247, 245, 0.9);/* Black background with 0.5 opacity */
+  color: black;
   width: 100%;
   padding: 20px;
-  cursor: pointer;
 }
 
 .background {
