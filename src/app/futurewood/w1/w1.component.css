@@ -1,0 +1,63 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 70px 0;
+  position: relative
+
+}
+
+.question {
+  font-size: 40px;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 30pt;
+  background: rgb(212, 116, 6);/* Fallback color */
+  background: rgb(235, 107, 3);/* Black background with 0.5 opacity */
+  color:white;
+  width: 100%;
+  padding: 20px;
+}
+
+
+.answer{
+  font-size: 36px;
+  line-height: 30pt;
+  background: rgb(0, 0, 0);/* Fallback color */
+  background: rgba(0, 0, 0, 0.5);/* Black background with 0.5 opacity */
+  color: #fdfafa;
+  width: 100%;
+  padding: 20px;
+  cursor: pointer;
+ }
+
+ .direction{
+  font-size: 30px;
+  line-height: 30pt;
+  background: rgb(0, 0, 0);/* Fallback color */
+  background: rgba(0, 0, 0, 0.5);/* Black background with 0.5 opacity */
+  color: orange;
+  width: 100%;
+  padding: 20px;
+  cursor: pointer;
+ }
+
+.background {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  height: 100%;
+  width: 100%;
+  background-image: url('./../../../assets/Photos/board1.jpg');
+  opacity: 0.5;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

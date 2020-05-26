@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalModule, BsModalService } from 'ngx-bootstrap';
 import { SharedModule } from './core/shared/shared.module';
 import { TeagradeModule} from './teagrade/teagrade.module';
+import { FuturewoodModule} from './futurewood/futurewood.module';
 
 // Services
 import { ListEmailService } from './Services/list-email.service';
@@ -62,6 +63,7 @@ import { MaterialModule } from './material-module';
     ClientinventoryModule,
     HealthModule,
     TeagradeModule,
+    FuturewoodModule,
     IgxCarouselModule
   ],
   declarations: [

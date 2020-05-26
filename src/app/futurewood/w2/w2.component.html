@@ -1,0 +1,37 @@
+<div class="background">
+
+  <div class="container"   [@simpleFadeAnimation]="'in'">
+
+
+      <div class="question">{{Title}}</div>
+      <p></p>
+      <br>
+      <div class="answer">
+        <i class="fab fa-envira"></i>
+        {{Content}}
+        <p></p>
+        <br>
+        <img src="./../../../assets/Photos/recycle.png"/>
+      </div>
+
+      <p></p>
+        <br>
+
+        <div  class="row">
+          <div class="col-md-4">
+            <button class="direction" (click)="click2()"><i class="far fa-hand-point-left"></i> 上一頁 </button>
+          </div>
+          <div class="col-md-8">
+            <button class="direction" (click)="click1()"><i class="far fa-hand-point-right"></i> 請到下一頁 </button>
+          </div>
+        </div>
+
+
+
+
+  </div>
+
+</div>
+
+
+
