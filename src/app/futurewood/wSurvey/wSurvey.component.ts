@@ -76,7 +76,7 @@ export class WSurveyComponent implements OnInit {
 
   private sendEmail() {
 
-    const fromemail = '未來木服務 <NoReply@gmail.com>';
+    const fromemail = '未來木服務 <bio.china@msa.hinet.net>';
 
     let emailcontent = '<div> <ul> <li> Name: ' + this.Entity.Name + '</li>';
 

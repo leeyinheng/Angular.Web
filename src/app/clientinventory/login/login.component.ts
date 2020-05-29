@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, public service: AuthserviceService, private spinner: NgxSpinnerService, private title: Title) { }
 
   ngOnInit() {
-    this.title.setTitle('普洱茶交流協會');
+    this.title.setTitle('普洱茶雲端管理系統');
   }
 
   login(): void {

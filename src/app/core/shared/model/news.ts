@@ -1,23 +1,16 @@
 
 export class News {
   status: string;
-  totalResults: number;
-  articles: Article[];
+  page: number;
+  news: Article[];
 }
 
 
 export class Article {
-  source: Source;
+  id: string;
   author: string;
   title: string;
   description: string;
-  urlToImage: string;
+  image: string;
   url: string;
 }
-
-
-export class Source {
-  id: string;
-  name: string;
-}
-

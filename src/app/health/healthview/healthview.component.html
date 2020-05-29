@@ -98,7 +98,7 @@
               <tr *ngFor="let meal of item.Activities">
                 <td> {{meal.DateTime}} - {{meal.Name}}
                   <a [href]= "meal.ImageUrl" target="_blank">
-                  <img [src]="meal.ImageLink" style="width: 100%;" />
+                  <img [src]="meal.ImageLink" style="width: 100%;" alt="newslink"/>
                 </a>
                  </td>
               </tr>

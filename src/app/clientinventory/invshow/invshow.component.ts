@@ -81,7 +81,7 @@ export class InvshowComponent implements OnInit {
 
   ngOnInit() {
 
-    this.title.setTitle('普洱茶交流協會');
+    this.title.setTitle('普洱茶雲端管理系統');
 
     const EncryptID: string = this.route.snapshot.queryParamMap.get('key');
 

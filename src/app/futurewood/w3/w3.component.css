@@ -29,7 +29,7 @@ body, html {
   font-size: 36px;
   line-height: 30pt;
   background: rgb(0, 0, 0);/* Fallback color */
-  background: rgba(0, 0, 0, 0.5);/* Black background with 0.5 opacity */
+  background: rgba(0, 0, 0, 0.8);/* Black background with 0.5 opacity */
   color: #fdfafa;
   width: 100%;
   padding: 20px;

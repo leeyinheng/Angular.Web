@@ -47,10 +47,10 @@ export class HealthviewmodalComponent implements OnInit {
     this.newsservice.getnews().subscribe( val => {
 
       const newImage = new Meal();
-      newImage.Name = val.articles[0].title;
-      newImage.ImageLink = val.articles[0].urlToImage;
+      newImage.Name = val.news[0].title;
+      newImage.ImageLink = val.news[0].image;
       newImage.DateTime = new Date().toLocaleString();
-      newImage.ImageUrl = val.articles[0].url;
+      newImage.ImageUrl = val.news[0].url;
       this.History.Activities.unshift(newImage);
 
     });

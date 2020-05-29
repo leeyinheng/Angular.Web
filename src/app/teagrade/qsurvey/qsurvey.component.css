@@ -24,7 +24,7 @@ body, html {
 }
 
 .answer{
-  font-size: 36px;
+  font-size: 30px;
   line-height: 26pt;
   background: rgb(241, 240, 238);/* Fallback color */
   background: rgba(248, 247, 245, 0.9);/* Black background with 0.5 opacity */
@@ -42,7 +42,7 @@ body, html {
   height: 100%;
   width: 100%;
   background-image: url('./../../../assets/Photos/b1.jpg');
-  opacity: 0.5;
+  opacity: 0.7;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

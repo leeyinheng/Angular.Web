@@ -159,7 +159,10 @@
                 <table>
                   <tr>
                     <td>
-                      <img [src]="meal.ImageLink" />
+
+                      <a [href]= "meal.ImageUrl" target="_blank">
+                        <img [src]="meal.ImageLink" style="width: 100%;" alt="newslink"/>
+                      </a>
                     </td>
                   </tr>
                   <tr>
