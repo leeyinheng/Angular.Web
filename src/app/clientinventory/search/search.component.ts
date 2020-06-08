@@ -3,10 +3,12 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import {InvserviceService} from '../invservice.service';
-import {  ClientInventoryFull} from '../model/projectinventory';
+import {  ClientInventoryFull, InventoryFull, InventoryTrade} from '../model/projectinventory';
 import {CryptserviceService} from './../../core/shared/service/cryptservice.service';
 import {AuthserviceService} from './../../core/shared/service/authservice.service';
 import {Router} from '@angular/router';
+import {  MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {TradedialogComponent} from './../tradedialog/tradedialog.component';
 
 @Component({
   selector: 'app-search',
@@ -61,10 +63,12 @@ orginiallist: ClientInventoryFull[];
 
 templist2: ClientInventoryFull[];
 
+tradelist: InventoryTrade[] = [];
+
 
 constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
   private service: InvserviceService, public cryptservice: CryptserviceService,
-  public authservice: AuthserviceService , private router: Router) { }
+  public authservice: AuthserviceService , private router: Router, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.authservice.checktoken().subscribe( val => {
@@ -204,5 +208,56 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
       window.open('#/clientinv/888?key=' + url  , '_blank');
     }
 
+    public trade(info: InventoryFull, item: ClientInventoryFull) {
+
+      if (this.tradelist.findIndex(x => x.ProductId === info.ProductId) < 0) {
+        const newinfo = new InventoryTrade();
+        newinfo.ClientId = item.ClientId;
+        newinfo.ClientName = item.ClientName;
+        newinfo.ProductId = info.ProductId;
+        newinfo.ProductName = info.ProductName;
+        newinfo.LocationId = info.LocationId;
+        newinfo.NotReturn = info.NotReturn;
+        this.tradelist.push(newinfo);
+      } else {
+        const index = this.tradelist.findIndex(x => x.ProductId === info.ProductId);
+        if (index > -1) {
+          this.tradelist.splice(index, 1);
+        }
+      }
+
+
+
+    }
+
+    public OpenTradeDialog() {
+
+    if (this.tradelist.length > 0) {
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '70%';
+      dialogConfig.data = {
+      list: this.tradelist,
+      orgList: this.orginiallist
+      };
+
+      this.dialog.open(TradedialogComponent, dialogConfig);
+    }
+    }
+
+    filterForClientId(filterVal: string) {
+
+      if (filterVal === '-1') {
+
+      } else {
+
+      }
+    }
 
 }
+
+
+
+

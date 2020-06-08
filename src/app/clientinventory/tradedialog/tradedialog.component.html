@@ -1,0 +1,78 @@
+<div>
+  <label>移轉客戶:</label>
+  <select (change)="filterForClientId($event.target.value)" class="form-control">
+    <option value="-1">--選擇--</option>
+    <option *ngFor="let item of orgList; let i = index" value={{item.ClientId}}>
+      {{item.ClientId}} | {{item.ClientName}}
+    </option>
+  </select>
+  <mat-form-field style="width: 100%">
+    <mat-label>交易內容</mat-label>
+    <input matInput type="string"
+    [(ngModel)]='TradeInfo'
+    />
+  </mat-form-field>
+  <mat-form-field style="width: auto;">
+    <mat-label>交易金額</mat-label>
+    <input matInput type="string"
+    [(ngModel)]='TradeAmount'
+    />
+  </mat-form-field>
+  <P>
+    <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">確認交易</button>  | <button type="button" class="btn btn-info" (click)="Cancel()">取消</button>
+  </P>
+</div>
+<p></p>
+ <mat-dialog-content>
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th>
+        原藏家
+      </th>
+        <th>
+          產品編號
+        </th>
+        <th>
+          產品名稱
+        </th>
+        <th>
+          庫存
+        </th>
+
+        <th>
+          倉架位置
+        </th>
+    </tr>
+
+
+        <tbody>
+            <tr *ngFor = 'let item of List '  >
+               <td>
+                {{item.ClientName}}
+               </td>
+                <td>
+                    {{item.ProductId}}
+                </td>
+                <td>{{item.ProductName}}
+
+                </td>
+                <td>
+                  {{item.NotReturn}}
+                </td>
+
+                <td>{{ item.LocationId}}</td>
+            </tr>
+        </tbody>
+  </table>
+  <div>
+
+</div>
+
+ </mat-dialog-content>
+
+ <div mat-dialog-actions>
+
+</div>
+
+
+

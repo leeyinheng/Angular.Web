@@ -28,13 +28,14 @@ import { ExtendlistComponent } from './extendlist/extendlist.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ExtenddialogComponent } from './extenddialog/extenddialog.component';
 import { ClientInfodialogComponent } from './clientinfodialog/clientinfodialog.component';
+import { TradedialogComponent } from './tradedialog/tradedialog.component';
 
 
 
 @NgModule({
   declarations: [InvuploadComponent, InvshowComponent, InvlistComponent, LoginComponent,
      PortalComponent, AdimageComponent, PaymentformComponent, PaymentlistComponent, SearchComponent,
-      ExtendlistComponent, ExtenddialogComponent, ClientInfodialogComponent],
+      ExtendlistComponent, ExtenddialogComponent, ClientInfodialogComponent, TradedialogComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -87,7 +88,8 @@ import { ClientInfodialogComponent } from './clientinfodialog/clientinfodialog.c
   providers: [],
   entryComponents: [
     ExtenddialogComponent,
-    ClientInfodialogComponent
+    ClientInfodialogComponent,
+    TradedialogComponent
   ]
 })
 export class ClientinventoryModule { }

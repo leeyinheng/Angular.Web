@@ -1,5 +1,5 @@
 abstract class ClientInventorybase {
-  ClientId: string;
+    ClientId: string;
     ClientName: string;
     Address: string;
     Phone: string;
@@ -41,6 +41,11 @@ export class InventoryFull extends Inventory {
   GroupId: string; // 產品大類
   BarCode: string; // 條碼
   LocationId: string; // 倉架位置
+}
+
+export class InventoryTrade extends InventoryFull {
+  ClientId: string;
+  ClientName: string;
 }
 
 export class InventoryExtend {

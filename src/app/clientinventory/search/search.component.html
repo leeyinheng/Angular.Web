@@ -53,6 +53,9 @@
               <td>
                 <table>
                   <th>
+                    <button type="button" class="btn btn-sm btn-primary" (click) = OpenTradeDialog()>藏品交易移轉</button>
+                  </th>
+                  <th>
                     產品編號
                  </th>
                  <th>
@@ -80,6 +83,9 @@
                   倉架位置
                 </th>
                   <tr *ngFor = 'let info of item.Inventories'>
+                    <td>
+                      <input type="checkbox" class="example-margin" (change)="trade(info, item)"/>
+                    </td>
                    <td>
                       {{info.ProductId}}
                     </td>
