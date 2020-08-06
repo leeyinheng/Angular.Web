@@ -11,7 +11,6 @@ import { InvshowComponent } from './invshow/invshow.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { InvlistComponent } from './invlist/invlist.component';
 import { LoginComponent } from './login/login.component';
-import { CustomMaterialModule} from '../core/material.module';
 import { PortalComponent } from './portal/portal.component';
 import {SharedModule} from '../core/shared/shared.module';
 import {ClipboardModule} from 'ngx-clipboard';
@@ -29,13 +28,16 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ExtenddialogComponent } from './extenddialog/extenddialog.component';
 import { ClientInfodialogComponent } from './clientinfodialog/clientinfodialog.component';
 import { TradedialogComponent } from './tradedialog/tradedialog.component';
+import { ProductdialogComponent } from './productdialog/productdialog.component';
+import { MaterialModule } from './../material-module';
 
 
 
 @NgModule({
   declarations: [InvuploadComponent, InvshowComponent, InvlistComponent, LoginComponent,
      PortalComponent, AdimageComponent, PaymentformComponent, PaymentlistComponent, SearchComponent,
-      ExtendlistComponent, ExtenddialogComponent, ClientInfodialogComponent, TradedialogComponent],
+      ExtendlistComponent, ExtenddialogComponent, ClientInfodialogComponent, TradedialogComponent,
+      ProductdialogComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -43,10 +45,10 @@ import { TradedialogComponent } from './tradedialog/tradedialog.component';
     NgxSpinnerModule,
     FlexLayoutModule,
     FormsModule,
-    CustomMaterialModule,
     ClipboardModule,
     NgbModule,
     MatSelectModule,
+    MaterialModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
     SharedModule.forRoot(),
@@ -89,7 +91,8 @@ import { TradedialogComponent } from './tradedialog/tradedialog.component';
   entryComponents: [
     ExtenddialogComponent,
     ClientInfodialogComponent,
-    TradedialogComponent
+    TradedialogComponent,
+    ProductdialogComponent
   ]
 })
 export class ClientinventoryModule { }

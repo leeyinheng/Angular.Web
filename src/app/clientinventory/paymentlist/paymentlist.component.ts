@@ -45,6 +45,10 @@ export class PaymentlistComponent implements OnInit {
       this.FilterList(value);
   }
 
+  SelfFunctionMode = false;  // turn app into self input mode which does not require excel uploading data feed
+
+  selectedVal = '';
+
   constructor(private service: InvserviceService, private spinner: NgxSpinnerService,
     private route: ActivatedRoute, private router: Router, public authservice: AuthserviceService) { }
 
@@ -68,6 +72,18 @@ export class PaymentlistComponent implements OnInit {
       }
     } );
 
+    const value = sessionStorage.getItem('mode');
+
+    if (!isNullOrUndefined(value)) {
+
+      if (value === 'Self') {
+        this.SelfFunctionMode = true;
+      } else {
+        this.SelfFunctionMode = false;
+      }
+
+      this.selectedVal = value;
+    }
   }
 
 
@@ -83,6 +99,19 @@ export class PaymentlistComponent implements OnInit {
       alert('error');
       this.spinner.hide();
     });
+
+  }
+
+
+  onValChange(value) {
+
+    if (value === 'Self') {
+      this.SelfFunctionMode = true;
+    } else {
+      this.SelfFunctionMode = false;
+    }
+
+    sessionStorage.setItem('mode', value);
 
   }
 
@@ -108,6 +137,22 @@ export class PaymentlistComponent implements OnInit {
     this.spinner.show();
 
     this.service.updatePaymentUsers().subscribe(
+      val => {
+        alert('藏家名單更新完成 請重新更新頁面');
+        this.spinner.hide();
+      },
+      err => {
+        alert('發生錯誤');
+        this.spinner.hide();
+      }
+    );
+  }
+
+  public updateFullInvSubUsers() {
+
+    this.spinner.show();
+
+    this.service.updatePaymentUserFullInvSub().subscribe(
       val => {
         alert('藏家名單更新完成 請重新更新頁面');
         this.spinner.hide();

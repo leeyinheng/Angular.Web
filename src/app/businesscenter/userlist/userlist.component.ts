@@ -52,7 +52,7 @@ export class UserlistComponent implements OnInit {
     if (confirm('確定刪除 ID: ' + Id + '?')) {
 
       this.List.forEach( (item, index) => {
-        if (item.Id === Id) {
+        if (item._id === Id) {
           this.List.splice(index, 1);
         }
       });

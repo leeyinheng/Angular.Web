@@ -124,6 +124,7 @@
         <tr>
           <th>
             序號
+            <button *ngIf="SelfFunctionMode" type="button" class="btn btn-info" (click) = "AddProduct()">新增庫藏</button>
           </th>
           <th>
             產品編號
@@ -159,6 +160,8 @@
           <tr *ngFor='let item of Entity.Inventories; let x = index  '>
             <td>
               {{ x  + 1 }}
+              <button type="button" class="btn btn-sm btn-primary" (click) = "EditProduct(item)">編輯</button>
+              <button type="button" class="btn btn-sm btn-danger" (click) = "DeleteProduct(item)">刪除</button>
             </td>
             <td>
               {{item.ProductId}}

@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { BusinessCenterImage} from '../model/BusinessCenter';
 import {BcserviceService} from '../service/bcservice.service';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import {NgxSpinnerService} from 'ngx-spinner';
@@ -8,9 +7,8 @@ import { isNullOrUndefined } from 'util';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import {BcformmodalComponent} from '../bcformmodal/bcformmodal.component';
-import { BusinesshourmodalComponent} from '../businesshourmodal/businesshourmodal.component';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
-import { Vendor } from '../model/Inhub';
+import { Vendor, Vendor_poco } from '../model/Inhub';
 
 @Component({
   selector: 'app-bcform',
@@ -76,7 +74,7 @@ export class BcformComponent implements OnInit {
       this.bcservice.getEntityById(ID).subscribe(val => {
         this.Entity = val;
         this.spinner.hide();
-        if (isNullOrUndefined(this.Entity.Latitude) !== true) {
+        if (isNullOrUndefined(this.Entity.latitude) !== true) {
              this.addMarker();
         }
       },
@@ -87,7 +85,7 @@ export class BcformComponent implements OnInit {
       );
     }
 
-    if (isNullOrUndefined(this.Entity.Latitude) !== true) {
+    if (isNullOrUndefined(this.Entity.latitude) !== true) {
       this.addMarker();
     } else {
       navigator.geolocation.getCurrentPosition(position => {
@@ -110,14 +108,14 @@ export class BcformComponent implements OnInit {
       const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() ,
       now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
 
-      newEntity.Id = 'VendorTest' + '_' + utc_timestamp.toString();
+      newEntity._id = 'Vendor' + '_' + utc_timestamp.toString();
 
       this.Entity = newEntity;
   }
 
   public saveGPS() {
 
-    if (!isNullOrUndefined(this.Entity.Longitude) && !isNullOrUndefined(this.Entity.Longitude)) {
+    if (!isNullOrUndefined(this.Entity.latitude) && !isNullOrUndefined(this.Entity.longitude)) {
       this.spinner.show();
       this.bcservice.updateGPS(this.Entity).subscribe(
         res => {
@@ -141,16 +139,33 @@ export class BcformComponent implements OnInit {
 
  public  SaveEntity() {
 
-    if (isNullOrUndefined(this.Entity.Company) || this.Entity.Company === '') {
+    if (isNullOrUndefined(this.Entity.company) || this.Entity.company === '') {
        alert('請輸入名稱欄位');
        return;
      }
 
       this.spinner.show();
 
+      const EntityPoco = new Vendor_poco;
+
+      EntityPoco.Id = this.Entity._id;
+      EntityPoco.Company = this.Entity.company;
+      EntityPoco.Company_en = this.Entity.company_en;
+      EntityPoco.County_en = this.Entity.county_en;
+      EntityPoco.County = this.Entity.county;
+      EntityPoco.DefaultSeats = this.Entity.defaultSeats;
+      EntityPoco.District = this.Entity.district;
+      EntityPoco.District_en = this.Entity.district_en;
+      EntityPoco.Intro = this.Entity.intro;
+      EntityPoco.Intro_en = this.Entity.intro_en;
+      EntityPoco.Points = this.Entity.points;
+      EntityPoco.Street = this.Entity.street;
+      EntityPoco.Street_en = this.Entity.street_en;
+
+
       if (this.isAdd === true) {
 
-        this.bcservice.postEntity(this.Entity).subscribe(
+        this.bcservice.postEntity(EntityPoco).subscribe(
           res => {
              alert('新增完畢');
              this.spinner.hide();
@@ -164,7 +179,7 @@ export class BcformComponent implements OnInit {
 
       } else {
 
-        this.bcservice.updateEntity(this.Entity).subscribe(
+        this.bcservice.updateEntity(EntityPoco).subscribe(
           res => {
              alert('更新完畢');
              this.spinner.hide();
@@ -200,10 +215,10 @@ export class BcformComponent implements OnInit {
 
         this.spinner.show();
 
-        this.bcservice.postImage(this.Entity.Id, formData).subscribe(
+        this.bcservice.postImage(this.Entity._id, formData).subscribe(
           (val) => {
                this.spinner.hide();
-               this.Entity.ImageUrls.push(file.name);
+               this.Entity.imageUrls.push(file.name);
           },
           err => {
               alert('upload image error');
@@ -231,17 +246,17 @@ public fileLeave(event) {
 
 public RemoveImage(i: number) {
 
-  const imagename = this.Entity.ImageUrls[i];
+  const imagename = this.Entity.imageUrls[i];
 
   if (confirm('Are you sure you want to delete ' + imagename + ' ?')) {
 
-      this.bcservice.removeImage(this.Entity.Id, imagename).subscribe(val => {
+      this.bcservice.removeImage(this.Entity._id, imagename).subscribe(val => {
         alert('Image Delete Complete');
         i++;
 
-        const orginialItems = this.Entity.ImageUrls;
+        const orginialItems = this.Entity.imageUrls;
         const filterItems = orginialItems.slice(0, i - 1).concat(orginialItems.slice(i, orginialItems.length));
-        this.Entity.ImageUrls = filterItems;
+        this.Entity.imageUrls = filterItems;
       },
       err => {
         alert('Image delete error');
@@ -267,8 +282,6 @@ openBusinessHourModal() {
     entity: this.Entity
 };
 
-this.bsModalRef = this.modalService.show(BusinesshourmodalComponent, {initialState});
-
 }
 
 zoomIn() {
@@ -286,30 +299,30 @@ addMarker() {
  // const coord = this.Entity.Coordinates.split(',');
   this.markers.push({
     position: {
-      lat: Number(this.Entity.Latitude),
-      lng: Number(this.Entity.Longitude),
+      lat: Number(this.Entity.latitude),
+      lng: Number(this.Entity.longitude),
     },
     label: {
       color: 'red',
-      text: this.Entity.Company + (this.markers.length + 1),
+      text: this.Entity.company + (this.markers.length + 1),
     },
-    title: this.Entity.Company + (this.markers.length + 1),
+    title: this.Entity.company + (this.markers.length + 1),
     info: 'Marker info ' + (this.markers.length + 1),
-    url: 'https://www.google.com/maps/place/' + this.Entity.Latitude + ',' + this.Entity.Longitude ,
+    url: 'https://www.google.com/maps/place/' + this.Entity.latitude + ',' + this.Entity.longitude ,
     options: {
       animation: google.maps.Animation.DROP
     }
   });
 
   this.center = {
-    lat: Number(this.Entity.Latitude),
-    lng: Number(this.Entity.Longitude),
+    lat: Number(this.Entity.latitude),
+    lng: Number(this.Entity.longitude),
   };
 
 }
 
 public opengooglemap() {
-  const url = 'https://www.google.com/maps/place/' + this.Entity.Latitude + ',' + this.Entity.Longitude;
+  const url = 'https://www.google.com/maps/place/' + this.Entity.latitude + ',' + this.Entity.longitude;
 
   window.open(
      url

@@ -11,6 +11,8 @@ import { ImageLink } from './../../core/shared/model/ImageLink';
 import { UserInfo, PaymentInfo, PaymentHistory } from '../../core/shared/model/userinfo';
 import * as XLSX from 'xlsx';
 import { Title } from '@angular/platform-browser';
+import {ProductdialogComponent} from './../productdialog/productdialog.component';
+import {  MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-invshow',
@@ -46,7 +48,7 @@ export class InvshowComponent implements OnInit {
 
   AdTextLinks: ImageLink[];
 
-
+  SelfFunctionMode = false;  // turn app into self input mode which does not require excel uploading data feed
 
   _stock_sum = 0;
   get stock_sum(): number {
@@ -77,13 +79,20 @@ export class InvshowComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
     private service: InvserviceService, public cryptservice: CryptserviceService,
-    public authservice: AuthserviceService, private router: Router, private title: Title) { }
+    public authservice: AuthserviceService, private router: Router, private title: Title
+    , private dialog: MatDialog) { }
 
   ngOnInit() {
 
     this.title.setTitle('普洱茶雲端管理系統');
 
     const EncryptID: string = this.route.snapshot.queryParamMap.get('key');
+
+    const mode: string = this.route.snapshot.queryParamMap.get('mode');
+
+    if (mode === 'self') {
+      this.SelfFunctionMode = true;
+    }
 
     const IDstring: string = this.cryptservice.decrypt(EncryptID);
 
@@ -136,38 +145,76 @@ export class InvshowComponent implements OnInit {
 
     this.spinner.show();
 
-    this.service.currentInventoryFullList.subscribe(val => {
-      if (val.length === 0) {
-        this.service.getFullEntityById(ID, 'admin').subscribe(value => {
-          this.Entity = value;
+    if (this.SelfFunctionMode) {
+
+      this.service.currentInventoryFullList.subscribe(val => {
+        if (val.length === 0) {
+          this.service._getClientFullEntity(ID).subscribe(value => {
+            this.Entity = value;
+            this.FilterForUser();
+            this.spinner.hide();
+          },
+            err => {
+              alert('無此客戶或發生錯誤');
+              this.spinner.hide();
+            });
+        } else {
+          this.Entity = val.find(x => x.ClientId === ID);
           this.FilterForUser();
           this.spinner.hide();
-        },
-          err => {
-            alert('無此客戶或發生錯誤');
+        }
+      });
+
+    } else {
+
+      this.service.currentInventoryFullList.subscribe(val => {
+        if (val.length === 0) {
+          this.service.getFullEntityById(ID, 'admin').subscribe(value => {
+            this.Entity = value;
+            this.FilterForUser();
             this.spinner.hide();
-          });
-      } else {
-        this.Entity = val.find(x => x.ClientId === ID);
-        this.FilterForUser();
-        this.spinner.hide();
-      }
-    });
+          },
+            err => {
+              alert('無此客戶或發生錯誤');
+              this.spinner.hide();
+            });
+        } else {
+          this.Entity = val.find(x => x.ClientId === ID);
+          this.FilterForUser();
+          this.spinner.hide();
+        }
+      });
+    }
   }
 
   public GetUserEntity(Id: string) {
 
     this.spinner.show();
 
-    this.service.getFullEntityById(Id, 'user').subscribe(val => {
-      this.Entity = val;
-      this.FilterForUser();
-      this.spinner.hide();
-    },
-    err => {
-      alert('Get User Client Error');
-      this.spinner.hide();
-    });
+    if (this.SelfFunctionMode) {
+
+      this.service._getClientFullEntity(Id).subscribe(val => {
+        this.Entity = val;
+        this.FilterForUser();
+        this.spinner.hide();
+      },
+      err => {
+        alert('Get User Client Error');
+        this.spinner.hide();
+      });
+
+    } else {
+      this.service.getFullEntityById(Id, 'user').subscribe(val => {
+        this.Entity = val;
+        this.FilterForUser();
+        this.spinner.hide();
+      },
+      err => {
+        alert('Get User Client Error');
+        this.spinner.hide();
+      });
+    }
+
   }
 
   public GetPaymentInfo(ID: string) {
@@ -215,6 +262,12 @@ export class InvshowComponent implements OnInit {
 
   }
 
+  public resetCount() {
+    this.stock_sum = 0;
+    this.return_sum = 0;
+    this.notreturn_sum = 0;
+  }
+
   public GetAdImages() {
     this.service.getAdImages().subscribe(res => {
 
@@ -246,6 +299,71 @@ export class InvshowComponent implements OnInit {
 
     /* save to file */
     XLSX.writeFile(wb, this.Entity.ClientName + '.xlsx');
+  }
+
+  public AddProduct() {
+    const newinfo = new InventoryFull();
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.data = {
+      entity: newinfo,
+      isnew: true,
+      clientId: this.Entity.ClientId,
+      clientInv: this.Entity
+    };
+
+    const dialogRef =  this.dialog.open(ProductdialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(arg => {
+
+      this.resetCount();
+      this.FilterForUser();
+
+    } );
+  }
+
+  public DeleteProduct(item: InventoryFull) {
+
+    if (confirm('確定刪除 產品: ' + item.ProductId)) {
+      this.service._deleteFullInvEntity(this.Entity.ClientId, item.ProductId).subscribe (val => {
+        alert('已刪除產品:' + item.ProductId);
+        this.Entity.Inventories.forEach( (info, index) => {
+          if (info.ProductId === item.ProductId) {
+            this.Entity.Inventories.splice(index, 1);
+            this.resetCount();
+            this.FilterForUser();
+          }
+        });
+      });
+    }
+
+  }
+
+  public EditProduct(item: InventoryFull) {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.data = {
+      entity: item,
+      isnew: false,
+      clientId: this.Entity.ClientId
+    };
+
+    const dialogRef = this.dialog.open(ProductdialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(arg => {
+
+      this.resetCount();
+      this.FilterForUser();
+
+    } );
   }
 
 

@@ -48,6 +48,13 @@ export class InventoryTrade extends InventoryFull {
   ClientName: string;
 }
 
+export class TradeConfirm {
+  ToClientId: string;
+  TradeInfo: string;
+  TradeAmount: number;
+  TradeList: InventoryTrade[];
+}
+
 export class InventoryExtend {
     ProductId: string;
     GroupId: string; // 產品大類

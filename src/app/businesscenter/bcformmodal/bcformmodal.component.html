@@ -1,19 +1,37 @@
 <div class="modal-header table-hover">
-        
+       
 </div>
           <div class="modal-body">
 
+      設備：
           <div fxLayout="column" fxLayoutAlign=" none">
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayout.xs="column">
               <div *ngFor="let i of list; let x = index" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
-                  <input [(ngModel)]="i.Checked" type="checkbox"/> {{i.Name}} <img  [src]="i.Image_Url" style="height: 50px; width: 50px;">
+                  <input [(ngModel)]="i.checked" type="checkbox"/> {{i.name}} <img  [src]="i.image_url" style="height: 50px; width: 50px;">
+              </div>
+            </div>
+          </div>
+
+          設施：
+          <div fxLayout="column" fxLayoutAlign=" none">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayout.xs="column">
+              <div *ngFor="let i of list2; let x = index" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                  <input [(ngModel)]="i.checked" type="checkbox"/> {{i.name}} <img  [src]="i.image_url" style="height: 50px; width: 50px;">
+              </div>
+            </div>
+          </div>
+
+          附加服務：
+          <div fxLayout="column" fxLayoutAlign=" none">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayout.xs="column">
+              <div *ngFor="let i of list3; let x = index" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                  <input [(ngModel)]="i.checked" type="checkbox"/> {{i.name}} <img  [src]="i.image_url" style="height: 50px; width: 50px;">
               </div>
             </div>
           </div>
                   
           </div>
           <div class="modal-footer">
-                 <button type="button" class="btn btn-primary" (click)="Save()">儲存</button>  
+                 <button type="button" class="btn btn-primary" (click)="Save()">儲存</button>
                 <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">取消</button>
           </div>
-    

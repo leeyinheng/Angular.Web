@@ -65,6 +65,10 @@ templist2: ClientInventoryFull[];
 
 tradelist: InventoryTrade[] = [];
 
+SelfFunctionMode = false;  // turn app into self input mode which does not require excel uploading data feed
+
+selectedVal = '';
+
 
 constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
   private service: InvserviceService, public cryptservice: CryptserviceService,
@@ -79,6 +83,19 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
         this.router.navigate(['login']);
       }
     } );
+
+    const value = sessionStorage.getItem('mode');
+
+    if (!isNullOrUndefined(value)) {
+
+      if (value === 'Self') {
+        this.SelfFunctionMode = true;
+      } else {
+        this.SelfFunctionMode = false;
+      }
+
+      this.selectedVal = value;
+    }
 
   }
 
@@ -179,24 +196,60 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
   public GetList() {
     this.spinner.show();
 
-        this.service.currentInventoryFullList.subscribe( val => {
+    if (!this.SelfFunctionMode) {
 
-          if ( isNullOrUndefined(val)) {
-            this.service.getClientFullInvList().subscribe(vals => {
-              this.orginiallist = vals;
-              this.service.changeInventoryFullList(vals);
-              this.spinner.hide();
-            },
-            err => {
-              alert('Not Found or Error');
-              this.spinner.hide();
-            });
-          } else {
-            this.orginiallist = val;
+      this.service.currentInventoryFullList.subscribe( val => {
+
+        if ( isNullOrUndefined(val)) {
+          this.service.getClientFullInvList().subscribe(vals => {
+            this.orginiallist = vals;
+            this.service.changeInventoryFullList(vals);
             this.spinner.hide();
-          }
-        });
+          },
+          err => {
+            alert('Not Found or Error');
+            this.spinner.hide();
+          });
+        } else {
+          this.orginiallist = val;
+          this.spinner.hide();
+        }
+      });
 
+
+    } else {
+
+
+      this.service.currentInventoryFullList.subscribe( val => {
+      //  alert('self mode data');
+        if ( isNullOrUndefined(val)) {
+          this.service._getClientFullList().subscribe(vals => {
+            this.orginiallist = vals;
+            this.service.changeInventoryFullList(vals);
+            this.spinner.hide();
+          },
+          err => {
+            alert('Not Found or Error');
+            this.spinner.hide();
+          });
+        } else {
+          this.orginiallist = val;
+          this.spinner.hide();
+        }
+      });
+
+    }
+
+  }
+
+    onValChange(value) {
+
+      if (value === 'Self') {
+        this.SelfFunctionMode = true;
+      } else {
+        this.SelfFunctionMode = false;
+      }
+      sessionStorage.setItem('mode', value);
     }
 
     public showUserEntity(id: string) {
@@ -218,6 +271,11 @@ constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
         newinfo.ProductName = info.ProductName;
         newinfo.LocationId = info.LocationId;
         newinfo.NotReturn = info.NotReturn;
+        newinfo.BarCode = info.BarCode;
+        newinfo.GroupId = info.GroupId;
+        newinfo.Return = info.Return;
+        newinfo.Stock = info.Stock;
+        newinfo.Unit = info.Unit;
         this.tradelist.push(newinfo);
       } else {
         const index = this.tradelist.findIndex(x => x.ProductId === info.ProductId);

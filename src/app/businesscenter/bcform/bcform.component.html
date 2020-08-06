@@ -20,7 +20,7 @@
                             ID:
                         </td>
                         <TD>
-                                {{Entity.Id}}
+                                {{Entity._id}}
                         </TD>
                     </tr>
                     <tr>
@@ -28,7 +28,7 @@
                                 商務中心名稱:
                         </td>
                         <td>
-                                <input [(ngModel)]="Entity.Company" #ctrl="ngModel" required name="entityname"  #fullName="ngModel" class="form-control" required>
+                                <input [(ngModel)]="Entity.company" #ctrl="ngModel" required name="entityname"  #fullName="ngModel" class="form-control" required>
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                               商務中心名稱 英文:
                       </td>
                       <td>
-                              <input [(ngModel)]="Entity.Company_en" #ctrl="ngModel" required name="entityname_en"  #fullName="ngModel" class="form-control">
+                              <input [(ngModel)]="Entity.company_en" #ctrl="ngModel" required name="entityname_en"  #fullName="ngModel" class="form-control">
                       </td>
                   </tr>
                   <tr>
@@ -48,7 +48,7 @@
                                 <textarea class="form-control"
                                 name="intro"
                                 rows="4"
-                                [(ngModel)]="Entity.Intro"
+                                [(ngModel)]="Entity.intro"
                                 #message='ngModel'
                                 ></textarea>
                         </td>
@@ -62,7 +62,7 @@
                               <textarea class="form-control"
                               name="intro_en"
                               rows="4"
-                              [(ngModel)]="Entity.Intro_en"
+                              [(ngModel)]="Entity.intro_en"
                               #message='ngModel'
                               ></textarea>
                       </td>
@@ -74,7 +74,7 @@
                             街:
                         </td>
                         <td>
-                                <input [(ngModel)]="Entity.Street" #ctrl="ngModel" name="address" class="form-control">
+                                <input [(ngModel)]="Entity.street" #ctrl="ngModel" name="address" class="form-control">
                         </td>
                     </tr>
                     <tr>
@@ -82,7 +82,7 @@
                           Street:
                       </td>
                       <td>
-                              <input [(ngModel)]="Entity.Street_en" #ctrl="ngModel" name="Street_en" class="form-control">
+                              <input [(ngModel)]="Entity.street_en" #ctrl="ngModel" name="Street_en" class="form-control">
                       </td>
                   </tr>
 
@@ -91,7 +91,7 @@
                                 市:
                             </td>
                             <td>
-                                    <input [(ngModel)]="Entity.County" #ctrl="ngModel" name="County">
+                                    <input [(ngModel)]="Entity.county" #ctrl="ngModel" name="County">
                             </td>
                     </tr>
                     <tr>
@@ -99,7 +99,7 @@
                           City:
                       </td>
                       <td>
-                              <input [(ngModel)]="Entity.County_en" #ctrl="ngModel" name="County_en">
+                              <input [(ngModel)]="Entity.county_en" #ctrl="ngModel" name="County_en">
                       </td>
               </tr>
                     <tr>
@@ -107,7 +107,7 @@
                                 區:
                             </td>
                             <td>
-                                    <input [(ngModel)]="Entity.District" #ctrl="ngModel" name="District">
+                                    <input [(ngModel)]="Entity.district" #ctrl="ngModel" name="District">
                             </td>
                     </tr>
                     <tr>
@@ -115,7 +115,7 @@
                           District :
                       </td>
                       <td>
-                              <input [(ngModel)]="Entity.District_en" #ctrl="ngModel" name="District_en">
+                              <input [(ngModel)]="Entity.district_en" #ctrl="ngModel" name="District_en">
                       </td>
               </tr>
                     <tr *ngIf="!isAdd">
@@ -127,8 +127,9 @@
 
                                         <div fxLayout="column" fxLayoutAlign=" none">
                                                 <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayout.xs="column">
-                                                  <div *ngFor="let i of Entity.Features" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
-                                                       {{i.Name}} <img  src ="https://image.flaticon.com/icons/svg/1642/1642269.svg" style="height: 50px; width: 50px;">
+                                                  <div *ngFor="let i of Entity.features" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                                                       {{i.name}}
+                                                       <!-- <img  src ="https://image.flaticon.com/icons/svg/1642/1642269.svg" style="height: 50px; width: 50px;"> -->
                                                   </div>
                                                 </div>
                                         </div>
@@ -141,7 +142,7 @@
                               空位數:
                           </td>
                           <td>
-                                  <input [(ngModel)]="Entity.DefaultSeats" #ctrl="ngModel" name="DefaultSeats">
+                                  <input [(ngModel)]="Entity.defaultSeats" #ctrl="ngModel" name="DefaultSeats">
                           </td>
                         </tr  >
                         <tr  *ngIf="!isAdd">
@@ -149,7 +150,7 @@
                               預扣點數:
                           </td>
                           <td>
-                                  <input [(ngModel)]="Entity.Points" #ctrl="ngModel" name="Points">
+                                  <input [(ngModel)]="Entity.points" #ctrl="ngModel" name="Points">
                           </td>
                         </tr  >
                     <tr *ngIf="!isAdd">
@@ -157,7 +158,7 @@
                             座標:    <button type="button" class="btn btn-sm btn-primary" (click)="saveGPS()">更新GPS</button>
                         </td>
                         <td>
-                          Latitude  :  <input [(ngModel)]="Entity.Latitude " #ctrl="ngModel" name="Latitude ">
+                          Latitude  :  <input [(ngModel)]="Entity.latitude " #ctrl="ngModel" name="Latitude ">
                         </td>
                     </tr>
 
@@ -166,7 +167,7 @@
 
                       </td>
                       <td>
-                        Longitude  :   <input [(ngModel)]="Entity.Longitude" #ctrl="ngModel" name="Longitude">
+                        Longitude  :   <input [(ngModel)]="Entity.longitude" #ctrl="ngModel" name="Longitude">
                       </td>
                     </tr>
                     <tr  *ngIf="!isAdd">
@@ -211,7 +212,7 @@
                     </tr>
                     <tr  *ngIf="!isAdd">
                         <td colspan="2">
-                                <ul *ngFor="let i of Entity.ImageUrls; let x = index" class="list-group">
+                                <ul *ngFor="let i of Entity.imageUrls; let x = index" class="list-group">
                                     <li class="list-group-item">
                                         <img src='https://in-hub-dev.azurewebsites.net/{{i}}'   class="img-thumbnail" > <p></p>
                                         <!-- 名稱:<input [(ngModel)]="i.Name" #ctrl="ngModel"  name="imagename" class="form-control"/> <p></p>

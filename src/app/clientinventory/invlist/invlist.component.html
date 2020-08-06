@@ -4,10 +4,26 @@
     </div>
 
     <h1>所有客戶庫存表</h1>
-    <div>
-            <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
+
+      <div class="row">
+        <div class="col-sm-8">
+          <button type="button" class="btn btn-success"  onclick="location.href='#/teaportal';">返回管理頁面</button>
+        </div>
+
+        <div *ngIf="SelfFunctionMode" class="col-sm-4">
+          <button type="button" class="btn btn-danger" (click)="syncExcelData()">同步Excel 資料進入獨立資料庫</button>
+        </div>
+      <div>
+
             <p></p>
-    </div>
+            <p>
+              選擇資料來源模式:
+              <mat-button-toggle-group  name="fontStyle" aria-label="Font Style" [value]="selectedVal">
+                <mat-button-toggle value="Excel" (change)='onValChange($event.value)'>Excel上傳模式</mat-button-toggle>
+                <mat-button-toggle value="Self" (change)='onValChange($event.value)'>獨立資料庫模式</mat-button-toggle>
+              </mat-button-toggle-group>
+            </p>
+
     <div class="form form-row">
         <label>搜尋:</label>
         <input type="string" placeholder="編號或名稱" class="form form-control"
@@ -20,6 +36,9 @@
         <tr>
             <th>
                 客戶編號
+                <div *ngIf="SelfFunctionMode">
+                  <button type="button" class="btn btn-sm btn-primary" (click) = AddClientInfo(item)>新增客戶</button>
+                </div>
             </th>
             <th>
                 客戶名稱
@@ -42,6 +61,9 @@
                         {{item.ClientId}}
 
                         <button type="button" class="btn btn-sm btn-primary" (click) = EditClientInfo(item)>編輯</button>
+                        <div *ngIf="SelfFunctionMode">
+                          <button type="button" class="btn btn-sm btn-danger" (click) = DeleteClientInfo(item)>刪除</button>
+                        </div>
                     </td>
                     <td>{{ item.ClientName}}
 

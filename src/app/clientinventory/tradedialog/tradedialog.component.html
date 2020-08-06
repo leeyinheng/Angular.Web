@@ -14,12 +14,12 @@
   </mat-form-field>
   <mat-form-field style="width: auto;">
     <mat-label>交易金額</mat-label>
-    <input matInput type="string"
+    <input matInput type="number"
     [(ngModel)]='TradeAmount'
     />
   </mat-form-field>
   <P>
-    <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">確認交易</button>  | <button type="button" class="btn btn-info" (click)="Cancel()">取消</button>
+    <button type="button" class="btn btn-success" (click)="Confirm()">確認交易</button>  | <button type="button" class="btn btn-info" (click)="Cancel()">取消</button>
   </P>
 </div>
 <p></p>
@@ -76,3 +76,11 @@
 
 
 
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">處理中...</p>
+</ngx-spinner>

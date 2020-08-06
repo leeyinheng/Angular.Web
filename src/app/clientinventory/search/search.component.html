@@ -6,7 +6,14 @@
 <h3>搜尋 客戶庫存  <span style="color: gray;"> {{Search}}</span>  總項:{{showtotal}} 總庫存量: {{showtotalstock}}</h3>
 <div>
       <button type="button" class="btn btn-success" onclick="location.href='#/teaportal';">返回管理頁面</button>
-      <p></p>
+
+      <p>
+        選擇資料來源模式:
+        <mat-button-toggle-group  name="fontStyle" aria-label="Font Style" [value]="selectedVal">
+          <mat-button-toggle value="Excel" (change)='onValChange($event.value)'>Excel上傳模式</mat-button-toggle>
+          <mat-button-toggle value="Self" (change)='onValChange($event.value)'>獨立資料庫模式</mat-button-toggle>
+        </mat-button-toggle-group>
+      </p>
 </div>
 <div class="form form-row">
   <label>搜尋茶葉庫存:</label>
@@ -53,7 +60,7 @@
               <td>
                 <table>
                   <th>
-                    <button type="button" class="btn btn-sm btn-primary" (click) = OpenTradeDialog()>藏品交易移轉</button>
+                    <button  *ngIf="SelfFunctionMode" type="button" class="btn btn-sm btn-primary" (click) = OpenTradeDialog()>藏品交易移轉</button>
                   </th>
                   <th>
                     產品編號
@@ -84,7 +91,7 @@
                 </th>
                   <tr *ngFor = 'let info of item.Inventories'>
                     <td>
-                      <input type="checkbox" class="example-margin" (change)="trade(info, item)"/>
+                      <input   *ngIf="SelfFunctionMode" type="checkbox" class="example-margin" (change)="trade(info, item)"/>
                     </td>
                    <td>
                       {{info.ProductId}}
@@ -92,6 +99,7 @@
                     <td>
                       {{info.ProductName}}
                     </td>
+
                     <td>
                       {{info.Stock}}
                     </td>
@@ -117,6 +125,7 @@
                   <tfoot>
                     <tr>
                       <td>小計</td>
+                      <td></td>
                       <td></td>
                       <td> <b>{{ item.SubStock}}</b></td>
                       <td></td>

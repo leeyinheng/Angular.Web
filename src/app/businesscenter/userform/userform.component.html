@@ -21,11 +21,11 @@
                       </td>
                       <td>
                              <div *ngIf="!isAdd">
-                              {{Entity.Id}}
+                              {{Entity._id}}
                              </div>
 
                               <div *ngIf="isAdd">
-                                <input [(ngModel)]="Entity.Id" #ctrl="ngModel" required name="ID"  #fullName="ngModel" class="form-control" required>
+                                <input [(ngModel)]="Entity._id" #ctrl="ngModel" required name="ID"  #fullName="ngModel" class="form-control"   (change)="onChangeEvent($event)" required>
                               </div>
 
                       </td>
@@ -35,10 +35,10 @@
                             Email :
                     </td>
                     <td>
-                            <input [(ngModel)]="Entity.Email" #ctrl="ngModel" required name="Email"  #fullName="ngModel" class="form-control" required>
+                            <input [(ngModel)]="Entity.eMail" #ctrl="ngModel" required name="Email"  #fullName="ngModel" class="form-control" required>
                     </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td>
                           Password :
                           <div *ngIf="!isAdd">
@@ -46,16 +46,16 @@
                           </div>
                   </td>
                   <td>
-                          <input [(ngModel)]="Entity.Password" #ctrl="ngModel" required name="Password"  #fullName="ngModel" class="form-control" required>
+                          <input [(ngModel)]="Entity.password" #ctrl="ngModel" required name="Password"  #fullName="ngModel" class="form-control" required>
                   </td>
-              </tr>
+              </tr> -->
 
                   <tr>
                       <td>
                               名:
                       </td>
                       <td>
-                              <input [(ngModel)]="Entity.FirstName" #ctrl="ngModel" required name="FirstName"  #fullName="ngModel" class="form-control" required>
+                              <input [(ngModel)]="Entity.firstName" #ctrl="ngModel" required name="FirstName"  #fullName="ngModel" class="form-control"  required>
                       </td>
                   </tr>
                   <tr>
@@ -63,7 +63,7 @@
                             姓:
                     </td>
                     <td>
-                            <input [(ngModel)]="Entity.LastName" #ctrl="ngModel" required name="LastName"  #fullName="ngModel" class="form-control">
+                            <input [(ngModel)]="Entity.lastName" #ctrl="ngModel" required name="LastName"  #fullName="ngModel" class="form-control">
                     </td>
                 </tr>
 
@@ -72,34 +72,40 @@
                           電話:
                       </td>
                       <td>
-                              <input [(ngModel)]="Entity.Cell " #ctrl="ngModel" name="Cell" class="form-control">
+                              <input [(ngModel)]="Entity.cell " #ctrl="ngModel" name="Cell" class="form-control">
                       </td>
                   </tr>
-                  <tr>
+                  <tr  *ngIf="!isAdmin">
                     <td>
                         點數:
                     </td>
                     <td>
-                            <input [(ngModel)]="Entity.Points" #ctrl="ngModel" name="Points" class="form-control" type="number">
+                           <!--  <input [(ngModel)]="Entity.points" #ctrl="ngModel" name="Points" class="form-control" type="number"> -->
+                           {{Entity.points}}
                     </td>
+                </tr>
+                <tr *ngIf="isAdd">
+                  <td  *ngIf="!isAdmin">
+                    Referral:   (PROMO-XX)
+                  </td>
+                  <td  *ngIf="!isAdmin">
+                          <input [(ngModel)]="Entity.referral" #ctrl="ngModel" name="REFERRAL" class="form-control" type="string">
+                  </td>
                 </tr>
 
                   <tr *ngIf="!isAdd">
-                          <td>
+                          <td *ngIf="isAdmin">
                              管理的 Vendor <button type="button" class="btn btn-sm btn-warning" (click)="AssignVendor()">指定管理的商務中心</button>
                           </td>
-                          <td>
-                                 {{Entity.Vendor.company}}
-
-
+                          <td  *ngIf="isAdmin">
+                                 {{Entity.vendorId.company}}
                                   <div>
                                     <select (change)="filterForArticles($event.target.value)" class="form-control">
                                       <option value="-1">--選擇--</option>
-                                      <option *ngFor="let item of List; let i = index" value={{item.Id}}>
-                                        {{item.Company}}
+                                      <option *ngFor="let item of List; let i = index" value={{item._id}}>
+                                        {{item.company}}
                                       </option>
                                     </select>
-
                                   </div>
                           </td>
                   </tr>

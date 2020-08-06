@@ -12,12 +12,10 @@ import { BcformmodalComponent } from './bcformmodal/bcformmodal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
-import { BusinesshourmodalComponent } from './businesshourmodal/businesshourmodal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-import { RequestmodalComponent } from './requestmodal/requestmodal.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { UserformComponent } from './userform/userform.component';
 import {BcserviceService} from './service/bcservice.service';
@@ -72,13 +70,12 @@ import { LoginComponent } from './login/login.component';
       }
     ])
   ],
-  declarations: [BclistComponent, BcformComponent, BcformmodalComponent, BusinesshourmodalComponent,
-     RequestmodalComponent,
+  declarations: [BclistComponent, BcformComponent, BcformmodalComponent,
      UserlistComponent,
      UserformComponent,
      LogviewComponent,
      LoginComponent],
-  entryComponents: [BcformmodalComponent, BusinesshourmodalComponent],
+  entryComponents: [BcformmodalComponent],
   providers: [BcserviceService]
 
 })

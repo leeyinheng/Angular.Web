@@ -13,6 +13,13 @@
         <div id="rcorners1a" >
                         <div class="row" id ="frontbackground" >
                                         <h3>庫存系統</h3>
+                                        <p>
+                                          選擇資料來源模式:
+                                          <mat-button-toggle-group  name="fontStyle" aria-label="Font Style" [value]="selectedVal">
+                                            <mat-button-toggle value="Excel" (change)='onValChange($event.value)'>Excel上傳模式</mat-button-toggle>
+                                            <mat-button-toggle value="Self" (change)='onValChange($event.value)'>獨立資料庫模式</mat-button-toggle>
+                                          </mat-button-toggle-group>
+                                        </p>
                                  </div>
                                  <div class="row"   id ="frontbackground"  >
                                    <div class="col">
@@ -24,7 +31,7 @@
                                    <div class="col">
                                     <button class="button"  onclick="location.href='#/searchtea';  "><i class="fa fa-search" ></i> 搜尋庫存 </button>
                                    </div>
-                                   <div class="col">
+                                   <div class="col" *ngIf="!SelfFunctionMode">
                                     <button class="button"  onclick="location.href='#/extendlist';  "><i class="fa fa-edit" ></i> 產品編輯 </button>
                                    </div>
                                    <div class="col">

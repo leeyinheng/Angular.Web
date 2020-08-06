@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import { Request} from '../model/BusinessCenter';
-import { Vendor, Gps, Feature, User } from '../model/Inhub';
+
+import { Vendor, Gps, Feature, User, Gps_poco, Vendor_poco, Feature_poco, User_poco } from '../model/Inhub';
 import { isNullOrUndefined } from 'util';
 import {InHubLog} from './../../core/shared/model/log';
 import {Router} from '@angular/router';
@@ -130,14 +130,14 @@ export class BcserviceService {
     return this.http.get<User>(url, this.getHttpoption());
   }
 
-  public postEntity(entity: Vendor) {
+  public postEntity(entity: Vendor_poco) {
 
     const url = this.vendorurl;
 
     return this.http.post(url, entity, this.getHttpoption());
   }
 
-  public postUser(entity: User) {
+  public postUser(entity: User_poco) {
 
     const url = this.userurl;
 
@@ -146,11 +146,11 @@ export class BcserviceService {
 
   public updateGPS(entity: Vendor) {
 
-      const url = this.vendorurl + '/' + entity.Id + '/position';
-      const corrd = new Gps();
-      corrd.Longitude = entity.Longitude;
-      corrd.Latitude = entity.Latitude;
-      return this.http.patch(url, entity, this.getHttpoption() );
+      const url = this.vendorurl + '/' + entity._id + '/position';
+      const corrd = new Gps_poco();
+      corrd.Longitude = entity.longitude;
+      corrd.Latitude = entity.latitude;
+      return this.http.patch(url, corrd, this.getHttpoption() );
 
   }
 
@@ -158,7 +158,16 @@ export class BcserviceService {
 
     const url = this.vendorurl + '/' + vendorid + '/feature';
 
-    return this.http.post(url, feature, this.getHttpoption());
+    const featurepoco = new Feature_poco;
+    featurepoco.Type = feature.type;
+    featurepoco.Name = feature.name;
+    featurepoco.Name_en = feature.name_en;
+    featurepoco.Image_Url = feature.image_url;
+    featurepoco.Checked = feature.checked;
+
+    // alert(featurepoco.Name);
+
+    return this.http.post(url, featurepoco, this.getHttpoption());
 
   }
 
@@ -169,7 +178,7 @@ export class BcserviceService {
     return this.http.delete(url, this.getHttpoption());
   }
 
- public updateEntity( entity: Vendor) {
+ public updateEntity( entity: Vendor_poco) {
 
   const url = this.vendorurl + '/' + entity.Id;
 
@@ -177,7 +186,7 @@ export class BcserviceService {
 
   }
 
-  public updateUser( entity: User) {
+  public updateUser( entity: User_poco) {
 
     const url = this.userurl + '/' + entity.Id;
 

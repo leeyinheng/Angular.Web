@@ -3,7 +3,7 @@ import {BcserviceService} from '../service/bcservice.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ActivatedRoute} from '@angular/router';
 import { isNullOrUndefined } from 'util';
-import { Vendor, User } from '../model/Inhub';
+import { Vendor, User, User_poco } from '../model/Inhub';
 
 @Component({
   selector: 'app-userform',
@@ -13,6 +13,8 @@ import { Vendor, User } from '../model/Inhub';
 export class UserformComponent implements OnInit {
 
   isAdd = false;
+
+  isAdmin = false;
 
   vendorId = '';
 
@@ -65,6 +67,15 @@ export class UserformComponent implements OnInit {
       } else {
         this.bcservice.getUser(ID).subscribe(val => {
           this.Entity = val;
+
+          if (this.Entity._id.length > 5 && this.Entity._id.startsWith('admin', 0)) {
+            this.isAdmin = true;
+          }
+
+          if (this.Entity._id.length > 5 && this.Entity._id.startsWith('Admin', 0)) {
+            this.isAdmin = true;
+          }
+
           this.spinner.hide();
         },
         err => {
@@ -99,14 +110,24 @@ export class UserformComponent implements OnInit {
 
 public AssignVendor() {
 
+  alert(this.vendorId);
 
-  this.bcservice.assignVendor(this.Entity.Id, this.vendorId).subscribe(val => {
+  this.bcservice.assignVendor(this.Entity._id, this.vendorId).subscribe(val => {
     alert('Assign complete');
   },
   err => {
     alert('assign error');
   });
 
+}
+
+onChangeEvent(event: any) {
+  const value = event.target.value;
+  if (value.length > 5 && value.startsWith('admin', 0)) {
+    this.isAdmin = true;
+  } else {
+    this.isAdmin = false;
+  }
 }
 
 filterForArticles(filterVal: string) {
@@ -122,7 +143,7 @@ filterForArticles(filterVal: string) {
 
 public UpdatePassword() {
 
-  this.bcservice.updatePassword(this.Entity.Id, this.Entity.Password).subscribe(val => {
+  this.bcservice.updatePassword(this.Entity._id, this.Entity.password).subscribe(val => {
     alert('Update Password complete');
   },
   err => {
@@ -133,16 +154,31 @@ public UpdatePassword() {
 
 public  SaveEntity() {
 
-  if (isNullOrUndefined(this.Entity.Id) || this.Entity.Id === '') {
+  if (isNullOrUndefined(this.Entity._id) || this.Entity._id === '') {
      alert('請輸入 ID 欄位');
      return;
    }
 
     this.spinner.show();
 
+    const userpoco = new User_poco;
+
+    userpoco.Id = this.Entity._id;
+    userpoco.FirstName = this.Entity.firstName;
+    userpoco.LastName = this.Entity.lastName;
+    userpoco.Password = this.Entity.password;
+    userpoco.Address = this.Entity.address;
+    userpoco.Cell = this.Entity.cell;
+    userpoco.DateJoined = this.Entity.dateJoined;
+    userpoco.Email = this.Entity.eMail;
+    userpoco.Points = this.Entity.points;
+    userpoco.Referral = this.Entity.referral;
+
+    // alert(this.Entity.referral);
+
     if (this.isAdd === true) {
 
-      this.bcservice.postUser(this.Entity).subscribe(
+      this.bcservice.postUser(userpoco).subscribe(
         res => {
            alert('新增完畢');
            this.spinner.hide();
@@ -156,7 +192,7 @@ public  SaveEntity() {
 
     } else {
 
-      this.bcservice.updateUser(this.Entity).subscribe(
+      this.bcservice.updateUser(userpoco).subscribe(
         res => {
            alert('更新完畢');
            this.spinner.hide();

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { ProjectImages, ClientInventory, Inventory, InventoryExtend , ClientInventoryFull, ClinetInfo } from './model/projectinventory';
+import { ProjectImages, ClientInventory, Inventory, InventoryExtend , ClientInventoryFull, ClinetInfo, InventoryFull, TradeConfirm } from './model/projectinventory';
 
 import { isNullOrUndefined } from 'util';
 
@@ -19,9 +19,9 @@ import { UserInfo, PaymentInfo, PaymentHistory } from '../core/shared/model/user
 
 export class InvserviceService {
 
-   private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
+    private site = 'https://leecloud.azurewebsites.net/';  // URL to web api
 
-  // private site = 'https://localhost:44347/';
+  //  private site = 'https://localhost:44347/';
 
   // private apim_site = 'https://leecloud.azure-api.net/';
 
@@ -63,13 +63,19 @@ export class InvserviceService {
 
   private paymentGetListUrl = 'api/PaymentApi/';
 
-  private paymentUpdateUsersUrl = 'api/PaymentApi/UpdateUsers/888';
+  private paymentUpdateUsersUrl = 'api/PaymentApi/UpdateUsers/888?mode=excel';
+
+  private paymentUpdateFullInvSubUsersUrl = 'api/PaymentApi/UpdateUsers/888?mode=self';
 
   private getClientInfoUrl = 'api/ClientInfoApi/';
 
   private APIM_Key = 'a63b428d457343ba80c4598119dfedc1';
 
+  private _FullInvList = 'api/ClientInventoryFullApi/';
 
+  private _SyncExcelData = 'api/ClientInventoryFullApi/SyncDataFromExcel/888';
+
+  private _ConfirmTradeUrl = 'api/ClientInventoryFullApi/ConfirmTrade/888';  // patch
 
 
   _list: ClientInventory[] = [];
@@ -136,6 +142,12 @@ export class InvserviceService {
 
   changeInventoryFullList(info: ClientInventoryFull[]){
     this.inventoryfulllistdataSource.next(info);
+  }
+
+
+
+  resetInventoryFullList() {
+    this.inventoryfulllistdataSource = null;
   }
 
   public postFile(file: FormData) {
@@ -266,6 +278,14 @@ export class InvserviceService {
 
   }
 
+  public deleteClientInfo(clientId: string) {
+
+    const url = this.site + this.getClientInfoUrl + clientId ;
+
+    return this.http.delete(url);
+
+  }
+
   public deleteExtendEntity(id: string) {
 
     const url = this.site + this.getExtendListUrl + id;
@@ -301,6 +321,52 @@ export class InvserviceService {
 
     return this.http.get<ClientInventoryFull[]>(url, {headers});
 
+  }
+
+  public _getClientFullList() {
+
+      const url = this.site + this._FullInvList;
+
+      return this.http.get<ClientInventoryFull[]>(url);
+
+  }
+
+  public _getClientFullEntity(id: string) {
+
+    const url = this.site + this._FullInvList + '?id=' + id;
+
+    return this.http.get<ClientInventoryFull>(url);
+
+}
+
+  public _addFullInvEntity(entity: InventoryFull, id: string) {
+
+    const url = this.site + this._FullInvList + '?id=' + id;
+
+    return this.http.post(url, entity);
+  }
+
+  public _updateFullInvEntity(entity: InventoryFull, id: string) {
+
+    const url = this.site + this._FullInvList + '/' + id;
+
+    return this.http.put(url, entity);
+
+  }
+
+  public _deleteFullInvEntity(id: string, prodid: string) {
+
+    const url = this.site + this._FullInvList + '/' + id + '?prodid=' + prodid;
+
+    return this.http.delete(url);
+
+  }
+
+  public _tradeConfirm(info: TradeConfirm) {
+
+    const url = this.site + this._ConfirmTradeUrl;
+
+    return this.http.patch(url, info);
   }
 
   public getImages() {
@@ -377,6 +443,14 @@ export class InvserviceService {
 
   }
 
+  public updatePaymentUserFullInvSub() {
+
+    const url = this.site + this.paymentUpdateFullInvSubUsersUrl;
+
+    return this.http.get(url);
+
+  }
+
   public postPaymentEntity(entity: UserInfo<PaymentInfo, PaymentHistory>) {
 
     const url = this.site + this.paymentPostUrl;
@@ -393,6 +467,14 @@ export class InvserviceService {
   public getPaymentList() {
     const url = this.site + this.paymentGetListUrl;
     return this.http.get<UserInfo<PaymentInfo, PaymentHistory>[]>(url);
+  }
+
+  public _syncExcelData() {
+
+    const url = this.site + this._SyncExcelData;
+
+    return this.http.get(url);
+
   }
 
   public postAdTextLinks(adimages: ImageLink[]) {

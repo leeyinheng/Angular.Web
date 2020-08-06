@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {BusinessCenter} from '../model/BusinessCenter';
 import {BcserviceService} from '../service/bcservice.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -66,7 +65,7 @@ export class BclistComponent implements OnInit {
     if (confirm('確定刪除 ID: ' + Id + '?')) {
 
       this.List.forEach( (item, index) => {
-        if (item.Id === Id) {
+        if (item._id === Id) {
           this.List.splice(index, 1);
         }
       });
@@ -91,11 +90,11 @@ export class BclistComponent implements OnInit {
 
   let imageurl = '';
 
-  if (isNullOrUndefined(item.ImageUrls) !== true) {
-    imageurl = item.ImageUrls[0];
+  if (isNullOrUndefined(item.imageUrls) !== true) {
+    imageurl = item.imageUrls[0];
   }
 
-   this.pophtml = '<talbe> <tr> <td>' + item.Intro + '</td> </tr>';
+   this.pophtml = '<talbe> <tr> <td>' + item.intro + '</td> </tr>';
    this.pophtml += '<tr><td>' + '<img src=https://in-hub-dev.azurewebsites.net/' + imageurl + ' width=90% height=90%> </td></tr>';
    this.pophtml += '</table>';
 
